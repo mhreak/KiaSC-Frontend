@@ -16,17 +16,44 @@ import { SectionWrapper } from "./section-wrapper";
 
 interface FormLayoutRendererProps {
   layout: LayoutConfig;
+  onFieldChange?: (
+    fieldId: string,
+    value: any,
+    formValues: Record<string, any>,
+  ) => void;
 }
 
 // این تابع به صورت بازگشتی (Recursive) نودهای داخل چیدمان را رندر می‌کند
-function RenderChildren({ nodes }: Readonly<{ nodes: FormNode[] }>) {
+function RenderChildren({
+  nodes,
+  onFieldChange,
+}: Readonly<{
+  nodes: FormNode[];
+  onFieldChange?: (
+    fieldId: string,
+    value: any,
+    formValues: Record<string, any>,
+  ) => void;
+}>) {
   return (
     <>
       {nodes.map((node) => {
         if (isLayoutConfig(node)) {
-          return <FormLayoutRenderer key={node.id} layout={node} />;
+          return (
+            <FormLayoutRenderer
+              key={node.id}
+              layout={node}
+              onFieldChange={onFieldChange}
+            />
+          );
         }
-        return <FormFieldRenderer key={node.id} field={node} />;
+        return (
+          <FormFieldRenderer
+            key={node.id}
+            field={node}
+            onFieldChange={onFieldChange}
+          />
+        );
       })}
     </>
   );
@@ -34,6 +61,7 @@ function RenderChildren({ nodes }: Readonly<{ nodes: FormNode[] }>) {
 
 export function FormLayoutRenderer({
   layout,
+  onFieldChange,
 }: Readonly<FormLayoutRendererProps>) {
   if (layout.visible === false) return null;
 
@@ -41,7 +69,10 @@ export function FormLayoutRenderer({
     case "grid":
       return (
         <div className="grid grid-cols-12 gap-5 col-span-12 border border-dashed border-muted p-4 rounded-lg">
-          <RenderChildren nodes={layout.children ?? []} />
+          <RenderChildren
+            nodes={layout.children ?? []}
+            onFieldChange={onFieldChange}
+          />
         </div>
       );
 
@@ -57,7 +88,10 @@ export function FormLayoutRenderer({
           sectionColSpan={layout.sectionColSpan}
           headerClassName={layout.headerClassName}
         >
-          <RenderChildren nodes={layout.children ?? []} />
+          <RenderChildren
+            nodes={layout.children ?? []}
+            onFieldChange={onFieldChange}
+          />
         </SectionWrapper>
       );
 
@@ -80,7 +114,10 @@ export function FormLayoutRenderer({
                 className="space-y-4 pt-4"
               >
                 <div className="grid grid-cols-12 gap-4 border rounded-2xl p-4">
-                  <RenderChildren nodes={item.children} />
+                  <RenderChildren
+                    nodes={item.children}
+                    onFieldChange={onFieldChange}
+                  />
                 </div>
               </TabsContent>
             ))}
@@ -97,7 +134,10 @@ export function FormLayoutRenderer({
               <AccordionItem key={item.id} value={item.id}>
                 <AccordionTrigger>{item.label}</AccordionTrigger>
                 <AccordionContent className="grid grid-cols-12 gap-4 pt-4">
-                  <RenderChildren nodes={item.children} />
+                  <RenderChildren
+                    nodes={item.children}
+                    onFieldChange={onFieldChange}
+                  />
                 </AccordionContent>
               </AccordionItem>
             ))}

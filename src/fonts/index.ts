@@ -1,45 +1,39 @@
 import localFont from "next/font/local";
 
-export const yekanBakh = localFont({
+export const vazir = localFont({
   src: [
     {
-      path: "./YekanBakh/YekanBakhLight.woff",
+      path: "./Vazir/Vazir-Thin.ttf",
       weight: "100",
       style: "normal",
     },
     {
-      path: "./YekanBakh/YekanBakhRegular.woff",
+      path: "./Vazir/Vazir-Light.ttf",
       weight: "300",
       style: "normal",
     },
     {
-      path: "./YekanBakh/YekanBakhMedium.woff",
+      path: "./Vazir/Vazir-Medium.ttf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "./YekanBakh/YekanBakhBold.woff",
+      path: "./Vazir/Vazir.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./Vazir/Vazir-Bold.ttf",
       weight: "700",
       style: "normal",
     },
-    {
-      path: "./YekanBakh/YekanBakhHeavy.woff",
-      weight: "800",
-      style: "normal",
-    },
-    {
-      path: "./YekanBakh/YekanBakhFat.woff",
-      weight: "900",
-      style: "normal",
-    },
   ],
-  variable: "--font-yekan-bakh",
+  variable: "--font-vazir",
   display: "swap",
 });
 
-
 export const modam = localFont({
-  src:[
+  src: [
     {
       path: "./Modam/Modam-ExtraLight.ttf",
       weight: "100",
@@ -73,7 +67,7 @@ export const modam = localFont({
     {
       path: "./Modam/Modam-ExtraBold.ttf",
       weight: "800",
-      style: "normal",  
+      style: "normal",
     },
     {
       path: "./Modam/Modam-Black.ttf",
@@ -83,4 +77,4 @@ export const modam = localFont({
   ],
   variable: "--font-modam",
   display: "swap",
-})
+});

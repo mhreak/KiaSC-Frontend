@@ -6,6 +6,7 @@ export type FieldType =
   | "amount"
   | "nationalcode"
   | "mobile"
+  | "phone"
   | "select"
   | "checkbox"
   | "switch"
@@ -21,13 +22,21 @@ export type FieldType =
   | "file" // جدید
   | "image"
   | "postalcode"
-  | "customerSearch"
-  | "location";
+  | "contractorSearch"
+  | "invisible";
 export type LayoutType = "grid" | "section" | "tabs" | "accordion";
 export interface FieldValidation {
   pattern?: string; // الگوی ریجکس به صورت رشته (مثلا "^09\\d{9}$")
   errorMessage?: string; // پیغام خطای دلخواه در صورت عدم تطابق
 }
+
+export type FieldOption = {
+  label: string;
+  value: string | number;
+  component?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+};
 
 export interface BaseFieldConfig {
   id: string; // شناسه منحصر به فرد فیلد (مثلا firstName)
@@ -47,7 +56,7 @@ export interface BaseFieldConfig {
   computedValue?: (formValues: Record<string, any>) => any;
 
   // گزینه‌ها برای فیلدهایی مثل Select
-  options?: { label: string; value: string }[];
+  options?: FieldOption[];
 
   // سیستم چیدمان (مثلا این فیلد چقدر از گرید را بگیرد)
   colSpan?: number;
@@ -58,8 +67,9 @@ export interface BaseFieldConfig {
 
   isRial?: boolean;
   maxLength?: number;
+  maxFileUpload?: number;
 
-  icon?: string;
+  displayName?: string;
 }
 
 // ساختار جدید برای چیدمان‌ها
@@ -78,7 +88,7 @@ export interface LayoutConfig {
   }[];
 
   // برای گرید یا بخش‌های ساده
-  children?: FormNode[];
+  children?: BaseFieldConfig[];
   icon?: string;
   iconSize?: number; // اندازه آیکون به صورت عددی (px)
   wrapperVariant?: "default" | "card" | "bordered" | "gradient" | "dangerZone";
@@ -96,3 +106,5 @@ export type FormConfig = FormNode[];
 export function isLayoutConfig(node: FormNode): node is LayoutConfig {
   return ["grid", "section", "tabs", "accordion"].includes(node.type);
 }
+
+export type FormMode = "add" | "edit" | "view";

@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { DirectionProvider } from "@/components/ui/direction";
-import { modam } from "@/fonts";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { Toaster } from "@/components/ui/toast";
-
+import { vazir } from "@/fonts";
 import { AuthProvider } from "@/context/AuthProvider";
 import { cn } from "@/lib/utils";
-import "./globals.css";
 import { ViewTransitions } from "next-view-transitions";
 import ToastContainer from "@/components/toast/ToastContainer";
 import { ToastProvider } from "@/context/ToastContext";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "کیا اسپورت",
@@ -22,19 +19,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={cn(modam.variable)}>
+    <html lang="fa" dir="rtl" className={cn(vazir.variable)}>
       <body>
         <AuthProvider>
           <DirectionProvider direction="rtl">
             <div className="relative flex h-dvh w-full">
-              <div className="h-full w-full overflow-auto hide-scrollbar">
-                <ViewTransitions>
-                  <ToastProvider>
-                    {children}
-                    <ToastContainer />
-                  </ToastProvider>
-                </ViewTransitions>
-              </div>
+              <ViewTransitions>
+                <ToastProvider>
+                  {children}
+                  <ToastContainer />
+                </ToastProvider>
+              </ViewTransitions>
             </div>
           </DirectionProvider>
         </AuthProvider>

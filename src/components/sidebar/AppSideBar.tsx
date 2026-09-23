@@ -14,31 +14,47 @@ import React from "react";
 import AppNavigatoin from "./AppNavigatoin";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 const AppSideBar = () => {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar collapsible="icon" variant="inset" dir="rtl" side="right">
+    <Sidebar collapsible="icon" variant="floating" dir="rtl" side="right">
+      <div
+        className={cn(
+          "absolute inset-0 bg-cover bg-center bg-no-repeat leftside-menu rounded-xl m-2",
+        )}
+        aria-hidden="true"
+      />
       <SidebarHeader
         className={cn(
           "flex md:pt-3.5",
           isCollapsed
             ? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-start md:justify-start"
-            : "flex-row items-center justify-between",
+            : "flex-row items-center justify-center",
         )}
       >
-        <a className="flex items-center gap-2" href="/">
-          <div className="h-8 w-8 border rounded-2xl border-border"></div>
-          {!isCollapsed && (
-            <span className="font-semibold text-sidebar-foreground text-xl dark:text-white">
-              کیا اسپورت
-            </span>
+        <a className="flex items-center gap-2 z-100" href="/">
+          {!isCollapsed ? (
+            // <span className="font-bold text-sidebar-foreground text-xl dark:text-white">
+            //   موسسه کیاسرخ هور
+            // </span>
+            <div className="relative aspect-square size-34 z-100">
+              <Image src={"/kiasc-logo.png"} alt="موسسه کیاسرخ هور" fill />
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <span>KiaSC</span>
+              <div className="relative aspect-square size-10 z-100">
+                <Image src={"/kiasc-logo.png"} alt="موسسه کیاسرخ هور" fill />
+              </div>
+            </div>
           )}
         </a>
 
-        <motion.div
+        {/* <motion.div
           animate={{ opacity: 1 }}
           className={cn(
             "flex items-center gap-2",
@@ -48,7 +64,7 @@ const AppSideBar = () => {
           key={isCollapsed ? "header-collapsed" : "header-expanded"}
           transition={{ duration: 0.8 }}
         >
-          {/* <NotificationsPopover notifications={sampleNotifications} /> */}
+       
           <SidebarTrigger
             render={
               <Button size={"icon"} variant={"outline"}>
@@ -56,14 +72,12 @@ const AppSideBar = () => {
               </Button>
             }
           />
-        </motion.div>
+        </motion.div> */}
       </SidebarHeader>
-      <SidebarContent className="gap-4 px-2 py-4">
+      <SidebarContent className="gap-4 px-2 py-4 items-center">
         <AppNavigatoin />
       </SidebarContent>
-      <SidebarFooter className="px-2">
-        {/* <TeamSwitcher teams={teams} /> */}
-      </SidebarFooter>
+      <SidebarFooter className="px-2"></SidebarFooter>
     </Sidebar>
   );
 };

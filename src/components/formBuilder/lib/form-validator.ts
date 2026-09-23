@@ -65,17 +65,43 @@ export const validators: Partial<Record<FieldType, ValidatorFactory>> = {
         })
       : schema.optional().or(z.null());
   },
-
-  checkbox: () => z.boolean().default(false),
-
-  multiselect: (required, label) => {
-    const schema = z.array(z.string());
+  amount: (required, label) => {
+    const schema = z.coerce.number({
+      message: "لطفاً عدد معتبر وارد کنید",
+    });
 
     return required
       ? schema.min(1, {
-          message: `حداقل یک مورد برای ${label} انتخاب کنید`,
+          message: `${label} باید بزرگتر از صفر باشد`,
         })
-      : schema.default([]);
+      : schema.optional().or(z.null());
+  },
+
+  checkbox: () => z.boolean().default(false),
+
+  select: (required, label) => {
+    const schema = z.union([z.string(), z.number()]);
+
+    return required
+      ? schema.refine(
+          (value) => value !== "" && value !== null && value !== undefined,
+          {
+            message: `${label} انتخاب نشده است`,
+          },
+        )
+      : schema.optional().or(z.literal("")).or(z.null());
+  },
+
+  multiselect: (required, label) => {
+    const schema = z.array(z.union([z.string(), z.number()]));
+
+    if (required) {
+      return schema.min(1, {
+        message: `حداقل یک مورد برای ${label} انتخاب کنید`,
+      });
+    }
+
+    return schema;
   },
 
   file: (required, label) =>
@@ -102,6 +128,15 @@ export const validators: Partial<Record<FieldType, ValidatorFactory>> = {
       ? schema.min(1, { message: `${label} الزامی است` })
       : schema.optional().or(z.literal("")).or(z.null());
   },
+  phone: (required, label) => {
+    const schema = z.string().regex(/^\d{11}$/, {
+      message: "شماره تلفن وارد شده معتبر نیست (باید ۱۱ رقم باشد).",
+    });
+
+    return required
+      ? schema.min(1, { message: `${label} الزامی است` })
+      : schema.optional().or(z.literal("")).or(z.null());
+  },
 
   nationalcode: (required, label) => {
     const schema = z.string().refine(validateNationalCode, {
@@ -112,6 +147,21 @@ export const validators: Partial<Record<FieldType, ValidatorFactory>> = {
       ? schema.min(1, { message: `${label} الزامی است` })
       : schema.optional().or(z.literal("")).or(z.null());
   },
-  postalcode: () =>
-    z.string().length(10, { message: "کد پستی باید ۱۰ رقم باشد." }),
+  postalcode: (required, label) => {
+    const schema = z.string();
+
+    return required
+      ? schema
+          .min(1, {
+            message: `${label} الزامی است`,
+          })
+          .length(10, {
+            message: "کد پستی باید ۱۰ رقم باشد.",
+          })
+      : schema.refine((value) => value === "" || value.length === 10, {
+          message: "کد پستی باید ۱۰ رقم باشد.",
+        });
+  },
+
+  switch: () => z.boolean().default(true),
 };

@@ -8,9 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-modam);
+  --font-sans: var(--font-vazir);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-modam);
+  --font-heading: var(--font-vazir);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,6 +50,37 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --text-md: 1rem; /* 15px */
+  --text-md--line-height: 1.5rem;
+
+  --color-text: var(--text);
+
+  --color-invert-foreground: var(--invert-foreground);
+  --color-invert: var(--invert);
+
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning: var(--warning);
+
+  --color-info-foreground: var(--info-foreground);
+  --color-info: var(--info);
+
+  --color-success-foreground: var(--success-foreground);
+  --color-success: var(--success);
+
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-sunset-start: var(--sunset-start);
+  --color-sunset-end: var(--sunset-end);
+
+  --color-sky-start: var(--sky-start);
+  --color-sky-end: var(--sky-end);
+
+  --color-royal-start: var(--royal-start);
+  --color-royal-end: var(--royal-end);
+
+  --color-rose-start: var(--rose-start);
+  --color-rose-end: var(--rose-end);
 }
 
 :root {
@@ -59,14 +90,14 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.527 0.154 150.069);
+  --primary: oklch(0.7188 0.1621 159.46);
   --primary-foreground: oklch(0.982 0.018 155.826);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.3524 0.1749 262.85);
+  --secondary-foreground: oklch(0.9118 0.0424 262.85);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --accent: oklch(0.2691 0.0158 224.21);
+  --accent-foreground: oklch(0.967 0.001 286.375);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
@@ -77,14 +108,42 @@
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar: oklch(0.2691 0.0158 224.21);
+  --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.627 0.194 149.214);
   --sidebar-primary-foreground: oklch(0.982 0.018 155.826);
   --sidebar-accent: oklch(0.967 0.001 286.375);
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+
+  --text: oklch(0.5243 0 0);
+
+  --destructive-foreground: var(--color-red-800);
+
+  --success: var(--color-emerald-500);
+  --success-foreground: var(--color-emerald-50);
+
+  --info: var(--color-sky-700);
+  --info-foreground: var(--color-sky-50);
+
+  --warning: var(--color-amber-500);
+  --warning-foreground: var(--color-amber-50);
+
+  --invert: var(--color-zinc-900);
+  --invert-foreground: var(--color-zinc-50);
+
+  --sunset-start: #feb62b;
+  --sunset-end: #f67d5b;
+
+  --sky-start: #45c2f3;
+  --sky-end: #6294d8;
+
+  --royal-start: #865dc2;
+  --royal-end: #5649b9;
+
+  --rose-start: #e64b87;
+  --rose-end: #ad6ca1;
 }
 
 .dark {
@@ -246,69 +305,85 @@
   @apply size-full rounded-full bg-background;
 }
 
-::view-transition-old(root) {
-  animation: old-page 400ms ease forwards;
-}
-
-::view-transition-new(root) {
-  animation: new-page 400ms ease forwards;
-}
-
-[dir="rtl"] .input-otp input {
-  direction: ltr !important;
-  text-align: left !important;
-}
-
-@keyframes old-page {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-    opacity: 0.9;
-  }
-}
-
-@keyframes new-page {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
 @media (min-width: 768px) {
-  ::view-transition-old(root) {
-    animation: desktop-old 400ms var(--animation-timing-function, ease-in-out)
-      forwards;
+  ::view-transition-old(page-content) {
+    animation: page-out 200ms ease-out forwards;
   }
-  ::view-transition-new(root) {
-    animation: desktop-new 400ms var(--animation-timing-function, ease-in-out)
-      forwards;
+
+  ::view-transition-new(page-content) {
+    animation: page-in 250ms ease-out forwards;
   }
 }
 
-@keyframes desktop-old {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes page-out {
   to {
-    opacity: 0.97;
-    transform: scale(0.98);
+    opacity: 0;
+    transform: translateY(4px);
   }
 }
 
-@keyframes desktop-new {
+@keyframes page-in {
   from {
     opacity: 0;
-    transform: scale(0.97);
+    transform: translateY(4px);
   }
+
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
+  }
+}
+
+.leftside-menu::before {
+  content: "";
+  background-image: url("/images/dark-texture-background.avif") !important;
+  background-repeat: no-repeat !important;
+  background-position: center;
+  background-size: cover !important;
+  filter: blur(10px);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 5;
+  left: 5;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  animation: blurPulse 10s ease-in-out infinite;
+}
+
+@keyframes blurPulse {
+  0% {
+    filter: blur(4px);
+    /* transform: scale(1.1); */
+  }
+
+  50% {
+    filter: blur(8px);
+  }
+
+  100% {
+    filter: blur(4px);
+    /* transform: scale(1.1); */
+  }
+}
+
+.animated-gradient {
+  position: relative;
+  background: linear-gradient(135deg, #002c94 0%, #00852e 50%, #ccffe6 100%);
+  background-size: 200% 200%;
+  animation: gradient-wave-h 9s ease alternate infinite;
+  overflow: hidden;
+}
+
+@keyframes gradient-wave-h {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

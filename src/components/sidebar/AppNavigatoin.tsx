@@ -18,7 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, Squircle } from "lucide-react";
 import { Link } from "next-view-transitions";
-import { SIDEBAR_ITEMS } from "@/constants/sidebar/sidbarItems";
+import { SIDEBAR_ITEMS } from "@/constants/sidebar/sidebarItems";
 import { AnimatePresence, motion } from "framer-motion";
 
 const AppNavigatoin = () => {
@@ -26,7 +26,7 @@ const AppNavigatoin = () => {
   const isCollapsed = state === "collapsed";
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
   return (
-    <SidebarMenu>
+    <SidebarMenu className={cn(isCollapsed && "w-fit", "gap-1")}>
       {SIDEBAR_ITEMS.map((route) => {
         const isOpen = !isCollapsed && openCollapsible === route.id;
         const hasSubRoutes = !!route.subs?.length;
@@ -45,10 +45,10 @@ const AppNavigatoin = () => {
                   render={
                     <SidebarMenuButton
                       className={cn(
-                        "flex w-full items-center rounded-lg px-2 transition-colors",
+                        "flex w-full items-center rounded-lg px-2 transition-colors cursor-pointer",
                         isOpen
-                          ? "bg-sidebar-muted text-sidebar-foreground"
-                          : "text-muted-foreground hover:bg-sidebar-muted hover:text-sidebar-foreground",
+                          ? "bg-sidebar-foreground/80 text-sidebar"
+                          : "text-sidebar-foreground hover:bg-sidebar-foreground/30 hover:backdrop-blur-sm",
                         isCollapsed && "justify-center",
                       )}
                     />
@@ -56,12 +56,12 @@ const AppNavigatoin = () => {
                 >
                   {route.icon}
                   {!isCollapsed && (
-                    <span className="ml-2 font-medium text-sm">
+                    <span className="ml-2 font-medium text-md">
                       {route.title}
                     </span>
                   )}
                   {!isCollapsed && hasSubRoutes && (
-                    <span className="ml-auto">
+                    <span className="mr-auto">
                       {isOpen ? (
                         <ChevronUp className="size-4" />
                       ) : (
@@ -87,7 +87,7 @@ const AppNavigatoin = () => {
                           height: 0,
                         }}
                         transition={{
-                          duration: 0.22,
+                          duration: 0.4,
                           ease: "easeInOut",
                         }}
                         style={{
@@ -109,8 +109,11 @@ const AppNavigatoin = () => {
                                   />
                                 }
                               >
-                                <Squircle />
-                                <span className="ml-2 flex-1 font-medium text-sm">
+                                <Squircle
+                                  style={{ color: "#ffffff" }}
+                                  className="hover:text-sidebar-accent "
+                                />
+                                <span className="ml-2 flex-1 font-medium text-xs">
                                   {subRoute.title}
                                 </span>
                               </SidebarMenuSubButton>
@@ -127,7 +130,7 @@ const AppNavigatoin = () => {
                 render={
                   <Link
                     className={cn(
-                      "flex items-center rounded-lg px-2 text-muted-foreground transition-colors hover:bg-sidebar-muted hover:text-foreground",
+                      "flex items-center rounded-lg px-2 text-sidebar-foreground transition-colors hover:bg-sidebar-foreground/30 hover:backdrop-blur-sm",
                       isCollapsed && "justify-center",
                     )}
                     href={route.link}
@@ -138,7 +141,7 @@ const AppNavigatoin = () => {
               >
                 {route.icon}
                 {!isCollapsed && (
-                  <span className="ml-2 font-medium text-sm">
+                  <span className="ml-2 font-medium text-md">
                     {route.title}
                   </span>
                 )}

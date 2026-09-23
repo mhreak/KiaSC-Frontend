@@ -23,17 +23,8 @@ import { PersianNumberInput } from "@/components/shared/inputs/PersianNumberInpu
 import { AmountInput } from "@/components/shared/inputs/AmountInput";
 import { Switch } from "@/components/ui/switch";
 import PasswordInput from "@/components/shared/inputs/PasswordInput";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import { CustomDatePicker } from "@/components/shared/inputs/CustomDatePicker";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { DynamicIcon } from "./icon-renderer";
+import MultipleSelector from "@/components/ui/multi-select";
+import { FileUploadInput } from "@/components/ui/file-upload";
 import { PersianDatePicker } from "@/components/persianDatePicker/PersianDatePicker";
 import {
   gregorianDateTimeToJalali,
@@ -45,10 +36,14 @@ import {
 } from "../utils/date-converter";
 import { PersianTimePicker } from "@/components/persianDatePicker/PersianTimePicker";
 import { PersianDateTimePicker } from "@/components/persianDatePicker/PersianDateTimePicker";
-
 interface FormFieldRendererProps {
   field: BaseFieldConfig;
   parentName?: string; // ارسال نام پدر برای پشتیبانی از آرایه‌های تودرتو
+  onFieldChange?: (
+    fieldId: string,
+    value: any,
+    formValues: Record<string, any>,
+  ) => void;
 }
 
 export const colSpanMap: Record<number, string> = {
@@ -69,8 +64,10 @@ export const colSpanMap: Record<number, string> = {
 export function FormFieldRenderer({
   field,
   parentName,
+  onFieldChange,
 }: Readonly<FormFieldRendererProps>) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, formState } = useFormContext();
+  console.log(formState.errors);
 
   // ۱. مانیتور کردن زنده مقادیر فرم
   const formValues = useWatch({ control }) || {};
@@ -112,23 +109,22 @@ export function FormFieldRenderer({
 
   const colSpanClass = field.colSpan
     ? colSpanMap[field.colSpan]
-    : "sm:col-span-12 col-span-1";
+    : "col-span-12";
 
   return (
     <div className={cn(colSpanClass, "space-y-2")}>
       {/* رندر هوشمند لِیبل (فیلد چک‌باکس لِیبل متفاوتی دارد که جلوتر مدیریت کردیم) */}
-      {field.type !== "checkbox" && field.type !== "switch" && (
-        <Label
-          htmlFor={field.id}
-          className={cn(
-            isDisabled && "opacity-50",
-            "mr-2 mb-2 text-lg text-text",
-          )}
-        >
-          {field.label}{" "}
-          {isRequired && <span className="text-destructive">*</span>}
-        </Label>
-      )}
+      {field.type !== "checkbox" &&
+        field.type !== "switch" &&
+        field.type !== "invisible" && (
+          <Label
+            htmlFor={field.id}
+            className={cn(isDisabled && "opacity-50", "text-lg")}
+          >
+            {field.label}{" "}
+            {isRequired && <span className="text-destructive">*</span>}
+          </Label>
+        )}
 
       <Controller
         control={control}
@@ -142,36 +138,30 @@ export function FormFieldRenderer({
               case "text":
               case "email":
                 return (
-                  <InputGroup>
-                    <InputGroupInput
-                      id={field.id}
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      disabled={isDisabled}
-                      readOnly={isReadOnly || !!field.computedValue}
-                      value={value ?? ""}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      ref={ref}
-                      className={cn(
-                        error &&
-                          "border-destructive focus-visible:ring-destructive",
-                        (isReadOnly || field.computedValue) &&
-                          "bg-muted cursor-not-allowed focus-visible:ring-0",
-                      )}
-                      maxLength={field.maxLength}
-                    />
-                    {field.icon && (
-                      <InputGroupAddon align="inline-start">
-                        <DynamicIcon name={field.icon} className="size-5" />
-                      </InputGroupAddon>
+                  <Input
+                    id={field.id}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={value ?? ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    ref={ref}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed focus-visible:ring-0",
                     )}
-                  </InputGroup>
+                    maxLength={field.maxLength}
+                  />
                 );
 
               case "number":
               case "nationalcode":
               case "mobile":
+              case "phone":
               case "postalcode":
                 return (
                   <PersianNumberInput
@@ -190,11 +180,10 @@ export function FormFieldRenderer({
                       (isReadOnly || field.computedValue) &&
                         "bg-muted cursor-not-allowed focus-visible:ring-0",
                     )}
-                    maxLength={field.maxLength}
-                    icon={
-                      field.icon ? (
-                        <DynamicIcon name={field.icon} className="size-5" />
-                      ) : undefined
+                    maxLength={
+                      field.type === "mobile" || field.type === "phone"
+                        ? 11
+                        : field.maxLength
                     }
                   />
                 );
@@ -315,9 +304,7 @@ export function FormFieldRenderer({
                     onChange={onChange}
                     onBlur={onBlur}
                     ref={ref}
-                    rows={5}
                     className={cn(
-                      "w-full",
                       error &&
                         "border-destructive focus-visible:ring-destructive",
                       isReadOnly &&
@@ -354,11 +341,11 @@ export function FormFieldRenderer({
 
               case "switch":
                 return (
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-5 h-full">
                     <Label
                       htmlFor={field.id}
                       className={cn(
-                        "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+                        "text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
                         isDisabled && "opacity-50",
                       )}
                     >
@@ -384,7 +371,14 @@ export function FormFieldRenderer({
                 return (
                   <Select
                     disabled={isDisabled || isReadOnly}
-                    onValueChange={onChange}
+                    onValueChange={(value: any) => {
+                      onChange(value);
+
+                      onFieldChange?.(field.id, value, {
+                        ...formValues,
+                        [field.id]: value,
+                      });
+                    }}
                     value={value ?? undefined}
                   >
                     <SelectTrigger
@@ -404,7 +398,7 @@ export function FormFieldRenderer({
                     <SelectContent>
                       {field.options?.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
-                          {option.label}
+                          {option.component ? option.component : option.label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -442,95 +436,125 @@ export function FormFieldRenderer({
 
               case "multiselect": {
                 const currentValues = Array.isArray(value) ? value : [];
-                const toggleOption = (optValue: string) => {
-                  const updated = currentValues.includes(optValue)
-                    ? currentValues.filter((v: string) => v !== optValue)
-                    : [...currentValues, optValue];
-                  onChange(updated);
-                };
+
+                const options =
+                  field.options?.map((option) => ({
+                    value: String(option.value),
+                    label: option.label,
+                    className: option.className,
+                    style: option.style,
+                  })) ?? [];
+
+                const selectedOptions = options.filter((option) =>
+                  currentValues.some(
+                    (currentValue) => String(currentValue) === option.value,
+                  ),
+                );
+
                 return (
-                  <div className="flex flex-wrap gap-2 p-1 border rounded-md min-h-10 bg-background">
-                    {field.options?.map((option) => {
-                      const isSelected = currentValues.includes(option.value);
-                      return (
-                        <button
-                          key={option.value}
-                          type="button"
-                          disabled={isDisabled || isReadOnly}
-                          onClick={() => toggleOption(option.value)}
-                          className={cn(
-                            "px-3 py-1 text-xs rounded-full border transition-all",
-                            isSelected
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "bg-secondary text-secondary-foreground hover:bg-muted",
-                          )}
-                        >
-                          {option.label}
-                        </button>
-                      );
-                    })}
-                    {currentValues.length === 0 && (
-                      <span className="text-xs text-muted-foreground p-1.5">
-                        {field.placeholder ??
-                          "جهت انتخاب روی گزینه‌ها کلیک کنید..."}
-                      </span>
-                    )}
-                  </div>
+                  <MultipleSelector
+                    value={selectedOptions}
+                    defaultOptions={options}
+                    placeholder={
+                      field.placeholder ?? "جهت انتخاب موارد کلیک کنید..."
+                    }
+                    emptyIndicator={
+                      <p className="text-center text-sm">موردی یافت نشد</p>
+                    }
+                    disabled={isDisabled || isReadOnly}
+                    className="w-full"
+                    commandProps={{
+                      label: field.label ?? "انتخاب موارد",
+                    }}
+                    onChange={(selected) => {
+                      const selectedValues = selected.map((option) => {
+                        const originalOption = field.options?.find(
+                          (item) => String(item.value) === option.value,
+                        );
+
+                        return originalOption?.value ?? option.value;
+                      });
+
+                      onChange(selectedValues);
+
+                      onFieldChange?.(field.id, selectedValues, {
+                        ...formValues,
+                        [field.id]: selectedValues,
+                      });
+                    }}
+                  />
                 );
               }
               // ۴. مدیریت فایل و تصویر (File & Image Upload)
               case "file":
               case "image": {
-                const handleFileChange = (
-                  e: React.ChangeEvent<HTMLInputElement>,
-                ) => {
-                  const files = e.target.files;
-                  if (files && files.length > 0) {
-                    // فرستادن کل فایل یا لیست فایل‌ها به react-hook-form
-                    onChange(field.multiple ? Array.from(files) : files[0]);
-                  }
-                };
-                return (
-                  <div className="space-y-2">
-                    <Input
-                      id={field.id}
-                      type="file"
-                      accept={field.type === "image" ? "image/*" : undefined}
-                      multiple={field.multiple}
-                      disabled={isDisabled || isReadOnly}
-                      onChange={handleFileChange}
-                      onBlur={onBlur}
-                      ref={(e) => {
-                        ref(e);
+                const isMultiple = (field.maxFileUpload ?? 1) > 1;
+                // return <div></div>;
 
-                        fileInputRef.current = e;
-                      }}
-                      className={cn(
-                        "cursor-pointer file:bg-secondary file:text-secondary-foreground file:border-0 file:rounded-md file:px-2 file:py-1 file:ml-2 file:text-xs",
-                        error && "border-destructive",
-                      )}
-                    />
-                    {/* نمایش یک پیش‌نمایش کوچک در صورتی که فیلد تصویر بود و فایلی انتخاب شده بود */}
-                    {field.type === "image" && value && (
-                      <div className="mt-2 border p-2 rounded-lg w-fit bg-muted">
-                        <p className="text-[10px] text-muted-foreground mb-1">
-                          فایل انتخاب شد:
-                        </p>
-                        <span className="text-xs font-mono">
-                          {value instanceof File
-                            ? value.name
-                            : "تصویر بارگذاری شده"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                return (
+                  <FileUploadInput
+                    maxFiles={field.maxFileUpload ?? 1}
+                    maxSize={2 * 1024 * 1024}
+                    accept={field.type === "image" ? "image/*" : undefined}
+                    multiple={isMultiple}
+                    disabled={isDisabled || isReadOnly}
+                    className="w-full"
+                    initialFiles={field.defaultValue ?? []}
+                    onFilesChange={(files) => {
+                      const selectedFiles = files.map(
+                        (fileItem) => fileItem.file,
+                      );
+
+                      if (isMultiple) {
+                        onChange(selectedFiles);
+                      } else {
+                        onChange(selectedFiles[0] ?? null);
+                      }
+
+                      onBlur();
+                    }}
+                    onExistingFilesChange={(files) => {
+                      console.log(files);
+                      if (files.length === 0) {
+                        onFieldChange?.(field.id, undefined, {
+                          ...formValues,
+                          [field.id]: undefined,
+                        });
+                      }
+                    }}
+                  />
                 );
               }
 
-              case "location": {
-                return null;
+              // case "contractorSearch": {
+              //   return (
+              //     <ContractorSearch
+              //       id={field.id}
+              //       type={field.type}
+              //       placeholder={field.placeholder}
+              //       disabled={isDisabled}
+              //       readOnly={isReadOnly || !!field.computedValue}
+              //       value={value ?? ""}
+              //       onChange={onChange}
+              //       onBlur={onBlur}
+              //       ref={ref}
+              //       className={cn(
+              //         error &&
+              //           "border-destructive focus-visible:ring-destructive",
+              //         (isReadOnly || field.computedValue) &&
+              //           "bg-muted cursor-not-allowed focus-visible:ring-0",
+              //       )}
+              //       maxLength={field.maxLength}
+              //       onClear={() => {
+              //         onChange("");
+              //       }}
+              //       displayName={field.displayName}
+              //     />
+              //   );
+              // }
+              case "invisible": {
+                return <div className="w-full invisible"></div>;
               }
-
               default:
                 return null;
             }

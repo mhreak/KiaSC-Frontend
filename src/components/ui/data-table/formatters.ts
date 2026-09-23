@@ -1,13 +1,14 @@
 // formatters.ts
 
 import { toPersianDigits } from "@/utils/numberConversions";
+import { toJalaliDate } from "@/utils/utillityFunctions";
 
 export const numberFormatter = (value: unknown) => {
   return toPersianDigits(String(value));
 };
 
 export const currencyFormatter = (value: unknown) => {
-  return `${toPersianDigits(Number(value).toLocaleString("fa-IR"))} تومان`;
+  return `${toPersianDigits(Number(value).toLocaleString("fa-IR"))}`;
 };
 
 export const phoneFormatter = (value: unknown) => {
@@ -23,7 +24,5 @@ export const percentFormatter = (value: unknown) => {
 };
 
 export const dateFormatter = (value: unknown) => {
-  return value
-}
-
-
+  return toPersianDigits(toJalaliDate(String(value) || ""));
+};
