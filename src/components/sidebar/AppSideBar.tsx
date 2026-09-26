@@ -15,6 +15,7 @@ import AppNavigatoin from "./AppNavigatoin";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { Link } from "next-view-transitions";
 
 const AppSideBar = () => {
   const { state } = useSidebar();
@@ -36,7 +37,7 @@ const AppSideBar = () => {
             : "flex-row items-center justify-center",
         )}
       >
-        <a className="flex items-center gap-2 z-100" href="/">
+        <Link className="flex items-center gap-2 z-100" href="/">
           {!isCollapsed ? (
             // <span className="font-bold text-sidebar-foreground text-xl dark:text-white">
             //   موسسه کیاسرخ هور
@@ -52,7 +53,7 @@ const AppSideBar = () => {
               </div>
             </div>
           )}
-        </a>
+        </Link>
 
         {/* <motion.div
           animate={{ opacity: 1 }}

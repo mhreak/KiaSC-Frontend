@@ -126,8 +126,10 @@ export function FormRenderer({
       // در غیر این صورت، بر اساس نوع فیلد مقدار اولیه پیش‌فرض استاندارد می‌گذاریم
       else if (field.type === "array" || field.type === "multiselect") {
         acc[field.id] = []; // آرایه خالی برای فیلدهای لیستی و چند انتخابی
-      } else if (field.type === "checkbox") {
+      } else if (field.type === "checkbox" || field.type === "switch") {
         acc[field.id] = false; // مقدار بولین برای چک‌باکس
+      } else if (field.type === "file" || field.type === "image") {
+        acc[field.id] = null;
       } else {
         acc[field.id] = ""; // رشته خالی برای فیلدهای متنی، ایمیل، تاریخ و غیره
       }
@@ -137,6 +139,8 @@ export function FormRenderer({
     {} as Record<string, any>,
   );
 
+  console.log(defaultValues);
+
   const methods = useForm({
     resolver: async (values, context, options) => {
       const schema = createSchemaFromConfig(allFields, values);
@@ -144,7 +148,8 @@ export function FormRenderer({
       return zodResolver(schema)(values, context, options);
     },
     defaultValues,
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
 
   // useEffect(() => {

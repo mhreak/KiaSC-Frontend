@@ -40,6 +40,7 @@ interface PersianDatePickerProps {
   maxDate?: JalaliDate;
   showMonthSelector?: boolean;
   showYearSelector?: boolean;
+  inputClassName?: string;
 }
 
 export function PersianDatePicker({
@@ -53,6 +54,7 @@ export function PersianDatePicker({
   maxDate,
   showMonthSelector = true,
   showYearSelector = true,
+  inputClassName,
 }: PersianDatePickerProps) {
   const calendar = getCalendar();
   const [open, setOpen] = useState(false);
@@ -198,6 +200,7 @@ export function PersianDatePicker({
                   error &&
                     "border border-destructive focus-visible:ring-destructive",
                   disabled && "opacity-50 cursor-not-allowed",
+                  inputClassName,
                 )}
                 onClick={() => !disabled && setOpen(true)}
               />

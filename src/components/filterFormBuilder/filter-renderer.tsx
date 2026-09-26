@@ -82,13 +82,14 @@ export function FilterRenderer({
     <FormProvider {...methods}>
       <Accordion defaultValue={["shipping"]} className="rounded-xl border">
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-xl font-bold text-primary flex items-center gap-2  px-3">
-            <span className="border bg-info rounded-full p-2">
+          <AccordionTrigger className="text-xl font-bold text-gradient flex items-center gap-2  px-3">
+            <span className="border bg-linear-to-r from-secondary-light to-secondary rounded-full p-2">
               <Funnel className="text-primary-foreground" size={17} />
             </span>
             فیلترهای جستجو
           </AccordionTrigger>
           <AccordionContent>
+            <hr className="mx-4" />
             <form
               onSubmit={methods.handleSubmit(handleSubmit)}
               className="p-4 space-y-4 "

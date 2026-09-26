@@ -41,6 +41,7 @@ interface FileUploadCompactProps {
   multiple?: boolean;
   disabled?: boolean;
   className?: string;
+  error?: boolean;
 
   /**
    * فایل‌های جدید انتخاب‌شده توسط کاربر
@@ -65,6 +66,7 @@ export function FileUploadInput({
   multiple = true,
   disabled = false,
   className,
+  error,
   onFilesChange,
   initialFiles = [],
   onExistingFilesChange,
@@ -166,6 +168,7 @@ export function FileUploadInput({
             ? "border-primary bg-primary/5"
             : "border-muted-foreground/25 hover:border-muted-foreground/50",
           disabled && "pointer-events-none cursor-not-allowed opacity-50",
+          error && "border-destructive/80 hover:border-destructive",
         )}
         onDragEnter={disabled ? undefined : handleDragEnter}
         onDragLeave={disabled ? undefined : handleDragLeave}

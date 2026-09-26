@@ -107,9 +107,7 @@ export function FormFieldRenderer({
     return <FormArrayRenderer field={field} parentName={parentName} />;
   }
 
-  const colSpanClass = field.colSpan
-    ? colSpanMap[field.colSpan]
-    : "col-span-12";
+  const colSpanClass = field.colSpan ? colSpanMap[field.colSpan] : "col-span-6";
 
   return (
     <div className={cn(colSpanClass, "space-y-2")}>
@@ -176,7 +174,7 @@ export function FormFieldRenderer({
                     ref={ref}
                     className={cn(
                       error &&
-                        "border-destructive focus-visible:ring-destructive",
+                        " border-destructive focus-visible:ring-destructive ocus-visible:ring",
                       (isReadOnly || field.computedValue) &&
                         "bg-muted cursor-not-allowed focus-visible:ring-0",
                     )}
@@ -396,6 +394,7 @@ export function FormFieldRenderer({
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value={""}>انتخاب کنید</SelectItem>
                       {field.options?.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.component ? option.component : option.label}
@@ -498,7 +497,8 @@ export function FormFieldRenderer({
                     accept={field.type === "image" ? "image/*" : undefined}
                     multiple={isMultiple}
                     disabled={isDisabled || isReadOnly}
-                    className="w-full"
+                    className={cn("w-full")}
+                    error={!!error}
                     initialFiles={field.defaultValue ?? []}
                     onFilesChange={(files) => {
                       const selectedFiles = files.map(

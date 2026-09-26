@@ -57,7 +57,7 @@ interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
   onRefresh?: () => void;
 
-  mode?: "base" | "modal";
+  mode?: "base" | "modal" | "filter";
   paginationMeta?: APIMetaData | null;
 }
 
@@ -207,11 +207,24 @@ export function DataTable<TData, TValue>({
     return pages;
   };
 
+  const getTableHeight = (): string => {
+    switch (mode) {
+      case "base":
+        return "calc(100vh - 204px)";
+
+      case "filter":
+        return "calc(100vh - 274px)";
+
+      default:
+        return "500px";
+    }
+  };
+
   return (
     <div
       className="rounded-xl border min-h-150 flex flex-col"
       style={{
-        height: mode === "base" ? "calc(100vh - 265px)" : "500px",
+        height: getTableHeight(),
       }}
     >
       {/* بخش جدول با ارتفاع ثابت و اسکرول داخلی */}

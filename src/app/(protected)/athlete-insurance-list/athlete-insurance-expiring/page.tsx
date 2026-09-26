@@ -1,28 +1,22 @@
 "use client";
 
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
-import React from "react";
-import { athleteListFilterConfig } from "./athleteListFilterConfig";
-import { DataTable } from "@/components/ui/data-table/data-table";
-import { FormDrawer } from "@/components/shared/FormDrawer";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table/data-table";
 import { FileChartColumn } from "lucide-react";
-import { athleteListFormConfig } from "./athleteListFormConfig";
+import React from "react";
+import { athleteInsuranceExpiringFilterConfig } from "./athleteInsuranceExpiringFilterConfig";
 
-export default function AthleteListPage() {
+export default function AthleteInsuranceExpiringPage() {
   return (
     <div className="space-y-5">
       <FilterRenderer
-        config={athleteListFilterConfig}
+        config={athleteInsuranceExpiringFilterConfig}
         onApplyFilters={() => {}}
       />
       <DataTable columns={[]} data={[]} mode="filter" />
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
-          <FormDrawer
-            formConfig={athleteListFormConfig}
-            drawerTitle="ورزشکار"
-          />
           <Button variant={"warning"}>
             <FileChartColumn />
             دانلود فایل اکسل

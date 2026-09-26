@@ -20,6 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PersianDatePicker } from "../persianDatePicker/PersianDatePicker";
+import {
+  gregorianToJalali,
+  jalaliToGregorian,
+} from "../formBuilder/utils/date-converter";
 
 interface FilterFieldRendererProps {
   field: FilterFieldConfig;
@@ -82,7 +87,7 @@ export function FilterFieldRenderer({
                   placeholder={field.placeholder ?? "مقدار عددی..."}
                   value={value ?? ""}
                   onChange={onChange}
-                  className="h-9 text-xs"
+                  inputSize="small"
                 />
               );
 
@@ -149,42 +154,19 @@ export function FilterFieldRenderer({
               );
             }
 
-            case "date":
+            case "date": {
               return (
-                <DatePicker
-                  ref={datePickerRef}
-                  value={value || null}
-                  onChange={(date) => onChange(date ? date.format() : null)}
-                  format="YYYY/MM/DD"
-                  calendar={persian}
-                  locale={persian_fa}
-                  calendarPosition="top-right"
-                  render={
-                    <CustomDatePicker
-                      iconName="Calendar"
-                      className="h-9 text-xs"
-                      onClear={() => {
-                        resetField(field.id, {
-                          defaultValue: "",
-                        });
-                        datePickerRef.current?.setValue?.(null);
-                        onChange(null);
-                        setValue(field.id, "", {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                          shouldValidate: true,
-                        });
-                        console.log("onClear");
-                        console.log(getValues());
-                        onChange("");
-                        console.log(getValues());
-                      }}
-                      handleValueChange={onChange}
-                    />
-                  }
-                  containerClassName="h-9"
+                <PersianDatePicker
+                  value={gregorianToJalali(value)}
+                  onChange={(date) => {
+                    onChange(jalaliToGregorian(date));
+                  }}
+                  placeholder={field.placeholder ?? "انتخاب تاریخ"}
+                  className={cn("w-full")}
+                  inputClassName="h-12"
                 />
               );
+            }
 
             case "date-range": {
               const rangeValue = value || { from: "", to: "" };
