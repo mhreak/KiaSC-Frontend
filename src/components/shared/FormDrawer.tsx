@@ -11,7 +11,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { FormRenderer } from "@/components/formBuilder/components/form-renderer";
-import { FormConfig } from "@/components/formBuilder/types";
+import { FormConfig, FormMode } from "@/components/formBuilder/types";
 import { Edit, Eye, Plus, PlusSquare, X } from "lucide-react";
 import CardSkeleton from "./skeletons/CardSkeleton";
 import { cn } from "@/lib/utils";
@@ -35,8 +35,6 @@ interface Props {
   isSubmitting?: boolean;
   isSubmittingText?: string;
 }
-
-export type FormMode = "add" | "edit" | "view";
 
 const formIcons: Record<FormMode, React.ReactNode> = {
   add: <PlusSquare className="text-emerald-600 size-9" />,

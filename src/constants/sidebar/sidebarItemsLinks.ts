@@ -7,4 +7,6 @@ export const SIDEBAR_ITEM_LINKS = {
   athleteInsuranceList: "/athlete-insurance-list",
   athleteInsuranceExpiring:
     "/athlete-insurance-list/athlete-insurance-expiring",
+  courses: "/courses",
+  courseRegister: "/courses/course-register",
 };

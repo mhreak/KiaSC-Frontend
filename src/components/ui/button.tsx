@@ -27,6 +27,12 @@ const buttonVariants = cva(
         warning:
           "bg-linear-to-r from-warning/70 to-warning text-warning-foreground hover:bg-warning/80",
         info: "bg-info text-info-foreground hover:bg-info/80",
+        edit: "border border-warning text-warning hover:bg-warning hover:text-warning-foreground",
+        view: "border border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground",
+        delete:
+          "border border-destructive text-destructive/70 hover:bg-destructive/70 hover:text-white",
+        infoOutline:
+          "border border-info text-info hover:bg-info hover:text-info-foreground",
       },
       size: {
         default:

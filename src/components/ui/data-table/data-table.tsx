@@ -216,13 +216,13 @@ export function DataTable<TData, TValue>({
         return "calc(100vh - 274px)";
 
       default:
-        return "500px";
+        return "calc(100vh - 500px)";
     }
   };
 
   return (
     <div
-      className="rounded-xl border min-h-150 flex flex-col"
+      className="rounded-xl border min-h-100 flex flex-col"
       style={{
         height: getTableHeight(),
       }}

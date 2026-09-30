@@ -44,7 +44,7 @@ export function PersianNumberInput({
         inputMode="numeric"
         autoComplete="off"
         // dir="ltr"
-        size={inputSize}
+        inputSize={inputSize}
         value={displayValue}
         onChange={handleChange}
       />

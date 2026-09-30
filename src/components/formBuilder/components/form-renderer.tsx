@@ -37,6 +37,7 @@ interface FormRendererProps {
   isSubmitting?: boolean;
   isSubmittingText?: string;
   formMode?: FormMode;
+  showCancelButton?: boolean;
 }
 
 // تابع کمکی برای استخراج تمام فیلدهای ساده از درون کل ساختار درختی چیدمان‌ها
@@ -70,6 +71,7 @@ export function FormRenderer({
   isSubmitting = false,
   isSubmittingText,
   formMode,
+  showCancelButton = true,
 }: Readonly<FormRendererProps>) {
   const allFields = flattenFields(config);
 
@@ -211,9 +213,11 @@ export function FormRenderer({
             )}
             {submitButtonText}
           </Button>
-          <Button variant={"destructive"} onClick={onCancel} size={"lg"}>
-            {cancelButtonText}
-          </Button>
+          {showCancelButton && (
+            <Button variant={"destructive"} onClick={onCancel} size={"lg"}>
+              {cancelButtonText}
+            </Button>
+          )}
         </div>
       </form>
     </FormProvider>

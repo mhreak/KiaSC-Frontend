@@ -60,7 +60,7 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-4xl border border-transparent px-1.5 py-0.5 text-md font-medium whitespace-nowrap text-foreground/60 transition-all duration-300 ease-in-out group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-none group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative cursor-pointer inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-4xl border border-transparent px-1.5 py-0.5 text-md font-medium whitespace-nowrap text-foreground/60 transition-all duration-300 ease-in-out group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground hover:-translate-y-1 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-none group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
         "data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground",
         "group-data-[variant=accent]/tabs-list:data-active:text-accent",
@@ -79,7 +79,7 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
     <TabsPrimitive.Panel
       data-slot="tabs-content"
       className={cn(
-        "flex-1 text-sm outline-none pt-3 text-md animate-slide-left",
+        "flex-1 outline-none pt-3 text-md animate-fade-in shadow-md rounded-xl",
         className,
       )}
       {...props}

@@ -22,8 +22,9 @@ export type FieldType =
   | "file" // جدید
   | "image"
   | "postalcode"
-  | "contractorSearch"
-  | "invisible";
+  | "athleteSearch"
+  | "invisible"
+  | "textWithConfirm";
 export type LayoutType = "grid" | "section" | "tabs" | "accordion";
 export interface FieldValidation {
   pattern?: string; // الگوی ریجکس به صورت رشته (مثلا "^09\\d{9}$")
@@ -70,6 +71,10 @@ export interface BaseFieldConfig {
   maxFileUpload?: number;
 
   displayName?: string;
+
+  onClick?: () => void;
+
+  isLoading?: boolean;
 }
 
 // ساختار جدید برای چیدمان‌ها

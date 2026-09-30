@@ -76,7 +76,7 @@ export function FilterFieldRenderer({
                   placeholder={field.placeholder}
                   value={value ?? ""}
                   onChange={onChange}
-                  size={"small"}
+                  inputSize={"small"}
                 />
               );
 

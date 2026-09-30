@@ -36,6 +36,10 @@ import {
 } from "../utils/date-converter";
 import { PersianTimePicker } from "@/components/persianDatePicker/PersianTimePicker";
 import { PersianDateTimePicker } from "@/components/persianDatePicker/PersianDateTimePicker";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
+import { AthleteSearch } from "@/components/shared/inputs/searchInputs/athleteSearch/AthleteSearch";
+import { Skeleton } from "@/components/ui/skeleton";
 interface FormFieldRendererProps {
   field: BaseFieldConfig;
   parentName?: string; // ارسال نام پدر برای پشتیبانی از آرایه‌های تودرتو
@@ -366,43 +370,46 @@ export function FormFieldRenderer({
                 const selectedOption = field.options?.find(
                   (opt) => opt.value === value,
                 );
-                return (
-                  <Select
-                    disabled={isDisabled || isReadOnly}
-                    onValueChange={(value: any) => {
-                      onChange(value);
+                if (field.isLoading)
+                  return <Skeleton className="w-full h-14 rounded-xl" />;
+                else
+                  return (
+                    <Select
+                      disabled={isDisabled || isReadOnly}
+                      onValueChange={(value: any) => {
+                        onChange(value);
 
-                      onFieldChange?.(field.id, value, {
-                        ...formValues,
-                        [field.id]: value,
-                      });
-                    }}
-                    value={value ?? undefined}
-                  >
-                    <SelectTrigger
-                      id={field.id}
-                      ref={ref}
-                      className={cn(
-                        error &&
-                          "border-destructive focus-visible:ring-destructive",
-                      )}
+                        onFieldChange?.(field.id, value, {
+                          ...formValues,
+                          [field.id]: value,
+                        });
+                      }}
+                      value={value ?? undefined}
                     >
-                      <SelectValue
-                        placeholder={field.placeholder ?? "انتخاب کنید..."}
+                      <SelectTrigger
+                        id={field.id}
+                        ref={ref}
+                        className={cn(
+                          error &&
+                            "border-destructive focus-visible:ring-destructive",
+                        )}
                       >
-                        {selectedOption ? selectedOption.label : null}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={""}>انتخاب کنید</SelectItem>
-                      {field.options?.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.component ? option.component : option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                );
+                        <SelectValue
+                          placeholder={field.placeholder ?? "انتخاب کنید..."}
+                        >
+                          {selectedOption ? selectedOption.label : null}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={""}>انتخاب کنید</SelectItem>
+                        {field.options?.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.component ? option.component : option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  );
               }
 
               case "radio":
@@ -526,34 +533,66 @@ export function FormFieldRenderer({
                 );
               }
 
-              // case "contractorSearch": {
-              //   return (
-              //     <ContractorSearch
-              //       id={field.id}
-              //       type={field.type}
-              //       placeholder={field.placeholder}
-              //       disabled={isDisabled}
-              //       readOnly={isReadOnly || !!field.computedValue}
-              //       value={value ?? ""}
-              //       onChange={onChange}
-              //       onBlur={onBlur}
-              //       ref={ref}
-              //       className={cn(
-              //         error &&
-              //           "border-destructive focus-visible:ring-destructive",
-              //         (isReadOnly || field.computedValue) &&
-              //           "bg-muted cursor-not-allowed focus-visible:ring-0",
-              //       )}
-              //       maxLength={field.maxLength}
-              //       onClear={() => {
-              //         onChange("");
-              //       }}
-              //       displayName={field.displayName}
-              //     />
-              //   );
-              // }
+              case "athleteSearch": {
+                return (
+                  <AthleteSearch
+                    id={field.id}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={value ?? ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    ref={ref}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed focus-visible:ring-0",
+                    )}
+                    maxLength={field.maxLength}
+                    onClear={() => {
+                      onChange("");
+                    }}
+                    displayName={field.displayName}
+                  />
+                );
+              }
               case "invisible": {
                 return <div className="w-full invisible"></div>;
+              }
+
+              case "textWithConfirm": {
+                return (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id={field.id}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      disabled={isDisabled}
+                      readOnly={isReadOnly || !!field.computedValue}
+                      value={value ?? ""}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={ref}
+                      className={cn(
+                        error &&
+                          "border-destructive focus-visible:ring-destructive",
+                        (isReadOnly || field.computedValue) &&
+                          "bg-muted cursor-not-allowed focus-visible:ring-0",
+                      )}
+                      maxLength={field.maxLength}
+                    />
+                    <Button
+                      variant={"secondary"}
+                      size={"icon-lg"}
+                      onClick={field.onClick}
+                    >
+                      <Check className="size-5" strokeWidth={4} />
+                    </Button>
+                  </div>
+                );
               }
               default:
                 return null;

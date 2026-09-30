@@ -96,15 +96,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     id: "courses",
     title: "دوره ها",
     icon: <Star className="size-4" />,
-    link: "#",
+    link: SIDEBAR_ITEM_LINKS.courses,
     subs: [
       {
         title: "لیست دوره ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.courses,
       },
       {
         title: "ثبت نام",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.courseRegister,
       },
     ],
   },
