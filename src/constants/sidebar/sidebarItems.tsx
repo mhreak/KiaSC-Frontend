@@ -116,15 +116,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست اقساط",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installment,
       },
       {
         title: "تراکنش های آنلاین",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installmentOnlineTransactions,
       },
       {
         title: "گزارش مالی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installmentReportCourseList,
       },
     ],
   },

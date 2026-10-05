@@ -48,6 +48,7 @@ export default function ActionItems<T>({
       )}
       {otherActions?.map((action) => (
         <Button
+          key={action.label}
           variant={"infoOutline"}
           size={"sm"}
           onClick={() => action.onClick(row.original)}
