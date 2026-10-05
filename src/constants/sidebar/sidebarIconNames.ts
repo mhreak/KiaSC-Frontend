@@ -11,4 +11,10 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   courses: "/icon/ic-course.png",
   "course-register": "/icon/ic-athlete.png",
   "course-details": "/icon/ic-course.png",
+  installment: "/icon/ic-payment.png",
+  "installment-items": "/icon/ic-payment.png",
+  "online-transactions": "/icon/ic-online-payment.png",
+  "transaction-details": "/icon/ic-online-payment.png",
+  "report-course-list": "/icon/ic-course.png",
+  "report-course-details": "/icon/ic-chart.png"
 };

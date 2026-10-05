@@ -11,4 +11,10 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   courses: "لیست دوره های آموزشی",
   "course-register": "ثبت نام ورزش آموز جدید",
   "course-details": "منوی دسترسی ",
+  installment: "لیست اقساط",
+  "installment-items": "لیست آیتم‌های قسط",
+  "online-transactions": "لیست تراکنش های آنلاین",
+  "transaction-details": "جزئیات تراکنش",
+  "report-course-list": "لیست دوره‌های آموزشی",
+  "report-course-details": "جزئیات گزارش مالی دوره"
 };
