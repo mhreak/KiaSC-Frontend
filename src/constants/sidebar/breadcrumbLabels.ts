@@ -22,4 +22,8 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "athlete-introducing-charge": "پاداش معرفی (ورزشکاران)",
   "person-introducing-charge": "پاداش معرفی (افراد)",
   "special-wallet": "لیست کیف پول‌های ویژه",
+  "public-messages": "لیست پیام‌های عمومی",
+  "message-details": "جزئیات پیام",
+  "private-messages": "لیست پیام‌های خصوصی",
+  sms: "لیست پیامک‌ها",
 };
