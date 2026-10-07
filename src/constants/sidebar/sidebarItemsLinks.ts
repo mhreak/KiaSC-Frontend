@@ -12,4 +12,9 @@ export const SIDEBAR_ITEM_LINKS = {
   installment: "/installment",
   installmentOnlineTransactions: "/installment/online-transactions",
   installmentReportCourseList: "/installment/report-course-list",
+  athleteWallet: "/wallet/athlete-wallet",
+  personWallet: "/wallet/person-wallet",
+  athleteIntroducingCharge: "/wallet/athlete-introducing-charge",
+  personIntroducingCharge: "/wallet/person-introducing-charge",
+  specialWallet: "/wallet/special-wallet",
 };

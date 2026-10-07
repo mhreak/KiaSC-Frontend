@@ -136,23 +136,23 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "کیف پول ورزشکاران",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.athleteWallet,
       },
       {
         title: "کیف پول افراد",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.personWallet,
       },
       {
         title: "پاداش معرفی (ورزشکاران)",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.athleteIntroducingCharge,
       },
       {
         title: "پاداش معرفی (افراد)",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.personIntroducingCharge,
       },
       {
         title: "کیف پول های ویژه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.specialWallet,
       },
     ],
   },
