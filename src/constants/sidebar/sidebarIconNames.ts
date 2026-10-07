@@ -16,5 +16,11 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "online-transactions": "/icon/ic-online-payment.png",
   "transaction-details": "/icon/ic-online-payment.png",
   "report-course-list": "/icon/ic-course.png",
-  "report-course-details": "/icon/ic-chart.png"
+  "report-course-details": "/icon/ic-chart.png",
+  "athlete-wallet": "/icon/ic-wallet.png",
+  "person-wallet": "/icon/ic-wallet.png",
+  "wallet-history": "/icon/ic-wallet.png",
+  "athlete-introducing-charge": "/icon/ic-wallet.png",
+  "person-introducing-charge": "/icon/ic-wallet.png",
+  "special-wallet": "/icon/ic-wallet.png",
 };
