@@ -17,4 +17,7 @@ export const SIDEBAR_ITEM_LINKS = {
   athleteIntroducingCharge: "/wallet/athlete-introducing-charge",
   personIntroducingCharge: "/wallet/person-introducing-charge",
   specialWallet: "/wallet/special-wallet",
+  publicMessages: "/messages/public-messages",
+  privateMessages: "/messages/private-messages",
+  sms: "/messages/sms",
 };

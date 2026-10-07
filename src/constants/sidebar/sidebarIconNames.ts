@@ -23,4 +23,8 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "athlete-introducing-charge": "/icon/ic-wallet.png",
   "person-introducing-charge": "/icon/ic-wallet.png",
   "special-wallet": "/icon/ic-wallet.png",
+  "public-messages": "/icon/ic-message.png",
+  "message-details": "/icon/ic-message.png",
+  "private-messages": "/icon/ic-message.png",
+  sms: "/icon/ic-message.png",
 };

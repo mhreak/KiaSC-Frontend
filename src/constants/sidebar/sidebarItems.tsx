@@ -164,15 +164,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "پیام های عمومی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.publicMessages,
       },
       {
         title: "پیام های خصوصی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.privateMessages,
       },
       {
         title: "پیام کوتاه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.sms,
       },
     ],
   },
