@@ -222,7 +222,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div
-      className="rounded-xl border min-h-100 flex flex-col"
+      className="rounded-xl border min-h-100 flex flex-col bg-background"
       style={{
         height: getTableHeight(),
       }}
@@ -230,7 +230,7 @@ export function DataTable<TData, TValue>({
       {/* بخش جدول با ارتفاع ثابت و اسکرول داخلی */}
       <div className="relative flex-1 overflow-auto rounded-xl">
         <Table>
-          <TableHeader className="font-extrabold h-12 bg-muted">
+          <TableHeader className="font-extrabold h-12 bg-muted/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="rounded-2xl">
                 {headerGroup.headers.map((header) => (

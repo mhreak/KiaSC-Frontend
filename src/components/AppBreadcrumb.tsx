@@ -81,7 +81,7 @@ export default function AppBreadcrumb() {
         </div>
       </div>
       <div>
-        <div className="text-2xl font-extrabold mb-2">
+        <div className="text-2xl font-extrabold mb-2 ">
           {name
             ? name
             : BREADCRUMB_LABELS[visibleSegments[visibleSegments.length - 1]]}
