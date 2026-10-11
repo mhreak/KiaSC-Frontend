@@ -116,15 +116,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست اقساط",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installment,
       },
       {
         title: "تراکنش های آنلاین",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installmentOnlineTransactions,
       },
       {
         title: "گزارش مالی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.installmentReportCourseList,
       },
     ],
   },
@@ -136,23 +136,23 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "کیف پول ورزشکاران",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.athleteWallet,
       },
       {
         title: "کیف پول افراد",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.personWallet,
       },
       {
         title: "پاداش معرفی (ورزشکاران)",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.athleteIntroducingCharge,
       },
       {
         title: "پاداش معرفی (افراد)",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.personIntroducingCharge,
       },
       {
         title: "کیف پول های ویژه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.specialWallet,
       },
     ],
   },
@@ -164,15 +164,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "پیام های عمومی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.publicMessages,
       },
       {
         title: "پیام های خصوصی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.privateMessages,
       },
       {
         title: "پیام کوتاه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.sms,
       },
     ],
   },
