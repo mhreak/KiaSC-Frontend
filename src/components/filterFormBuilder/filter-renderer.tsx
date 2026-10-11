@@ -80,7 +80,10 @@ export function FilterRenderer({
 
   return (
     <FormProvider {...methods}>
-      <Accordion defaultValue={["shipping"]} className="rounded-xl border">
+      <Accordion
+        defaultValue={["shipping"]}
+        className="rounded-xl border bg-background"
+      >
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-xl font-bold text-gradient flex items-center gap-2  px-3">
             <span className="border bg-linear-to-r from-secondary-light to-secondary rounded-full p-2">

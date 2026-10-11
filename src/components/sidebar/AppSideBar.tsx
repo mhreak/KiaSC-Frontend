@@ -33,11 +33,14 @@ const AppSideBar = () => {
         className={cn(
           "flex md:pt-3.5",
           isCollapsed
-            ? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-start md:justify-start"
-            : "flex-row items-center justify-center",
+            ? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-center md:justify-start"
+            : "flex-row items-start justify-between",
         )}
       >
-        <Link className="flex items-center gap-2 z-100" href="/">
+        <Link
+          className="flex items-center gap-2 z-100 flex-1 justify-end"
+          href="/"
+        >
           {!isCollapsed ? (
             // <span className="font-bold text-sidebar-foreground text-xl dark:text-white">
             //   موسسه کیاسرخ هور
@@ -55,17 +58,16 @@ const AppSideBar = () => {
           )}
         </Link>
 
-        {/* <motion.div
+        <motion.div
           animate={{ opacity: 1 }}
           className={cn(
-            "flex items-center gap-2",
-            isCollapsed ? "flex-row md:flex-col-reverse" : "flex-row",
+            "flex items-center gap-2 z-50 mt-1.5 ml-3",
+            isCollapsed ? "flex-row md:flex-col-reverse m-0" : "flex-row",
           )}
           initial={{ opacity: 0 }}
           key={isCollapsed ? "header-collapsed" : "header-expanded"}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
         >
-       
           <SidebarTrigger
             render={
               <Button size={"icon"} variant={"outline"}>
@@ -73,7 +75,7 @@ const AppSideBar = () => {
               </Button>
             }
           />
-        </motion.div> */}
+        </motion.div>
       </SidebarHeader>
       <SidebarContent className="gap-4 px-2 py-4 items-center">
         <AppNavigatoin />
