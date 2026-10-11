@@ -26,4 +26,6 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "message-details": "جزئیات پیام",
   "private-messages": "لیست پیام‌های خصوصی",
   sms: "لیست پیامک‌ها",
+  shops: "لیست فروشگاه ها",
+  "shop-products": "لیست محصولات",
 };
