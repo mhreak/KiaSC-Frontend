@@ -212,11 +212,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "فروشگاه ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.shops,
       },
       {
         title: "محصولات / خدمات",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.shopProducts,
       },
     ],
   },
