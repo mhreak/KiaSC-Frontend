@@ -8,17 +8,12 @@ import { DataTable } from "@/components/ui/data-table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
 import { useTransitionRouter } from "next-view-transitions";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { dateFormatter } from "@/components/ui/data-table/formatters";
-import {
-  Message,
-  PrivateMessage,
-} from "@/types/api/endpointTypes/messages.types";
+import { PrivateMessage } from "@/types/api/endpointTypes/messages.types";
 import { privateMessagesFilterConfig } from "./privateMessagesFilterConfig";
-import {
-  addPrivateMessagesFormConfig,
-  editPrivateMessagesFormConfig,
-} from "./privateMessagesFormConfig";
+import { FormMode } from "@/components/formBuilder/types";
+import { privateMessagesFormConfig } from "./privateMessagesFormConfig";
 
 const sampleData: PrivateMessage[] = [
   {
@@ -32,9 +27,8 @@ const sampleData: PrivateMessage[] = [
 ];
 
 export default function PrivateMessagesPage() {
-  const addFormDrawerRef = useRef<FormDrawerRef>(null);
-  const editFormDrawerRef = useRef<FormDrawerRef>(null);
-
+  const formDrawerRef = useRef<FormDrawerRef>(null);
+  const [formMode, setFormMode] = useState<FormMode>("add");
   const router = useTransitionRouter();
 
   const privateMessagesColumns: ColumnDef<PrivateMessage>[] = [
@@ -77,7 +71,7 @@ export default function PrivateMessagesPage() {
         <ActionItems
           row={row}
           onEdit={() => {
-            editFormDrawerRef.current?.open();
+            formDrawerRef.current?.open();
           }}
           onView={() => {
             router.push(
@@ -103,17 +97,11 @@ export default function PrivateMessagesPage() {
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
           <FormDrawer
-            ref={addFormDrawerRef}
-            formConfig={addPrivateMessagesFormConfig}
+            ref={formDrawerRef}
+            formConfig={privateMessagesFormConfig}
             drawerTitle="پیام"
-            formMode="add"
-          />
-          <FormDrawer
-            ref={editFormDrawerRef}
-            formConfig={editPrivateMessagesFormConfig}
-            drawerTitle="پیام"
-            showTriggerButton={false}
-            formMode="edit"
+            formMode={formMode}
+            onTriggerButtonClick={() => setFormMode("add")}
           />
           <Button variant={"warning"}>
             <FileChartColumn />
