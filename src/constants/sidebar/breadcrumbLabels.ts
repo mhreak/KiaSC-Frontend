@@ -16,7 +16,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "online-transactions": "لیست تراکنش های آنلاین",
   "transaction-details": "جزئیات تراکنش",
   "report-course-list": "لیست دوره‌های آموزشی",
-  "report-course-details": "جزئیات گزارش مالی دوره",
+  "report-course-details": "گزارش مالی دورۀ آموزشی",
   "athlete-wallet": "لیست کیف پول ورزشکاران",
   "person-wallet": "لیست کیف پول افراد",
   "athlete-introducing-charge": "پاداش معرفی (ورزشکاران)",
