@@ -23,10 +23,10 @@ export default function ProtectedLayout({
     >
       <AppSideBar />
       {/* ---------------- Main ---------------- */}
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex flex-1 flex-col">
         <NavBar />
         <main
-          className="flex-1 h-full overflow-auto rounded-xl bg-background shadow-sm p-5"
+          className="flex-1 h-full overflow-auto rounded-xl p-5"
           style={{ viewTransitionName: "page-content" }}
         >
           {children}

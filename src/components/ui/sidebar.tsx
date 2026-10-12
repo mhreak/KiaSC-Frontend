@@ -139,7 +139,7 @@ function SidebarProvider({
         }
         className={cn(
           "group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
-          "has-data-[variant=floating]: animated-gradient",
+          "has-data-[variant=floating]:",
           className,
         )}
         {...props}

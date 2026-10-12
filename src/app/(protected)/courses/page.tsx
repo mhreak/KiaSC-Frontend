@@ -74,7 +74,7 @@ export default function CoursesPage() {
           <FormDrawer
             ref={formDrawerRef}
             formConfig={courseFormConfig}
-            drawerTitle="دوره"
+            drawerTitle="دوره ی آموزشی"
           />
           <Button variant={"warning"}>
             <FileChartColumn />

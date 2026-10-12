@@ -25,7 +25,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
   {
     id: "home",
     title: "پیشخوان",
-    icon: <Home className="size-4" />,
+    icon: <Home className="size-4 text-primary" />,
     link: SIDEBAR_ITEM_LINKS.home,
   },
   {
@@ -212,11 +212,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "فروشگاه ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.shops,
       },
       {
         title: "محصولات / خدمات",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.shopProducts,
       },
     ],
   },

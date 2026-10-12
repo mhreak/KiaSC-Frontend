@@ -21,4 +21,6 @@ export const SIDEBAR_ITEM_LINKS = {
   privateMessages: "/messages/private-messages",
   sms: "/messages/sms",
   discounts: "/discounts",
+  shops: "/shops",
+  shopProducts: "/shop-products",
 };

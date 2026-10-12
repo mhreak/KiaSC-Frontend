@@ -7,14 +7,7 @@ import AppBreadcrumb from "../AppBreadcrumb";
 
 const NavBar = () => {
   return (
-    <header className="flex flex-row gap-8 h-fit shrink-0 items-center bg-background rounded-xl px-4 py-3 shadow-sm">
-      <SidebarTrigger
-        render={
-          <Button size={"icon"} variant={"accent"}>
-            <Menu />
-          </Button>
-        }
-      />
+    <header className="flex flex-row gap-8 h-fit shrink-0 items-center  rounded-xl px-4 py-3">
       <AppBreadcrumb />
     </header>
   );
