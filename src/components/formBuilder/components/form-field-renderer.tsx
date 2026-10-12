@@ -40,6 +40,11 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { AthleteSearch } from "@/components/shared/inputs/searchInputs/athleteSearch/AthleteSearch";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SportSelect } from "@/components/shared/inputs/selectInputs/sportSelect/SportSelect";
+import { TermSelect } from "@/components/shared/inputs/selectInputs/termSelect/TermSelect";
+import { CourseSelect } from "@/components/shared/inputs/selectInputs/courseSelect/CourseSelect";
+import { TeamSelect } from "@/components/shared/inputs/selectInputs/teamSelect/TeamSelect";
+
 interface FormFieldRendererProps {
   field: BaseFieldConfig;
   parentName?: string; // ارسال نام پدر برای پشتیبانی از آرایه‌های تودرتو
@@ -559,6 +564,87 @@ export function FormFieldRenderer({
                   />
                 );
               }
+
+              case "sportSelect": {
+                return (
+                  <SportSelect
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={Array.isArray(value) ? value : []}
+                    onChange={onChange}
+                    onClear={() => {
+                      onChange([]);
+                    }}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed",
+                    )}
+                  />
+                );
+              }
+
+              case "termSelect": {
+                return (
+                  <TermSelect
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={Array.isArray(value) ? value : []}
+                    onChange={onChange}
+                    onClear={() => {
+                      onChange([]);
+                    }}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed",
+                    )}
+                  />
+                );
+              }
+
+              case "courseSelect": {
+                return (
+                  <CourseSelect
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={Array.isArray(value) ? value : []}
+                    onChange={onChange}
+                    onClear={() => {
+                      onChange([]);
+                    }}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed",
+                    )}
+                  />
+                );
+              }
+
+              case "teamSelect": {
+                return (
+                  <TeamSelect
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={Array.isArray(value) ? value : []}
+                    onChange={onChange}
+                    onClear={() => {
+                      onChange([]);
+                    }}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed",
+                    )}
+                  />
+                );
+              }
+
               case "invisible": {
                 return <div className="w-full invisible"></div>;
               }

@@ -184,7 +184,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "کد های تخفیف",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.discounts,
       },
     ],
   },

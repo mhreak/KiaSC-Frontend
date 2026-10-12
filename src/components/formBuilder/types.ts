@@ -23,6 +23,10 @@ export type FieldType =
   | "image"
   | "postalcode"
   | "athleteSearch"
+  | "sportSelect"
+  | "termSelect"
+  | "courseSelect"
+  | "teamSelect"
   | "invisible"
   | "textWithConfirm";
 export type LayoutType = "grid" | "section" | "tabs" | "accordion";
