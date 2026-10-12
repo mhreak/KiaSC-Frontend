@@ -27,4 +27,6 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "message-details": "/icon/ic-message.png",
   "private-messages": "/icon/ic-message.png",
   sms: "/icon/ic-message.png",
+  discounts: "/icon/ic-discount.png",
+  "discount-report": "/icon/ic-discount.png",
 };
