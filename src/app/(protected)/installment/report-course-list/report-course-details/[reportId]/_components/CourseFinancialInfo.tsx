@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const financialItems = [
   {
@@ -22,7 +17,7 @@ const financialItems = [
 
 export default function CourseFinancialInfo() {
   return (
-    <Card>
+    <Card className="py-0">
       <CardHeader className="bg-primary py-3">
         <CardTitle className="text-right text-sm text-primary-foreground">
           اطلاعات مالی دوره آموزشی
@@ -36,13 +31,9 @@ export default function CourseFinancialInfo() {
               key={item.label}
               className="flex items-center justify-between gap-4"
             >
-              <span className="font-medium">
-                {item.label}:
-              </span>
+              <span className="font-medium">{item.label}:</span>
 
-              <span className="text-muted-foreground">
-                {item.value}
-              </span>
+              <span className="text-muted-foreground">{item.value}</span>
             </div>
           ))}
         </div>

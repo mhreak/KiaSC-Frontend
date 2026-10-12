@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DiscountInfo() {
   return (
-    <Card>
+    <Card className="py-0">
       <CardHeader className="bg-primary py-3">
         <CardTitle className="text-right text-sm text-primary-foreground">
           اطلاعات استفاده از کد های تخفیف

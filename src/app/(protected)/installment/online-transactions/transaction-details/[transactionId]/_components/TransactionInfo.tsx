@@ -1,5 +1,8 @@
 import LabelValue from "@/components/shared/LabelValue";
-import { currencyFormatter, dateFormatter } from "@/components/ui/data-table/formatters";
+import {
+  currencyFormatter,
+  dateFormatter,
+} from "@/components/ui/data-table/formatters";
 import { OnlineTransaction } from "@/types/api/endpointTypes/installment.types";
 
 const sampleData: OnlineTransaction = {
@@ -21,16 +24,23 @@ export default function TransactionInfo() {
           <LabelValue label="شناسه تراکنش" value={sampleData.id} />
           <LabelValue label="ورزش آموز" value={sampleData.athleteName} />
           <LabelValue label="دوره آموزشی" value={sampleData.course} />
-          <LabelValue label="تاریخ ثبت" value={String(dateFormatter(sampleData.date))} />
-          <LabelValue label="مبلغ" value={currencyFormatter(sampleData.price)} />
-          <LabelValue label="وضعیت" value={sampleData.status === "success" ? "موفق" : "ناموفق"} />
+          <LabelValue
+            label="تاریخ ثبت"
+            value={String(dateFormatter(sampleData.date))}
+          />
+          <LabelValue
+            label="مبلغ"
+            value={currencyFormatter(sampleData.price)}
+          />
+          <LabelValue
+            label="وضعیت"
+            value={sampleData.status === "success" ? "موفق" : "ناموفق"}
+          />
           <LabelValue label="شماره پیگیری" value={sampleData.trackingNumber} />
           <LabelValue label="شرح" value={sampleData.description} />
         </div>
-        <hr className="my-5" />
         <div className="grid grid-cols-3 gap-x-20 gap-y-5 ml-8"></div>
       </div>
-      <div className="w-1/4"></div>
     </div>
   );
 }

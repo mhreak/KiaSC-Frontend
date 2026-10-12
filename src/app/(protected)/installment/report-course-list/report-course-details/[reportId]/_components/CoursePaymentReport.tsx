@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   Table,
@@ -37,7 +32,7 @@ const rows = [
 
 export default function CoursePaymentReport() {
   return (
-    <Card>
+    <Card className="py-0">
       <CardHeader className="bg-primary py-3">
         <CardTitle className="text-right text-sm text-primary-foreground">
           گزارش مالی ثبت نام بصورت پرداخت با چک
@@ -49,13 +44,9 @@ export default function CoursePaymentReport() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-right">
-                  وضعیت ثبت نام
-                </TableHead>
+                <TableHead className="text-right">وضعیت ثبت نام</TableHead>
 
-                <TableHead className="text-center">
-                  تعداد ورزش آموزان
-                </TableHead>
+                <TableHead className="text-center">تعداد ورزش آموزان</TableHead>
 
                 <TableHead className="text-center">
                   مجموع مبالغ ثبت نام دوره (ریال)
@@ -70,13 +61,9 @@ export default function CoursePaymentReport() {
             <TableBody>
               {rows.map((row) => (
                 <TableRow key={row.status}>
-                  <TableCell className="font-medium">
-                    {row.status}
-                  </TableCell>
+                  <TableCell className="font-medium">{row.status}</TableCell>
 
-                  <TableCell className="text-center">
-                    {row.students}
-                  </TableCell>
+                  <TableCell className="text-center">{row.students}</TableCell>
 
                   <TableCell className="text-center">
                     {row.registrationAmount}
@@ -89,13 +76,9 @@ export default function CoursePaymentReport() {
               ))}
 
               <TableRow className="font-semibold">
-                <TableCell>
-                  مجموع
-                </TableCell>
+                <TableCell>مجموع</TableCell>
 
-                <TableCell className="text-center text-blue-500">
-                  ۱
-                </TableCell>
+                <TableCell className="text-center text-blue-500">۱</TableCell>
 
                 <TableCell className="text-center text-blue-500">
                   ۷۲,۰۰۰,۰۰۰

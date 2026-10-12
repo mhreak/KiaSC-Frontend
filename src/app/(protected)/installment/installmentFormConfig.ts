@@ -2,13 +2,27 @@ import { FormConfig } from "@/components/formBuilder/types";
 
 export const addInstallmentFormConfig: FormConfig = [
   {
-    id: "basic-info",
+    id: "installment-info",
     type: "section",
     title: "ایجاد قسط",
     icon: "HandCoins",
     wrapperVariant: "card",
     headerClassName: "text-green-400",
     children: [
+      {
+        id: "course",
+        label: "دورۀ آموزشی",
+        type: "text",
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "athlete",
+        label: "ورزش آموز",
+        type: "text",
+        required: true,
+        colSpan: 6,
+      },
       {
         id: "dueDate",
         label: "تاریخ سررسید",
@@ -39,7 +53,7 @@ export const addInstallmentFormConfig: FormConfig = [
       },
       {
         id: "settlementDate",
-        label: "تاریخ سررسید",
+        label: "تاریخ تسویه",
         type: "date",
         required: true,
         colSpan: 6,
@@ -50,7 +64,7 @@ export const addInstallmentFormConfig: FormConfig = [
 
 export const editInstallmentFormConfig: FormConfig = [
   {
-    id: "basic-info",
+    id: "installment-info",
     type: "section",
     title: "ویرایش قسط",
     icon: "HandCoins",
@@ -87,7 +101,7 @@ export const editInstallmentFormConfig: FormConfig = [
       },
       {
         id: "settlementDate",
-        label: "تاریخ سررسید",
+        label: "تاریخ تسویه",
         type: "date",
         required: true,
         colSpan: 6,
