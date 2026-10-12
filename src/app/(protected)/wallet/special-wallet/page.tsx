@@ -7,16 +7,14 @@ import { DataTable } from "@/components/ui/data-table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
 import { useTransitionRouter } from "next-view-transitions";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   currencyFormatter,
   dateFormatter,
 } from "@/components/ui/data-table/formatters";
-import {
-  addSpecialWalletFormConfig,
-  editSpecialWalletFormConfig,
-} from "./specialWalletFormConfig";
 import { SpecialWallet } from "@/types/api/endpointTypes/wallet.types";
+import { FormMode } from "@/components/formBuilder/types";
+import { specialWalletFormConfig } from "./specialWalletFormConfig";
 
 const sampleData: SpecialWallet[] = [
   {
@@ -29,9 +27,8 @@ const sampleData: SpecialWallet[] = [
 ];
 
 export default function SpecialWalletPage() {
-  const addFormDrawerRef = useRef<FormDrawerRef>(null);
-  const editFormDrawerRef = useRef<FormDrawerRef>(null);
-
+  const formDrawerRef = useRef<FormDrawerRef>(null);
+  const [formMode, setFormMode] = useState<FormMode>("add");
   const router = useTransitionRouter();
 
   const specialWalletColumns: ColumnDef<SpecialWallet>[] = [
@@ -73,13 +70,16 @@ export default function SpecialWalletPage() {
         <ActionItems
           row={row}
           onEdit={() => {
-            editFormDrawerRef.current?.open();
+            setFormMode("edit");
+            formDrawerRef.current?.open();
           }}
           otherActions={[
             {
               label: "سابقه تغییرات",
               onClick: () => {
-                router.push(`/wallet/special-wallet/wallet-history/${row.original.id}?name=${"سابقه تغییرات کیف پول " + row.original.name}`);
+                router.push(
+                  `/wallet/special-wallet/wallet-history/${row.original.id}?name=${"سابقه تغییرات کیف پول " + row.original.name}`,
+                );
               },
             },
           ]}
@@ -98,17 +98,11 @@ export default function SpecialWalletPage() {
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
           <FormDrawer
-            ref={addFormDrawerRef}
-            formConfig={addSpecialWalletFormConfig}
-            drawerTitle="کیف پول جدید"
-            formMode="add"
-          />
-          <FormDrawer
-            ref={editFormDrawerRef}
-            formConfig={editSpecialWalletFormConfig}
-            drawerTitle="کیف پول ویژه"
-            showTriggerButton={false}
-            formMode="edit"
+            ref={formDrawerRef}
+            formConfig={specialWalletFormConfig}
+            drawerTitle="کیف پول"
+            formMode={formMode}
+            onTriggerButtonClick={() => setFormMode("add")}
           />
           <Button variant={"warning"}>
             <FileChartColumn />

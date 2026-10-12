@@ -1,7 +1,6 @@
 "use client";
 
 import BackButton from "@/components/shared/BackButton";
-import { Tabs } from "@/components/ui/tabs";
 import { useParams } from "next/navigation";
 import ReportCourseInfo from "./_components/ReportCourseInfo";
 
@@ -11,9 +10,7 @@ export default function ReportCourseDetailsPage() {
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex-1">
-        <Tabs className={"mb-auto h-full"}>
-          <ReportCourseInfo courseId={reportCourseId} />
-        </Tabs>
+        <ReportCourseInfo courseId={reportCourseId} />
       </div>
       <div className="h-full flex flex-col justify-end items-end">
         <BackButton />

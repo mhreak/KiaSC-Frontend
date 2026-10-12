@@ -4,15 +4,12 @@ import ActionItems from "@/components/shared/ActionItems";
 import { FormDrawer, FormDrawerRef } from "@/components/shared/FormDrawer";
 import { DataTable } from "@/components/ui/data-table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
-import { useTransitionRouter } from "next-view-transitions";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { InstallmentItem } from "@/types/api/endpointTypes/installment.types";
 import { currencyFormatter } from "@/components/ui/data-table/formatters";
 import BackButton from "@/components/shared/BackButton";
-import {
-  installmentAddItemFormConfig,
-  installmentEditItemFormConfig,
-} from "./installmentItemFormConfig";
+import { installmentItemFormConfig } from "./installmentItemFormConfig";
+import { FormMode } from "@/components/formBuilder/types";
 
 const sampleData: InstallmentItem[] = [
   {
@@ -23,10 +20,8 @@ const sampleData: InstallmentItem[] = [
 ];
 
 export default function InstallmentPage() {
-  const addFormDrawerRef = useRef<FormDrawerRef>(null);
-  const editFormDrawerRef = useRef<FormDrawerRef>(null);
-
-  const router = useTransitionRouter();
+  const formDrawerRef = useRef<FormDrawerRef>(null);
+  const [formMode, setFormMode] = useState<FormMode>("add");
 
   const installmentItemsColumns: ColumnDef<InstallmentItem>[] = [
     {
@@ -47,7 +42,8 @@ export default function InstallmentPage() {
         <ActionItems
           row={row}
           onEdit={() => {
-            editFormDrawerRef.current?.open();
+            setFormMode("edit");
+            formDrawerRef.current?.open();
           }}
           onDelete={() => {}}
         />
@@ -65,17 +61,11 @@ export default function InstallmentPage() {
       <div className="flex-between">
         <div className="w-full flex flex-row items-center justify-between gap-5">
           <FormDrawer
-            ref={addFormDrawerRef}
-            formConfig={installmentAddItemFormConfig}
-            drawerTitle="آیتم جدید"
-            formMode="add"
-          />
-          <FormDrawer
-            ref={editFormDrawerRef}
-            formConfig={installmentEditItemFormConfig}
+            ref={formDrawerRef}
+            formConfig={installmentItemFormConfig}
             drawerTitle="آیتم قسط"
-            showTriggerButton={false}
-            formMode="edit"
+            formMode={formMode}
+            onTriggerButtonClick={() => setFormMode("add")}
           />
 
           <BackButton />
