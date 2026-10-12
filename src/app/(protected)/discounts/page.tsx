@@ -82,6 +82,7 @@ export default function DiscountsPage() {
             formConfig={discountFormConfig}
             drawerTitle="کد تخفیف"
             formMode={formMode}
+            onTriggerButtonClick={() => setFormMode("add")}
           />
           <Button variant={"warning"}>
             <FileChartColumn />
