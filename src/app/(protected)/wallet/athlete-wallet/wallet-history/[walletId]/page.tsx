@@ -7,7 +7,6 @@ import {
   currencyFormatter,
   dateFormatter,
 } from "@/components/ui/data-table/formatters";
-import { Tabs } from "@/components/ui/tabs";
 import { WalletHistory } from "@/types/api/endpointTypes/wallet.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
@@ -57,13 +56,11 @@ export default function TransactionDetailsPage() {
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex-1">
-        <Tabs className={"mb-auto h-full"}>
-          <DataTable
-            columns={walletHistoryColumns}
-            data={sampleData}
-            mode="filter"
-          />
-        </Tabs>
+        <DataTable
+          columns={walletHistoryColumns}
+          data={sampleData}
+          mode="filter"
+        />
       </div>
       <div className="h-max flex justify-between items-center">
         <Button variant={"warning"}>

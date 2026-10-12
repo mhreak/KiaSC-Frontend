@@ -1,15 +1,12 @@
 "use client";
 
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
-import { FormMode } from "@/components/formBuilder/types";
 import ActionItems from "@/components/shared/ActionItems";
-import { FormDrawer, FormDrawerRef } from "@/components/shared/FormDrawer";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
 import { useTransitionRouter } from "next-view-transitions";
-import { useRef, useState } from "react";
 import { OnlineTransaction } from "@/types/api/endpointTypes/installment.types";
 import {
   currencyFormatter,
@@ -31,10 +28,6 @@ const sampleData: OnlineTransaction[] = [
 ];
 
 export default function OnlineTransactionsPage() {
-  const formDrawerRef = useRef<FormDrawerRef>(null);
-
-  const [formMode, setFormMode] = useState<FormMode>("add");
-
   const router = useTransitionRouter();
 
   const onlineTransactionsColumns: ColumnDef<OnlineTransaction>[] = [

@@ -19,6 +19,7 @@ import LinearLoadingProgress from "./LinearLoadingProgress";
 
 interface Props {
   formConfig: FormConfig;
+  onTriggerButtonClick?: (data: any) => void;
   onSubmit?: (data: any) => void;
   onFieldChange?: (
     fieldId: string,
@@ -62,6 +63,7 @@ export const FormDrawer = forwardRef<FormDrawerRef, Props>(
       buttonText = "ثبت جدید",
       buttonComponent,
       showTriggerButton = true,
+      onTriggerButtonClick,
       onSubmit,
       onFieldChange,
       formMode = "add",
@@ -95,7 +97,11 @@ export const FormDrawer = forwardRef<FormDrawerRef, Props>(
               buttonComponent ? (
                 buttonComponent
               ) : (
-                <Button variant="default" className={"min-w-40"}>
+                <Button
+                  variant="default"
+                  className={"min-w-40"}
+                  onClick={onTriggerButtonClick}
+                >
                   <Plus />
                   {buttonText}
                 </Button>

@@ -96,6 +96,7 @@ export default function AthleteWalletPage() {
             ref={editSomeFormDrawerRef}
             formConfig={editSomeAthleteWalletFormConfig}
             drawerTitle="گروهی کیف پول"
+            buttonText="ویرایش گروهی"
             formMode="edit"
           />
           <FormDrawer
