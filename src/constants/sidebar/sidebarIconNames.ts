@@ -36,4 +36,6 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "birthdays-list": "/icon/ic-birthday-cake.png",
   "gifts-list": "/icon/ic-birthday-cake.png",
   "gift-athlete-list": "/icon/ic-birthday-cake.png",
+  "review-list": "/icon/ic-user.png",
+  "review-details": "/icon/ic-user.png",
 };

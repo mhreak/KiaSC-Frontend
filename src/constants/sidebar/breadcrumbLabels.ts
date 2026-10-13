@@ -35,4 +35,6 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "birthdays-list": "لیست تولدها",
   "gifts-list": "لیست هدایای تولد",
   "gift-athlete-list": "لیست هدایای تولد ورزشکاران",
+  "review-list": "لیست نظرات",
+  "review-details": "مشاهده نظر",
 };
