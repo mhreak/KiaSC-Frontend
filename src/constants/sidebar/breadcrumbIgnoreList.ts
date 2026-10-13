@@ -4,4 +4,5 @@ export const BREADCRUMB_IGNORE_LIST = [
   "messages",
   "birthdays",
   "users",
+  "dev-settings",
 ];

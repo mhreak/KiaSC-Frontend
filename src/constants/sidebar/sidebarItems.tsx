@@ -364,7 +364,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "وظایف زمان بندی شده",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.scheduledTasks,
       },
     ],
   },
