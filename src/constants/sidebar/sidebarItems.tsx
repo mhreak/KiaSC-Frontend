@@ -244,7 +244,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست نظرات",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.reviewList,
       },
     ],
   },

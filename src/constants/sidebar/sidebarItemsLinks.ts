@@ -27,4 +27,5 @@ export const SIDEBAR_ITEM_LINKS = {
   promoReport: "/promo-report",
   birthdaysList: "/birthdays/birthdays-list",
   giftsList: "/birthdays/gifts-list",
+  reviewList: "/review-list",
 };
