@@ -196,11 +196,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "تولد ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.birthdaysList,
       },
       {
         title: "هدایای تولد",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.giftsList,
       },
     ],
   },
