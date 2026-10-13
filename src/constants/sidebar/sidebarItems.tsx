@@ -228,11 +228,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "روش های آشنایی با موسسه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.promoTypes,
       },
       {
         title: "گزارش آشنایی با موسسه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.promoReport,
       },
     ],
   },

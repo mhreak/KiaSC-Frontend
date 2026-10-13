@@ -22,4 +22,6 @@ export const SIDEBAR_ITEM_LINKS = {
   sms: "/messages/sms",
   shops: "/shops",
   shopProducts: "/shop-products",
+  promoTypes: "/promo-types",
+  promoReport: "/promo-report",
 };

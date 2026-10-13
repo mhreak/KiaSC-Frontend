@@ -28,4 +28,6 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   sms: "لیست پیامک‌ها",
   shops: "لیست فروشگاه ها",
   "shop-products": "لیست محصولات",
+  "promo-types": "لیست روش های آشنایی با موسسه",
+  "promo-report": "گزارش آشنایی با موسسه",
 };
