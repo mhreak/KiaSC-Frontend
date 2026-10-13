@@ -30,4 +30,5 @@ export const SIDEBAR_ITEM_LINKS = {
   reviewList: "/review-list",
   userList: "/users/user-list",
   userRole: "/users/user-role",
+  scheduledTasks: "/dev-settings/scheduled-tasks",
 };

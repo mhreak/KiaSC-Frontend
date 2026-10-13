@@ -41,4 +41,5 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "user-list": "/icon/ic-user.png",
   "user-activity": "/icon/ic-user.png",
   "user-role": "/icon/ic-user.png",
+  "scheduled-tasks": "/icon/ic-setting.png",
 };
