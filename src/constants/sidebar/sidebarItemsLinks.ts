@@ -28,4 +28,6 @@ export const SIDEBAR_ITEM_LINKS = {
   birthdaysList: "/birthdays/birthdays-list",
   giftsList: "/birthdays/gifts-list",
   reviewList: "/review-list",
+  userList: "/users/user-list",
+  userRole: "/users/user-role",
 };
