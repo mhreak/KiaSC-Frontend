@@ -32,4 +32,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "shop-products": "لیست محصولات",
   "promo-types": "لیست روش های آشنایی با موسسه",
   "promo-report": "گزارش آشنایی با موسسه",
+  "birthdays-list": "لیست تولدها",
+  "gifts-list": "لیست هدایای تولد",
+  "gift-athlete-list": "لیست هدایای تولد ورزشکاران",
 };

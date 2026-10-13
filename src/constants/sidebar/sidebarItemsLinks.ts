@@ -25,4 +25,6 @@ export const SIDEBAR_ITEM_LINKS = {
   shopProducts: "/shop-products",
   promoTypes: "/promo-types",
   promoReport: "/promo-report",
+  birthdaysList: "/birthdays/birthdays-list",
+  giftsList: "/birthdays/gifts-list",
 };
