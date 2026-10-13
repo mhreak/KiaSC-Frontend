@@ -150,8 +150,8 @@ export function FormRenderer({
       return zodResolver(schema)(values, context, options);
     },
     defaultValues,
-    mode: "onSubmit",
-    reValidateMode: "onChange",
+    mode: "onChange",
+    // reValidateMode: "onChange",
   });
 
   // useEffect(() => {

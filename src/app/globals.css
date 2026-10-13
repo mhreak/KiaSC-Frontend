@@ -383,6 +383,23 @@
   overflow: hidden;
 }
 
+.animated-gradient-grayscale {
+  animation: animate-text 8s ease alternate infinite;
+  color: #e6e6e6;
+  overflow: hidden;
+}
+
+@keyframes animate-text {
+  0% {
+    color: #e6e6e6;
+  }
+  50% {
+    color: #a1a1a1;
+  }
+  100% {
+    color: #3b3b3b;
+  }
+}
 @keyframes gradient-wave-h {
   0% {
     background-position: 0% 50%;

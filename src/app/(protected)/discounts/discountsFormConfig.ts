@@ -1,0 +1,141 @@
+import { FormConfig } from "@/components/formBuilder/types";
+
+export const discountFormConfig: FormConfig = [
+  {
+    id: "discount-info",
+    type: "section",
+    title: "اطلاعات کد تخفیف",
+    icon: "Percent",
+    wrapperVariant: "card",
+    headerClassName: "text-green-400",
+    children: [
+      {
+        id: "name",
+        label: "نام کد",
+        type: "text",
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "code",
+        label: "کد تخفیف",
+        type: "text",
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "type",
+        label: "نوع",
+        type: "select",
+        options: [
+          {
+            value: "byPrice",
+            label: "تخفیف مبلغ ثابت",
+          },
+          {
+            value: "byPercentage",
+            label: "تخفیف درصدی",
+          },
+          {
+            value: "custom",
+            label: "روش دلخواه",
+          },
+        ],
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "discountPrice",
+        label: "مبلغ تخفیف",
+        type: "number",
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "discountPercentage",
+        label: "درصد تخفیف",
+        type: "number",
+        required: true,
+        colSpan: 6,
+      },
+      {
+        id: "sports",
+        label: "ورزش‌های مشمول تخفیف",
+        type: "sportSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "sportsExcluded",
+        label: "ورزش‌های مستثنی شده",
+        type: "sportSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "terms",
+        label: "ترم‌های مشمول تخفیف",
+        type: "termSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "termsExcluded",
+        label: "ترم‌های مستثنی شده",
+        type: "termSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "courses",
+        label: "دوره‌های مشمول تخفیف",
+        type: "courseSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "coursesExcluded",
+        label: "دوره‌های مستثنی شده",
+        type: "courseSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "teams",
+        label: "تیم‌های مشمول تخفیف",
+        type: "teamSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "teamsExcluded",
+        label: "تیم‌های مستثنی شده",
+        type: "teamSelect",
+        required: false,
+        colSpan: 12,
+      },
+      {
+        id: "gender",
+        label: "جنسیت",
+        type: "select",
+        required: false,
+        options: [
+          { label: "مرد", value: "male" },
+          { label: "زن", value: "female" },
+        ],
+      },
+      {
+        id: "expiryDate",
+        label: "تاریخ انقضا",
+        type: "date",
+        required: false,
+      },
+      {
+        id: "status",
+        label: "وضعیت",
+        type: "switch",
+        required: false,
+      },
+    ],
+  },
+];

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 import {
   Breadcrumb,
@@ -13,9 +14,9 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { BREADCRUMB_LABELS } from "@/constants/sidebar/breadcrumbLabels";
+import { BREADCRUMB_IGNORE_LIST } from "@/constants/sidebar/breadcrumbIgnoreList";
 import { DynamicIcon } from "./formBuilder/components/icon-renderer";
 import { SIDEBAR_ICON_NAMES } from "@/constants/sidebar/sidebarIconNames";
-import Image from "next/image";
 
 export default function AppBreadcrumb() {
   const pathname = usePathname();
@@ -28,12 +29,14 @@ export default function AppBreadcrumb() {
   // -----------------------------
   if (pathname === "/") {
     return (
-      <div className="flex flex-row justify-start items-center gap-5">
-        <div className="border border-border rounded-2xl p-4 bg-muted">
-          <DynamicIcon name={"Home"} className="size-9 text-sky-400" />
+      <div className="flex flex-row items-center justify-start gap-5">
+        <div className="rounded-2xl border border-border bg-muted p-4">
+          <DynamicIcon name="Home" className="size-9 text-sky-400" />
         </div>
+
         <div>
-          <div className="text-2xl font-extrabold mb-3">{"پیشخوان"}</div>
+          <div className="mb-3 text-2xl font-extrabold">پیشخوان</div>
+
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -49,58 +52,84 @@ export default function AppBreadcrumb() {
   }
 
   // -----------------------------
-  // Last segment
+  // Query params
   // -----------------------------
-  const lastSegment = segments.at(-1);
-
-  const isLastSegmentId =
-    lastSegment !== undefined && !BREADCRUMB_LABELS[lastSegment];
-
-  // اگر name در query string وجود داشته باشد
   const name = searchParams.get("name");
   const idName = searchParams.get("idName");
 
-  // اگر آخرین segment عدد باشد،
-  // آن را از breadcrumb حذف می‌کنیم.
-  const visibleSegments = isLastSegmentId ? segments.slice(0, -1) : segments;
+  // -----------------------------
+  // Remove ignored segments
+  // -----------------------------
+  const filteredSegments = segments
+    .map((segment, originalIndex) => ({
+      segment,
+      originalIndex,
+    }))
+    .filter(({ segment }) => !BREADCRUMB_IGNORE_LIST.includes(segment));
+
+  // -----------------------------
+  // Remove dynamic route
+  // -----------------------------
+  const lastSegment = filteredSegments.at(-1)?.segment;
+
+  const isDynamicRoute =
+    lastSegment !== undefined && !BREADCRUMB_LABELS[lastSegment];
+
+  const visibleSegments = isDynamicRoute
+    ? filteredSegments.slice(0, -1)
+    : filteredSegments;
+
+  // -----------------------------
+  // Last visible segment
+  // -----------------------------
+  const lastVisibleSegment = visibleSegments.at(-1)?.segment;
+
+  const iconName = lastVisibleSegment
+    ? SIDEBAR_ICON_NAMES[lastVisibleSegment]
+    : undefined;
+
+  // -----------------------------
+  // Page title
+  // -----------------------------
+  const pageTitle = name
+    ? name
+    : lastVisibleSegment
+      ? BREADCRUMB_LABELS[lastVisibleSegment]
+      : "";
 
   return (
-    <div className="flex flex-row justify-start items-center gap-3">
-      <div className="border border-border p-2 rounded-2xl bg-stone-50">
-        <div className="relative aspect-square size-12 ">
-          <Image
-            src={
-              SIDEBAR_ICON_NAMES[visibleSegments[visibleSegments.length - 1]]
-            }
-            alt={
-              SIDEBAR_ICON_NAMES[visibleSegments[visibleSegments.length - 1]]
-            }
-            className="size-9 text-yellow-400 "
-            fill
-          />
+    <div className="flex flex-row items-center justify-start gap-3">
+      <div className="rounded-2xl border border-border bg-stone-50 p-2">
+        <div className="relative aspect-square size-12">
+          {iconName && (
+            <Image
+              src={iconName}
+              alt={lastVisibleSegment ?? ""}
+              className="size-9"
+              fill
+            />
+          )}
         </div>
       </div>
+
       <div>
-        <div className="text-2xl font-extrabold mb-2">
-          {name
-            ? name
-            : BREADCRUMB_LABELS[visibleSegments[visibleSegments.length - 1]]}
-        </div>
+        <div className="mb-2 text-2xl font-extrabold">{pageTitle}</div>
+
         <Breadcrumb>
           <BreadcrumbList>
-            {visibleSegments.map((segment, index) => {
-              const href = "/" + visibleSegments.slice(0, index + 1).join("/");
+            {visibleSegments.map(({ segment, originalIndex }, index) => {
+              const href = "/" + segments.slice(0, originalIndex + 1).join("/");
 
               const isLast = index === visibleSegments.length - 1 && !name;
 
-              const isNumericSegment = !BREADCRUMB_LABELS[segment];
-
-              const label = isNumericSegment
-                ? (idName ?? segment)
-                : (BREADCRUMB_LABELS[segment] ?? decodeURIComponent(segment));
+              const label =
+                BREADCRUMB_LABELS[segment] ?? decodeURIComponent(segment);
 
               return (
-                <div key={href} className="flex items-center gap-2">
+                <div
+                  key={`${segment}-${originalIndex}`}
+                  className="flex items-center gap-2"
+                >
                   {index > 0 && <BreadcrumbSeparator />}
 
                   <BreadcrumbItem>
@@ -119,10 +148,10 @@ export default function AppBreadcrumb() {
               );
             })}
 
-            {/* اگر آخرین segment عدد بود و name داشتیم */}
-            {isLastSegmentId && name && (
+            {/* Dynamic route + name */}
+            {isDynamicRoute && name && (
               <>
-                <BreadcrumbSeparator />
+                {visibleSegments.length > 0 && <BreadcrumbSeparator />}
 
                 <BreadcrumbItem>
                   <BreadcrumbPage className="text-sm font-bold">
