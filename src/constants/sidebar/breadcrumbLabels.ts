@@ -37,4 +37,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "gift-athlete-list": "لیست هدایای تولد ورزشکاران",
   "review-list": "لیست نظرات",
   "review-details": "مشاهده نظر",
+  "user-list": "لیست کاربران",
+  "user-activity": "مشاهده فعالیت کاربر",
+  "user-role": "لیست نقش‌های کاربری",
 };

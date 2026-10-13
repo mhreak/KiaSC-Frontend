@@ -256,11 +256,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست کاربران",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.userList,
       },
       {
         title: "نقش های کاربری",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.userRole,
       },
     ],
   },
