@@ -30,4 +30,6 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "discount-report": "گزارش استفاده از کد تخفیف",
   shops: "لیست فروشگاه ها",
   "shop-products": "لیست محصولات",
+  "promo-types": "لیست روش های آشنایی با موسسه",
+  "promo-report": "گزارش آشنایی با موسسه",
 };

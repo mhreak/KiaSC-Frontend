@@ -31,4 +31,6 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "discount-report": "/icon/ic-discount.png",
   shops: "/icon/ic-shop.png",
   "shop-products": "/icon/ic-product.png",
+  "promo-types": "/icon/ic-question.png",
+  "promo-report": "/icon/ic-chart.png",
 };

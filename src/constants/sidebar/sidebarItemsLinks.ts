@@ -23,4 +23,6 @@ export const SIDEBAR_ITEM_LINKS = {
   discounts: "/discounts",
   shops: "/shops",
   shopProducts: "/shop-products",
+  promoTypes: "/promo-types",
+  promoReport: "/promo-report",
 };
