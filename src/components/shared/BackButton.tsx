@@ -13,7 +13,7 @@ const BackButton = () => {
         router.back();
       }}
     >
-      <ArrowRight />
+      <ArrowRight strokeWidth={4} />
       بازگشت
     </Button>
   );

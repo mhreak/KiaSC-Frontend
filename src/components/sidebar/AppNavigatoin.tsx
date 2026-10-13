@@ -20,11 +20,15 @@ import { ChevronDown, ChevronUp, Squircle } from "lucide-react";
 import { Link } from "next-view-transitions";
 import { SIDEBAR_ITEMS } from "@/constants/sidebar/sidebarItems";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const AppNavigatoin = () => {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+
+  const pathName = usePathname();
+
   return (
     <SidebarMenu className={cn(isCollapsed && "w-fit", "gap-1")}>
       {SIDEBAR_ITEMS.map((route) => {
@@ -103,15 +107,28 @@ const AppNavigatoin = () => {
                               <SidebarMenuSubButton
                                 render={
                                   <Link
-                                    className="flex items-center rounded-md px-2 py-1.5 font-medium text-muted-foreground text-sm hover:bg-sidebar-muted hover:text-foreground"
+                                    className={cn(
+                                      "flex items-center rounded-md px-2 py-1.5 font-medium text-muted-foreground text-sm hover:bg-sidebar-muted hover:text-foreground",
+                                      pathName === subRoute.link &&
+                                        "bg-sidebar-muted text-foreground",
+                                    )}
                                     href={subRoute.link}
                                     prefetch={true}
                                   />
                                 }
+                                className={cn(
+                                  pathName === subRoute.link &&
+                                    "bg-white text-foreground",
+                                )}
                               >
                                 <Squircle
-                                  style={{ color: "#ffffff" }}
-                                  className="hover:text-sidebar-accent "
+                                  style={{
+                                    color:
+                                      pathName === subRoute.link
+                                        ? "#000"
+                                        : "#ffffff",
+                                  }}
+                                  // className="hover:text-sidebar-accent"
                                 />
                                 <span className="ml-2 flex-1 font-medium text-xs">
                                   {subRoute.title}

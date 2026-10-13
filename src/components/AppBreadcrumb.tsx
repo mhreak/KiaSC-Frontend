@@ -99,13 +99,13 @@ export default function AppBreadcrumb() {
 
   return (
     <div className="flex flex-row items-center justify-start gap-3">
-      <div className="rounded-2xl border border-border bg-stone-50 p-2">
-        <div className="relative aspect-square size-12">
+      <div className="rounded-2xl border border-border bg-stone-50 p-3">
+        <div className="relative aspect-square size-10">
           {iconName && (
             <Image
               src={iconName}
               alt={lastVisibleSegment ?? ""}
-              className="size-9"
+              className="size-5"
               fill
             />
           )}

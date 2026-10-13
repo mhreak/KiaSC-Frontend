@@ -1,9 +1,10 @@
 export interface Athlete {
   id: string;
-  fullNama: string;
+  fullName: string;
   fatherName: string;
   nationalCole: string;
   gender: number;
   genderStr: string;
   ageGroup: string;
+  teamName?: string;
 }

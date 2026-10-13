@@ -2,4 +2,9 @@ export const BREADCRUMB_IGNORE_LIST = [
   "wallet",
   "wallet-history",
   "messages",
+  "sub-places",
+  "athlete-in-team",
+  "person-in-team",
+  "athletes-with-role",
+  "persons-with-role",
 ];

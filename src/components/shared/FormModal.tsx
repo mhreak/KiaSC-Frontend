@@ -14,7 +14,7 @@ import {
 import { FormRenderer } from "@/components/formBuilder/components/form-renderer";
 import { FormConfig } from "@/components/formBuilder/types";
 
-import { Edit, Eye, PlusSquare, X } from "lucide-react";
+import { Edit, Eye, Plus, PlusSquare, X } from "lucide-react";
 
 import CardSkeleton from "./skeletons/CardSkeleton";
 import LinearLoadingProgress from "./LinearLoadingProgress";
@@ -39,6 +39,8 @@ interface Props {
   submitButtonText?: string;
 
   modalContentClassName?: string;
+
+  onTriggerButtonClick?: () => void;
 }
 
 export type FormMode = "add" | "edit" | "view";
@@ -75,6 +77,7 @@ export const FormModal = forwardRef<FormModalRef, Props>(
       isSubmitting = false,
       submitButtonText,
       modalContentClassName,
+      onTriggerButtonClick,
     },
     ref,
   ) => {
@@ -95,7 +98,10 @@ export const FormModal = forwardRef<FormModalRef, Props>(
               buttonComponent ? (
                 buttonComponent
               ) : (
-                <Button variant="default">{buttonText}</Button>
+                <Button variant="default" onClick={onTriggerButtonClick}>
+                  <Plus strokeWidth={5} />
+                  {buttonText}
+                </Button>
               )
             }
           />
@@ -103,7 +109,7 @@ export const FormModal = forwardRef<FormModalRef, Props>(
 
         <DialogContent
           className={cn(
-            "w-fullh-full max-w-none rounded-2xl p-5 sm:max-w-3xl md:w-[55vw] md:h-[55vh] md:max-w-4xl md:rounded-lg shadow-2xl",
+            "w-full h-full max-w-none rounded-2xl p-5 sm:max-w-3xl md:w-[55vw] md:h-fit md:max-w-4xl shadow-2xl flex flex-col gap-12",
             modalContentClassName,
           )}
           showCloseButton={false}
@@ -161,6 +167,7 @@ export const FormModal = forwardRef<FormModalRef, Props>(
                 }
                 isSubmitting={isSubmitting}
                 formMode={formMode}
+                buttonsContainerClassName="mt-5"
               />
             )}
 
