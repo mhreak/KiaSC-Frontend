@@ -31,4 +31,7 @@ export const SIDEBAR_ITEM_LINKS = {
   userList: "/users/user-list",
   userRole: "/users/user-role",
   scheduledTasks: "/dev-settings/scheduled-tasks",
+  generalSettings: "/settings/general-settings",
+  smsSettings: "/settings/sms-settings",
+  messagingSettings: "/settings/messaging-settings",
 };

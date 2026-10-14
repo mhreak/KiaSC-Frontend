@@ -41,4 +41,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "user-activity": "مشاهده فعالیت کاربر",
   "user-role": "لیست نقش‌های کاربری",
   "scheduled-tasks": "وظایف زمان بندی شده",
+  "general-settings": "تنظیمات اصلی",
+  "sms-settings": "تنظیمات پنل پیامک",
+  "messaging-settings": "تنظیمات اطلاع‌رسانی",
 };
