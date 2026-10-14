@@ -324,15 +324,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "تنظیمات اصلی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.generalSettings,
       },
       {
         title: "پنل پیامک",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.smsSettings,
       },
       {
         title: "اطلاع رسانی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.messagingSettings,
       },
       {
         title: "شرایط و قوانین",

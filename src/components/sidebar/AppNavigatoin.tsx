@@ -103,16 +103,14 @@ const AppNavigatoin = () => {
                               <SidebarMenuSubButton
                                 render={
                                   <Link
-                                    className="flex items-center rounded-md px-2 py-1.5 font-medium text-muted-foreground text-sm hover:bg-sidebar-muted hover:text-foreground"
+                                    className="flex items-center rounded-md px-2 py-1.5 font-medium text-white! text-sm hover:bg-sidebar-muted hover:text-foreground!"
                                     href={subRoute.link}
                                     prefetch={true}
                                   />
                                 }
                               >
-                                <Squircle
-                                  style={{ color: "#ffffff" }}
-                                  className="hover:text-sidebar-accent "
-                                />
+                                <Squircle className="text-inherit!" />
+
                                 <span className="ml-2 flex-1 font-medium text-xs">
                                   {subRoute.title}
                                 </span>
