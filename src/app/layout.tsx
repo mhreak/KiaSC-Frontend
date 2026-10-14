@@ -23,14 +23,14 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <DirectionProvider direction="rtl">
-            <div className="relative flex h-dvh w-full">
-              <ViewTransitions>
+            <ViewTransitions>
+              <div className="relative flex h-dvh w-full">
                 <ToastProvider>
                   {children}
                   <ToastContainer />
                 </ToastProvider>
-              </ViewTransitions>
-            </div>
+              </div>
+            </ViewTransitions>
           </DirectionProvider>
         </AuthProvider>
       </body>

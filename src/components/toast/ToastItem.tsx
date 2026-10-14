@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { CheckCircle, XCircle, AlertTriangle, Info, X } from "lucide-react";
+
 import { Toast, ToastType } from "@/types/toast.types";
 import { cn } from "@/lib/utils";
-import { CheckCircle, XCircle, AlertTriangle, Info, X } from "lucide-react";
 import { Button } from "../ui/button";
 
 interface ToastItemProps {
@@ -14,22 +16,27 @@ interface ToastItemProps {
 const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
   const [isExiting, setIsExiting] = useState(false);
 
-  useEffect(() => {
-    if (toast.duration && toast.duration > 0) {
-      const timer = setTimeout(() => {
-        handleClose();
-      }, toast.duration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [toast.duration]);
-
   const handleClose = () => {
+    if (isExiting) {
+      return;
+    }
+
     setIsExiting(true);
-    setTimeout(() => {
-      onClose();
-    }, 350);
   };
+
+  useEffect(() => {
+    if (!toast.duration || toast.duration <= 0) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      handleClose();
+    }, toast.duration);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [toast.duration]);
 
   const getToastStyles = (type: ToastType) => {
     const styles = {
@@ -42,6 +49,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
         progress: "bg-green-500 dark:bg-green-400",
         ring: "ring-green-400/20",
       },
+
       error: {
         bg: "bg-red-50 dark:bg-red-950/30",
         border: "border-red-500 dark:border-red-400",
@@ -51,6 +59,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
         progress: "bg-red-500 dark:bg-red-400",
         ring: "ring-red-400/20",
       },
+
       warning: {
         bg: "bg-amber-50 dark:bg-amber-950/30",
         border: "border-amber-500 dark:border-amber-400",
@@ -60,6 +69,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
         progress: "bg-amber-500 dark:bg-amber-400",
         ring: "ring-amber-400/20",
       },
+
       info: {
         bg: "bg-blue-50 dark:bg-blue-950/30",
         border: "border-blue-500 dark:border-blue-400",
@@ -70,10 +80,9 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
         ring: "ring-blue-400/20",
       },
     };
+
     return styles[type];
   };
-
-  const styles = getToastStyles(toast.type);
 
   const getIcon = (type: ToastType) => {
     const icons = {
@@ -82,30 +91,66 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
       warning: AlertTriangle,
       info: Info,
     };
+
     return icons[type];
   };
 
+  const styles = getToastStyles(toast.type);
   const IconComponent = getIcon(toast.type);
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={{
+        opacity: 0,
+        y: -35,
+        scale: 0.94,
+      }}
+      animate={{
+        opacity: isExiting ? 0 : 1,
+        y: isExiting ? -30 : 0,
+        scale: isExiting ? 0.96 : 1,
+      }}
+      exit={{
+        opacity: 0,
+        y: -30,
+        scale: 0.96,
+      }}
+      transition={{
+        layout: {
+          duration: 0.6,
+          ease: [0.22, 1, 0.36, 1],
+        },
+
+        default: {
+          duration: 0.65,
+          ease: [0.22, 1, 0.36, 1],
+        },
+      }}
+      onAnimationComplete={() => {
+        if (isExiting) {
+          onClose();
+        }
+      }}
       className={cn(
-        "w-full rounded-3xl shadow-lg",
+        "w-full",
+        "rounded-3xl",
+        "border",
+        "shadow-lg",
         "backdrop-blur-sm",
-        "transition-all duration-300 ease-out ",
-        "transform-gpu will-change-transform",
+        "transform-gpu",
+        "will-change-transform",
         styles.bg,
-        styles.border,
-        isExiting ? "animate-toast-out" : "animate-slide-down",
       )}
       role="alert"
     >
       <div className="p-4">
         <div className="flex items-start gap-3">
-          {/* Icon with ring effect */}
+          {/* Icon */}
           <div
             className={cn(
-              "shrink-0 rounded-full flex-center",
+              "flex shrink-0 items-center justify-center",
+              "rounded-full",
               "ring-2 ring-offset-2 ring-offset-transparent",
               styles.iconBg,
               styles.ring,
@@ -119,54 +164,51 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
           </div>
 
           {/* Content */}
-          <div className="flex-1 flex flex-col justify-center h-full">
+          <div className="flex min-w-0 flex-1 flex-col justify-center">
             {toast.title && (
               <h3 className={cn("text-md font-semibold", styles.text)}>
                 {toast.title}
               </h3>
             )}
-            <p
-              className={cn(
-                "text-md wrap-break-word",
-                styles.text,
-                toast.title ? "mt-1" : "mt-1",
-              )}
-            >
+
+            <p className={cn("text-md wrap-break-word", styles.text, "mt-1")}>
               {toast.message}
             </p>
           </div>
 
-          {/* Close button with X icon */}
-          <Button onClick={handleClose} variant={"ghost"} size={"icon-sm"}>
-            <X className="w-4 h-4" strokeWidth={2} />
+          {/* Close */}
+          <Button
+            type="button"
+            onClick={handleClose}
+            variant="ghost"
+            size="icon-sm"
+            className="shrink-0"
+            aria-label="بستن اعلان"
+          >
+            <X className="size-4" strokeWidth={2} />
           </Button>
         </div>
 
-        {/* Progress bar */}
+        {/* Progress */}
         {toast.duration && toast.duration > 0 && (
           <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-gray-200/50 dark:bg-gray-700/50">
-            <div
-              className={cn("h-full rounded-full", styles.progress)}
-              style={{
+            <motion.div
+              initial={{
                 width: "100%",
-                animation: `shrink-width ${toast.duration}ms linear forwards`,
               }}
+              animate={{
+                width: "0%",
+              }}
+              transition={{
+                duration: toast.duration / 1000,
+                ease: "linear",
+              }}
+              className={cn("h-full rounded-full", styles.progress)}
             />
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        @keyframes shrink-width {
-          from {
-            width: 100%;
-          }
-          to {
-            width: 0%;
-          }
-        }
-      `}</style>
-    </div>
+    </motion.div>
   );
 };
 

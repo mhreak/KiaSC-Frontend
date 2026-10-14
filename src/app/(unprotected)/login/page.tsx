@@ -3,13 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Lock, User, User2 } from "lucide-react";
-import React from "react";
+import { Lock, User2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { LoginFormValues, loginSchema } from "./login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
+  const { login, isLoading } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -17,13 +19,13 @@ export default function LoginPage() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      UserName: "",
+      Password: "",
     },
   });
 
-  const handleSubmitForm = (data: LoginFormValues) => {
-    console.log(data);
+  const handleSubmitForm = async (data: LoginFormValues) => {
+    login(data);
   };
 
   return (
@@ -54,38 +56,38 @@ export default function LoginPage() {
             </p>
             <div className="relative w-xs">
               <Input
-                {...register("username")}
+                {...register("UserName")}
                 type="text"
                 placeholder="نام کاربری (کد ملی)"
                 className={cn(
                   "p-2 pr-10 border-t-0 border-r-0 border-l-0 rounded-none  focus-visible:ring-0 border-text focus-visible:border-b-primary transition-all duration-200",
-                  errors.username &&
+                  errors.UserName &&
                     "border-b-destructive focus-visible:border-b-2 focus-visible:border-b-destructive",
                 )}
               />
               <User2 className="absolute bottom-4 right-0 size-6 text-primary" />
             </div>
-            {errors.username && (
+            {errors.UserName && (
               <span className="text-sm text-destructive animate-shake">
-                {errors.username.message}
+                {errors.UserName.message}
               </span>
             )}
             <div className="relative w-xs">
               <Input
-                {...register("password")}
-                type="password"
+                {...register("Password")}
+                type="Password"
                 placeholder="کلمه عبور"
                 className={cn(
                   "p-2 pr-10 border-t-0 border-r-0 border-l-0 rounded-none  focus-visible:ring-0 border-text focus-visible:border-b-primary transition-all duration-200",
-                  errors.password &&
+                  errors.Password &&
                     "border-b-destructive focus-visible:border-b-2 focus-visible:border-b-destructive",
                 )}
               />
               <Lock className="absolute bottom-4 right-0 size-6 text-primary" />
             </div>
-            {errors.password && (
+            {errors.Password && (
               <span className="text-sm text-destructive animate-shake ">
-                {errors.password.message}
+                {errors.Password.message}
               </span>
             )}
             <Button variant={"link"}>فراموشی رمز عبور</Button>
@@ -93,7 +95,7 @@ export default function LoginPage() {
               type="submit"
               className="rounded-full text-text border border-primary p-2 px-9 hover:bg-primary hover:text-white cursor-pointer transition-all duration-400 active:translate-y-1 ease-out"
             >
-              ورود
+              {isLoading ? "در حال ورود..." : "ورود"}
             </button>
           </div>
         </div>

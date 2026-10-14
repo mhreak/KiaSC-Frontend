@@ -12,6 +12,6 @@ export const API_CONFIG = {
   },
 
   get baseURL() {
-    return `${this.baseUrl}${this.prefix}${this.version}`;
+    return `${this.baseUrl}${this.prefix}`;
   },
 };

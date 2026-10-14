@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  username: z
+  UserName: z
     .string()
     .min(1, "نام کاربری الزامی است")
     .max(100, "نام کاربری بیش از حد طولانی است"),
 
-  password: z
+  Password: z
     .string()
     .min(1, "رمز عبور الزامی است")
     .max(32, "رمز عبور حداکثر ۳۲ کاراکتر مجاز است"),

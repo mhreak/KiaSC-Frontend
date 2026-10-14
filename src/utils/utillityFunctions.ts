@@ -134,6 +134,8 @@ import {
   FilterOption,
 } from "@/components/filterFormBuilder/types";
 import { ExistingFile } from "@/components/ui/file-upload";
+import { PaginationMeta } from "@/components/ui/data-table/data-table";
+import { APIGetTemplate } from "@/types/api/commonApiTypes";
 
 export function toJalaliDate(
   date: string | null | undefined,
@@ -276,3 +278,16 @@ const getMimeType = (extension: string) => {
 
   return mimeTypes[ext] ?? "application/octet-stream";
 };
+
+export function createPaginationMeta<T = any>(
+  response?: APIGetTemplate<T> | null,
+): PaginationMeta | null {
+  if (!response) return null;
+
+  return {
+    PageNumber: response.PageNumber ?? 1,
+    PageSize: response.PageSize ?? 20,
+    TotalCount: response.TotalCount ?? 0,
+    TotalPages: response.TotalPages ?? 1,
+  };
+}

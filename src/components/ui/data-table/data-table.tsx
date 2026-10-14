@@ -39,7 +39,14 @@ import { toPersianDigits } from "@/utils/numberConversions";
 import Loader1 from "@/components/shared/loaders/Loader1/Loader1";
 import { Button } from "../button";
 import { RefreshCw } from "lucide-react";
-import { APIMetaData } from "@/types/api/commonApiTypes";
+
+// شکل جدید داده‌ی pagination که از بکند میاد
+export interface PaginationMeta {
+  PageNumber: number;
+  PageSize: number;
+  TotalCount: number;
+  TotalPages: number;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -58,7 +65,7 @@ interface DataTableProps<TData, TValue> {
   onRefresh?: () => void;
 
   mode?: "base" | "modal" | "filter";
-  paginationMeta?: APIMetaData | null;
+  paginationMeta?: PaginationMeta | null;
 }
 
 export function DataTable<TData, TValue>({
@@ -105,9 +112,7 @@ export function DataTable<TData, TValue>({
 
   const selectionColumn: ColumnDef<TData> = {
     id: "select",
-
     size: 50,
-
     header:
       selectionMode === "multiple"
         ? ({ table }) => (
@@ -120,7 +125,6 @@ export function DataTable<TData, TValue>({
             />
           )
         : undefined,
-
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
@@ -132,7 +136,6 @@ export function DataTable<TData, TValue>({
 
   const finalColumns = React.useMemo(() => {
     if (selectionMode === "none") return columns;
-
     return [selectionColumn, ...columns];
   }, [columns, selectionMode]);
 
@@ -144,7 +147,6 @@ export function DataTable<TData, TValue>({
       if (selectKey) {
         return String(row[selectKey]);
       }
-
       return String(index);
     },
 
@@ -158,7 +160,6 @@ export function DataTable<TData, TValue>({
 
       if (selectionMode === "single") {
         const firstKey = Object.keys(next).find((key) => next[key]);
-
         setRowSelection(firstKey ? { [firstKey]: true } : {});
       } else {
         setRowSelection(next);
@@ -167,12 +168,21 @@ export function DataTable<TData, TValue>({
 
     enableRowSelection: selectionMode !== "none",
     enableMultiRowSelection: selectionMode === "multiple",
-
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const currentPage = paginationMeta?.page ?? 1;
-  const totalPages = paginationMeta?.totalPages ?? 1;
+  // ---- Pagination values از شکل جدید ----
+  const currentPage = paginationMeta?.PageNumber ?? 1;
+  const totalPages = paginationMeta?.TotalPages ?? 1;
+  const pageSize = paginationMeta?.PageSize ?? 20;
+  const totalCount = paginationMeta?.TotalCount ?? 0;
+
+  const hasPrevious = currentPage > 1;
+  const hasNext = currentPage < totalPages;
+
+  // محاسبه رنج نمایشی (۱ تا ۲۰ از ۱۴۲۵)
+  const firstItem = totalCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const lastItem = Math.min(currentPage * pageSize, totalCount);
 
   // تولید شماره صفحه‌ها به صورت هوشمند همراه با نقطه‌چین (...)
   const getPageNumbers = () => {
@@ -211,10 +221,8 @@ export function DataTable<TData, TValue>({
     switch (mode) {
       case "base":
         return "calc(100vh - 204px)";
-
       case "filter":
         return "calc(100vh - 274px)";
-
       default:
         return "calc(100vh - 500px)";
     }
@@ -265,7 +273,6 @@ export function DataTable<TData, TValue>({
                     if (selectionMode === "single") {
                       table.resetRowSelection();
                     }
-
                     row.toggleSelected();
                   }}
                 >
@@ -284,11 +291,13 @@ export function DataTable<TData, TValue>({
               ))}
           </TableBody>
         </Table>
+
         {isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[1px]">
             <Loader1 />
           </div>
         )}
+
         {table.getRowModel().rows?.length === 0 && !isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[1px] text-2xl">
             <span> موردی یافت نشد!</span>
@@ -296,42 +305,48 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      {/* بخش ناوبری و تغییر تعداد ردیف‌ها با استایل ثابت در پایین */}
+      {/* بخش ناوبری و تغییر تعداد ردیف‌ها */}
       <div
         className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between px-4 py-3 border-t bg-muted/20"
         dir="rtl"
       >
-        {/* انتخاب تعداد ردیف‌ها در هر صفحه */}
-        <div className="flex items-center gap-2">
-          <p className="text-xs font-medium text-muted-foreground">
-            تعداد ردیف‌ها در هر صفحه
-          </p>
-          <Select
-            value={`${paginationMeta?.pageSize ?? 20}`}
-            onValueChange={(value) => {
-              const newPageSize = Number(value);
-
-              onPageSizeChanged?.(newPageSize);
-            }}
-          >
-            <SelectTrigger className="h-8 w-17.5" size="sm">
-              <SelectValue
-                placeholder={toPersianDigits(paginationMeta?.pageSize ?? 20)}
-              >
-                {toPersianDigits(paginationMeta?.pageSize ?? 20)}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 50, 100].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
+        {/* انتخاب تعداد ردیف‌ها در هر صفحه + نمایش رنج */}
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex items-center gap-2">
+            <p className="text-xs font-medium text-muted-foreground">
+              تعداد ردیف‌ها در هر صفحه
+            </p>
+            <Select
+              value={`${pageSize}`}
+              onValueChange={(value) => {
+                const newPageSize = Number(value);
+                onPageSizeChanged?.(newPageSize);
+              }}
+            >
+              <SelectTrigger className="h-8 w-17.5" size="sm">
+                <SelectValue placeholder={toPersianDigits(pageSize)}>
                   {toPersianDigits(pageSize)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent side="top">
+                {[10, 20, 50, 100].map((size) => (
+                  <SelectItem key={size} value={`${size}`}>
+                    {toPersianDigits(size)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* نمایش رنج آیتم‌ها */}
+          <div className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+            {totalCount === 0
+              ? "موردی یافت نشد"
+              : `نمایش ${toPersianDigits(firstItem)} تا ${toPersianDigits(lastItem)} از ${toPersianDigits(totalCount)}`}
+          </div>
         </div>
 
-        {/* کامپوننت صفحه‌بندی Shadcn UI */}
+        {/* کامپوننت صفحه‌بندی */}
         <div className="flex items-center justify-center gap-4">
           <Pagination className="w-auto m-0">
             <PaginationContent className="gap-1">
@@ -341,13 +356,11 @@ export function DataTable<TData, TValue>({
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-
-                    if (!paginationMeta?.hasPrevious) return;
-
+                    if (!hasPrevious) return;
                     onPageChanged?.(currentPage - 1);
                   }}
                   className={
-                    !paginationMeta?.hasPrevious
+                    !hasPrevious
                       ? "pointer-events-none opacity-50"
                       : "cursor-pointer"
                   }
@@ -373,9 +386,7 @@ export function DataTable<TData, TValue>({
                       isActive={currentPage === pageNum}
                       onClick={(e) => {
                         e.preventDefault();
-
                         if (pageNum === currentPage) return;
-
                         onPageChanged?.(pageNum);
                       }}
                     >
@@ -391,13 +402,11 @@ export function DataTable<TData, TValue>({
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-
-                    if (!paginationMeta?.hasNext) return;
-
+                    if (!hasNext) return;
                     onPageChanged?.(currentPage + 1);
                   }}
                   className={
-                    !paginationMeta?.hasNext
+                    !hasNext
                       ? "pointer-events-none opacity-50"
                       : "cursor-pointer"
                   }
@@ -407,6 +416,7 @@ export function DataTable<TData, TValue>({
             </PaginationContent>
           </Pagination>
         </div>
+
         <div className="flex items-center gap-3">
           <Button variant={"outline"} size={"icon"} onClick={onRefresh}>
             <RefreshCw className="size-5 text-gray-600" />

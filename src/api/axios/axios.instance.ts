@@ -1,6 +1,4 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-
-import { ENV } from "@/config/env";
 import TokenService from "../services/TokenService";
 import AuthService from "../services/AuthService";
 import ErrorService from "../services/ErrorService/ErrorService";
@@ -67,11 +65,7 @@ axiosInstance.interceptors.response.use(
     }
 
     // Refresh request خودش نباید وارد این چرخه شود
-    if (
-      originalRequest.url?.includes(
-        `${API_CONFIG.panel.admin}/auth/refresh-token`,
-      )
-    ) {
+    if (originalRequest.url?.includes(`/auth/refresh`)) {
       TokenService.clearTokens();
 
       ErrorService.handle(error);

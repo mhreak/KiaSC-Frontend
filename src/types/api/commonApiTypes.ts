@@ -1,19 +1,24 @@
 export interface APIGlobalErrorResponse<T = any> {
-  status: number;
-  success: boolean;
-  message: string;
-  data?: T | null;
-  meta?: string | null;
-  errors?: any | null;
+  // status: number;
+  // success: boolean;
+  // message: string;
+  // data?: T | null;
+  // meta?: string | null;
+  // errors?: any | null;
 }
 
 export interface APIGetTemplate<T = any> {
-  status: number;
-  success: boolean;
-  message: string;
-  data: T;
-  meta?: APIMetaData | null;
-  errors?: string | null;
+  // status: number;
+  // success: boolean;
+  // message: string;
+  // data: T;
+  // meta?: APIMetaData | null;
+  // errors?: string | null;
+  Items: T;
+  PageNumber: number;
+  PageSize: number;
+  TotalCount: number;
+  TotalPages: number;
 }
 
 export interface APIMetaData {

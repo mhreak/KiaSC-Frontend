@@ -1,41 +1,23 @@
 import HttpService from "@/api/services/HttpService";
 import TokenService from "./TokenService";
-import { API_CONFIG } from "@/config/apiConfig";
-
-interface LoginDto {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    expiresAt: string;
-  };
-}
-
-interface RefreshTokenResponse {
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    expiresAt: string;
-    isProfileCompleted: boolean;
-  };
-}
+import {
+  LoginDto,
+  LoginResponse,
+  RefreshTokenResponse,
+} from "@/types/api/auth";
 
 class AuthService {
   async login(data: LoginDto): Promise<void> {
     const response = await HttpService.post<LoginResponse, LoginDto>(
-      `${API_CONFIG.panel.admin}/auth/login`,
+      `/auth/login`,
       data,
     );
 
-    const { accessToken, refreshToken, expiresAt } = response.data;
+    const { AccessToken, RefreshToken, AccessTokenExpiresAtUtc } = response;
 
-    TokenService.setAccessToken(accessToken);
-    TokenService.setRefreshToken(refreshToken);
-    TokenService.setExpiresAt(expiresAt);
+    TokenService.setAccessToken(AccessToken);
+    TokenService.setRefreshToken(RefreshToken);
+    TokenService.setExpiresAt(AccessTokenExpiresAtUtc);
   }
 
   async refreshToken(): Promise<string> {
@@ -47,25 +29,25 @@ class AuthService {
 
     const response = await HttpService.post<
       RefreshTokenResponse,
-      { refreshToken: string }
-    >(`${API_CONFIG.panel.admin}/auth/refresh-token`, {
-      refreshToken,
+      { RefreshToken: string }
+    >(`/auth/refresh`, {
+      RefreshToken: refreshToken,
     });
 
     const {
-      accessToken,
-      refreshToken: newRefreshToken,
-      expiresAt,
-    } = response.data;
+      AccessToken,
+      RefreshToken: newRefreshToken,
+      AccessTokenExpiresAtUtc,
+    } = response;
 
-    TokenService.setAccessToken(accessToken);
-    TokenService.setExpiresAt(expiresAt);
+    TokenService.setAccessToken(AccessToken);
+    TokenService.setExpiresAt(AccessTokenExpiresAtUtc);
 
     if (newRefreshToken) {
       TokenService.setRefreshToken(newRefreshToken);
     }
 
-    return accessToken;
+    return AccessToken;
   }
 
   async logout(): Promise<void> {
