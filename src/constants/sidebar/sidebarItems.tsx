@@ -196,11 +196,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "تولد ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.birthdaysList,
       },
       {
         title: "هدایای تولد",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.giftsList,
       },
     ],
   },
@@ -244,7 +244,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست نظرات",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.reviewList,
       },
     ],
   },
@@ -256,11 +256,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "لیست کاربران",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.userList,
       },
       {
         title: "نقش های کاربری",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.userRole,
       },
     ],
   },
@@ -324,15 +324,15 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "تنظیمات اصلی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.generalSettings,
       },
       {
         title: "پنل پیامک",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.smsSettings,
       },
       {
         title: "اطلاع رسانی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.messagingSettings,
       },
       {
         title: "شرایط و قوانین",
@@ -364,7 +364,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "وظایف زمان بندی شده",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.scheduledTasks,
       },
     ],
   },

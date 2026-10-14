@@ -36,4 +36,13 @@ export const SIDEBAR_ITEM_LINKS = {
   smsTemplates: "/sms-templates",
   fileTypes: "/file-types",
   activityEvaluationTemplate: "/activity-evaluation-template",
+  birthdaysList: "/birthdays/birthdays-list",
+  giftsList: "/birthdays/gifts-list",
+  reviewList: "/review-list",
+  userList: "/users/user-list",
+  userRole: "/users/user-role",
+  scheduledTasks: "/dev-settings/scheduled-tasks",
+  generalSettings: "/settings/general-settings",
+  smsSettings: "/settings/sms-settings",
+  messagingSettings: "/settings/messaging-settings",
 };

@@ -7,4 +7,8 @@ export const BREADCRUMB_IGNORE_LIST = [
   "person-in-team",
   "athletes-with-role",
   "persons-with-role",
+  "birthdays",
+  "users",
+  "dev-settings",
+  "settings",
 ];
