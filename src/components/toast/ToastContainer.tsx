@@ -135,7 +135,7 @@ const ToastContainer: React.FC = () => {
 
   const containerClasses = cn(
     // Position
-    "fixed top-4 left-1/2 z-50",
+    "fixed top-4 left-1/2 z-999",
     "-translate-x-1/2",
     // Size
     "w-[calc(100%-2rem)]",

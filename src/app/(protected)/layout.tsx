@@ -16,23 +16,23 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <AuthGuard>
-    <SidebarProvider
-      className="p-2 bg-muted"
-      style={{ "--sidebar-width": "230px" } as React.CSSProperties}
-    >
-      <AppSideBar />
-      {/* ---------------- Main ---------------- */}
-      <div className="flex flex-1 flex-col">
-        <NavBar />
-        <main
-          className="flex-1 h-full overflow-auto rounded-xl p-5"
-          style={{ viewTransitionName: "page-content" }}
-        >
-          {children}
-        </main>
-      </div>
-      {/* <div className="relative flex h-dvh w-full">
+    <AuthGuard>
+      <SidebarProvider
+        className="p-2 bg-muted"
+        style={{ "--sidebar-width": "230px" } as React.CSSProperties}
+      >
+        <AppSideBar />
+        {/* ---------------- Main ---------------- */}
+        <div className="flex flex-1 flex-col">
+          <NavBar />
+          <main
+            className="flex-1 h-full overflow-auto rounded-xl p-5"
+            style={{ viewTransitionName: "page-content" }}
+          >
+            {children}
+          </main>
+        </div>
+        {/* <div className="relative flex h-dvh w-full">
         <AppSideBar />
         <SidebarInset className="flex flex-col min-w-0">
           <div className="flex flex-row min-w-0">
@@ -41,7 +41,7 @@ export default function ProtectedLayout({
           <div className="p-8 h-full overflow-auto min-w-0">{children}</div>
         </SidebarInset>
       </div> */}
-    </SidebarProvider>
-    // </AuthGuard>
+      </SidebarProvider>
+    </AuthGuard>
   );
 }

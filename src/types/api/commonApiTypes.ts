@@ -15,10 +15,10 @@ export interface APIGetTemplate<T = any> {
   // meta?: APIMetaData | null;
   // errors?: string | null;
   Items: T;
-  PageNumber?: number;
-  PageSize?: number;
-  TotalCount?: number;
-  TotalPages?: number;
+  PageNumber: number;
+  PageSize: number;
+  TotalCount: number;
+  TotalPages: number;
 }
 
 export interface APIMetaData {

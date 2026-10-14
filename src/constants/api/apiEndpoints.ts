@@ -5,11 +5,6 @@ type EndpointGroup = {
 
 type ApiEndpoints = Record<string, EndpointGroup>;
 
-export const API_ENDPOINT: ApiEndpoints = {
-  user: {
-    endpoint: "/user",
-    actions: {
-      userLogin: "/login",
-    },
-  },
+export const API_ENDPOINT = {
+  athlete: "/Athlete",
 };

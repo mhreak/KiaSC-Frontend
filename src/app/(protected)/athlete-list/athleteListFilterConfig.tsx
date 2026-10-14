@@ -2,18 +2,23 @@ import { FilterConfig } from "@/components/filterFormBuilder/types";
 
 export const athleteListFilterConfig: FilterConfig = [
   {
-    id: "firstName",
-    label: "نام",
+    id: "FilterFullName",
+    label: "نام و نام خانوادگی",
     type: "text",
   },
   {
-    id: "lastName",
-    label: "نام خانوادگی",
-    type: "text",
-  },
-  {
-    id: "nationalCode",
+    id: "FilterNationalCode",
     label: "کد ملی",
     type: "number",
+  },
+  {
+    id: "FilterMobile",
+    label: "تلفن همراه",
+    type: "number",
+  },
+  {
+    id: "FilterAgeGroupId",
+    label: "رده سنی",
+    type: "select",
   },
 ];

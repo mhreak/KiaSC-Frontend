@@ -29,9 +29,9 @@ class AuthService {
 
     const response = await HttpService.post<
       RefreshTokenResponse,
-      { refreshToken: string }
+      { RefreshToken: string }
     >(`/auth/refresh`, {
-      refreshToken,
+      RefreshToken: refreshToken,
     });
 
     const {
