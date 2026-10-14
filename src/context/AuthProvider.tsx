@@ -9,15 +9,11 @@ import {
   ReactNode,
 } from "react";
 
-import { User } from "@/types/api/auth";
+import { LoginDto, User } from "@/types/api/auth";
 
 import AuthService from "@/api/services/AuthService";
 import TokenService from "@/api/services/TokenService";
-
-interface LoginDto {
-  username: string;
-  password: string;
-}
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
   user: User | null;
@@ -45,11 +41,14 @@ export function AuthProvider({ children }: Props) {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
     initializeAuth();
   }, []);
 
   async function initializeAuth() {
+    setIsLoading(true);
     try {
       const accessToken = TokenService.getAccessToken();
 
@@ -95,9 +94,15 @@ export function AuthProvider({ children }: Props) {
   }
 
   async function login(data: LoginDto) {
-    await AuthService.login(data);
-
-    setIsAuthenticated(true);
+    try {
+      setIsLoading(true);
+      await AuthService.login(data);
+      setIsAuthenticated(true);
+      router.push("/");
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   async function logout() {

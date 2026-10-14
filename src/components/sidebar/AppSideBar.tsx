@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/sidebar";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import React from "react";
 import AppNavigatoin from "./AppNavigatoin";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";

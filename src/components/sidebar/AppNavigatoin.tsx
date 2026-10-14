@@ -107,14 +107,18 @@ const AppNavigatoin = () => {
                               <SidebarMenuSubButton
                                 render={
                                   <Link
-                                    className="flex items-center rounded-md px-2 py-1.5 font-medium text-white! text-sm hover:bg-sidebar-muted hover:text-foreground!"
+                                    className={cn(
+                                      "flex items-center rounded-md px-2 py-1.5 font-medium text-white! text-sm hover:bg-sidebar-muted hover:text-foreground!",
+                                      pathName === subRoute.link &&
+                                        "bg-white text-foreground!",
+                                    )}
                                     href={subRoute.link}
                                     prefetch={true}
                                   />
                                 }
                                 className={cn(
                                   pathName === subRoute.link &&
-                                    "bg-white text-foreground",
+                                    "bg-white text-foreground!",
                                 )}
                               >
                                 <Squircle className="text-inherit!" />

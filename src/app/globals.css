@@ -343,7 +343,7 @@
 
 .leftside-menu::before {
   content: "";
-  background-image: url("/images/dark-texture-background.avif") !important;
+  background-image: url("/images/sidebar-background-image.jpg") !important;
   background-repeat: no-repeat !important;
   background-position: center;
   background-size: cover !important;
