@@ -102,7 +102,7 @@ export const FormDrawer = forwardRef<FormDrawerRef, Props>(
                   className={"min-w-40"}
                   onClick={onTriggerButtonClick}
                 >
-                  <Plus />
+                  <Plus strokeWidth={5} />
                   {buttonText}
                 </Button>
               )

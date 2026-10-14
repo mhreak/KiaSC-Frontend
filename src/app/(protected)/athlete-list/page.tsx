@@ -18,7 +18,7 @@ import { useTransitionRouter } from "next-view-transitions";
 const sampleData: Athlete[] = [
   {
     id: "ivsjekflisjdjj-aejfaek",
-    fullNama: "محمد هادی رادان",
+    fullName: "محمد هادی رادان",
     fatherName: "محمد تقی",
     nationalCole: "1272244581",
     gender: 2,
@@ -36,7 +36,7 @@ export default function AthleteListPage() {
 
   const athleteColumns: ColumnDef<Athlete>[] = [
     {
-      accessorKey: "fullNama",
+      accessorKey: "fullName",
       header: "نام و نام خانوادگی",
     },
     {
@@ -91,6 +91,10 @@ export default function AthleteListPage() {
             ref={formDrawerRef}
             formConfig={athleteListFormConfig}
             drawerTitle="ورزشکار"
+            formMode={formMode}
+            onTriggerButtonClick={() => {
+              setFormMode("add");
+            }}
           />
           <Button variant={"warning"}>
             <FileChartColumn />

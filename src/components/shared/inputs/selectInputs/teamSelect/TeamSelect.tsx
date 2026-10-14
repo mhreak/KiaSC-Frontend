@@ -5,13 +5,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TeamSelectDialog } from "./TeamSelectDialog";
-
-export interface Team {
-  id: string;
-  name: string;
-  sport: string;
-  gender: "male" | "female";
-}
+import { Team } from "@/types/api/endpointTypes/team.types";
 
 interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
   value: string[];

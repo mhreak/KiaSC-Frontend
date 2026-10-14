@@ -348,7 +348,7 @@ export function FormFieldRenderer({
 
               case "switch":
                 return (
-                  <div className="flex items-center space-x-5 h-full">
+                  <div className="flex items-center justify-between space-x-5 h-full">
                     <Label
                       htmlFor={field.id}
                       className={cn(

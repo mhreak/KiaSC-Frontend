@@ -15,8 +15,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
-import { Team } from "./TeamSelect";
 import { teamSelectFilterConfig } from "./teamSelectFilterConfig";
+import { Team } from "@/types/api/endpointTypes/team.types";
 
 interface Props {
   selectedTeams: Team[];

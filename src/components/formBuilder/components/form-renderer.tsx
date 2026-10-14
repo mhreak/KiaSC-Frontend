@@ -19,6 +19,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { validators } from "../lib/form-validator";
 
 import { Eye, Pencil, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FormRendererProps {
   config: FormConfig;
@@ -38,6 +39,9 @@ interface FormRendererProps {
   isSubmittingText?: string;
   formMode?: FormMode;
   showCancelButton?: boolean;
+
+  formClassName?: string;
+  buttonsContainerClassName?: string;
 }
 
 // تابع کمکی برای استخراج تمام فیلدهای ساده از درون کل ساختار درختی چیدمان‌ها
@@ -72,6 +76,8 @@ export function FormRenderer({
   isSubmittingText,
   formMode,
   showCancelButton = true,
+  formClassName,
+  buttonsContainerClassName,
 }: Readonly<FormRendererProps>) {
   const allFields = flattenFields(config);
 
@@ -141,8 +147,6 @@ export function FormRenderer({
     {} as Record<string, any>,
   );
 
-  console.log(defaultValues);
-
   const methods = useForm({
     resolver: async (values, context, options) => {
       const schema = createSchemaFromConfig(allFields, values);
@@ -173,9 +177,12 @@ export function FormRenderer({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(handleFormSubmit)}
-        className="relative flex flex-col justify-between h-full"
+        className={cn(
+          "relative flex flex-col justify-between h-full",
+          formClassName,
+        )}
       >
-        <div className="grid grid-cols-12 gap-4 gap-y-12">
+        <div className="grid grid-cols-12 gap-8 gap-y-12">
           {config.map((node) => {
             if (isLayoutConfig(node)) {
               return (
@@ -195,7 +202,12 @@ export function FormRenderer({
             );
           })}
         </div>
-        <div className="flex-between mt-16 sticky bottom-0 right-0 left-0 bg-background py-5">
+        <div
+          className={cn(
+            "flex-between mt-16 sticky bottom-0 right-0 left-0 bg-background py-5",
+            buttonsContainerClassName,
+          )}
+        >
           <Button
             type="submit"
             size={"lg"}
@@ -205,11 +217,11 @@ export function FormRenderer({
             isLoadingText={isSubmittingText}
           >
             {formMode === "add" ? (
-              <Plus />
+              <Plus strokeWidth={5} />
             ) : formMode === "edit" ? (
-              <Pencil />
+              <Pencil strokeWidth={5} />
             ) : (
-              <Eye />
+              <Eye strokeWidth={5} />
             )}
             {submitButtonText}
           </Button>

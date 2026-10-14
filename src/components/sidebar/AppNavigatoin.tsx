@@ -20,11 +20,15 @@ import { ChevronDown, ChevronUp, Squircle } from "lucide-react";
 import { Link } from "next-view-transitions";
 import { SIDEBAR_ITEMS } from "@/constants/sidebar/sidebarItems";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const AppNavigatoin = () => {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+
+  const pathName = usePathname();
+
   return (
     <SidebarMenu className={cn(isCollapsed && "w-fit", "gap-1")}>
       {SIDEBAR_ITEMS.map((route) => {
@@ -108,6 +112,10 @@ const AppNavigatoin = () => {
                                     prefetch={true}
                                   />
                                 }
+                                className={cn(
+                                  pathName === subRoute.link &&
+                                    "bg-white text-foreground",
+                                )}
                               >
                                 <Squircle className="text-inherit!" />
 

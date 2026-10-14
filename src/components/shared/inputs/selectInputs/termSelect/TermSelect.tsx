@@ -5,13 +5,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TermSelectDialog } from "./TermSelectDialog";
-
-export interface Term {
-  id: string;
-  name: string;
-  year: string;
-  season: string;
-}
+import { Term } from "@/types/api/endpointTypes/term.types";
 
 interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
   value: string[];

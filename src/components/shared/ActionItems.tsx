@@ -22,7 +22,7 @@ export default function ActionItems<T>({
       {onEdit && (
         <Button
           variant={"edit"}
-          size={"sm"}
+          size={"xs"}
           onClick={() => onEdit(row.original)}
         >
           ویرایش
@@ -31,7 +31,7 @@ export default function ActionItems<T>({
       {onView && (
         <Button
           variant={"view"}
-          size={"sm"}
+          size={"xs"}
           onClick={() => onView(row.original)}
         >
           نمایش
@@ -40,7 +40,7 @@ export default function ActionItems<T>({
       {onDelete && (
         <Button
           variant={"delete"}
-          size={"sm"}
+          size={"xs"}
           onClick={() => onDelete(row.original)}
         >
           حذف
@@ -50,7 +50,7 @@ export default function ActionItems<T>({
         <Button
           key={action.label}
           variant={"infoOutline"}
-          size={"sm"}
+          size={"xs"}
           onClick={() => action.onClick(row.original)}
         >
           {action.label}

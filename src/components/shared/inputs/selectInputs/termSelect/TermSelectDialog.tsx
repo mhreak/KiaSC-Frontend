@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { termSelectFilterConfig } from "./termSelectFilterConfig";
-import { Term } from "./TermSelect";
+import { Term } from "@/types/api/endpointTypes/term.types";
 
 interface Props {
   selectedTerms: Term[];
@@ -27,7 +27,7 @@ const sampleData: Term[] = [
   {
     id: "1",
     name: "بهار",
-    year: "1405",
+    year: 1405,
     season: "بهار",
   },
 ];

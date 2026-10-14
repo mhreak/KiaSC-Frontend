@@ -272,47 +272,47 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     subs: [
       {
         title: "رشته های ورزشی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.sports,
       },
       {
         title: "رده های سنی",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.ageGroup,
       },
       {
         title: "ورزشگاه ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.places,
       },
       {
         title: "ترم ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.term,
       },
       {
         title: "تیم ها",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.teams,
       },
       {
         title: "نقش های ورزشکاران",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.athleteRoles,
       },
       {
         title: "نقش های افراد",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.personRoles,
       },
       {
         title: "اصناف",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.guilds,
       },
       {
         title: "قالب های پیام کوتاه",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.smsTemplates,
       },
       {
         title: "انواع فایل",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.fileTypes,
       },
       {
         title: "قالب های ارزیابی فعالیت",
-        link: "#",
+        link: SIDEBAR_ITEM_LINKS.activityEvaluationTemplate,
       },
     ],
   },
