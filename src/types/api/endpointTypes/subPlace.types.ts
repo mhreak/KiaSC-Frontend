@@ -1,6 +1,10 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface SubPlace {
-  id: string;
-  name: string;
-  roofed: string;
-  status: string;
+  SubPlaceId: number;
+  SubPlaceName: string;
+  Roofed: boolean;
+  Active: boolean;
 }
+
+export interface SubPlaceGetListParams extends BaseParams {}

@@ -1,10 +1,12 @@
 export interface APIGlobalErrorResponse<T = any> {
-  // status: number;
-  // success: boolean;
-  // message: string;
-  // data?: T | null;
-  // meta?: string | null;
-  // errors?: any | null;
+  Success: boolean;
+  Data: T;
+  MessageList: string[];
+}
+export interface APIAddTemplateResponse<T = any> {
+  Success: boolean;
+  Data: T;
+  MessageList: string[];
 }
 
 export interface APIGetTemplate<T = any> {
@@ -41,4 +43,11 @@ export interface APIAttachment {
   url: string;
   thumbnailUrl: string;
   size: number;
+}
+
+export interface BaseParams {
+  PageNumber?: number;
+  PageSize?: number;
+  SortField?: string;
+  SortDirection?: string;
 }

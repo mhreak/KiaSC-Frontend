@@ -41,7 +41,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
       },
       {
         title: "گزارش ساز اکسل",
-        link: "#",
+        link: `${SIDEBAR_ITEM_LINKS.athleteExcelReport}?name=گزارش ساز اکسل ورزشکاران`,
         icon: <LinkIcon className="size-4" />,
       },
       {
@@ -64,7 +64,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
       },
       {
         title: "گزارش ساز اکسل",
-        link: "#",
+        link: `${SIDEBAR_ITEM_LINKS.personExcelReport}?name=گزارش ساز اکسل افراد`,
         icon: <LinkIcon className="size-4" />,
       },
       {

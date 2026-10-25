@@ -1,6 +1,22 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Team {
-  id: string;
-  name: string;
-  sport: string;
-  gender: "male" | "female";
+  TeamId: number;
+  TeamName: string;
+  Gender: boolean;
+  SportId: number;
+  SportName: string;
+}
+
+export interface TeamGetListParams extends BaseParams {
+  FilterTeamName?: string;
+  FilterSportId?: string;
+  FilterGender?: string;
+}
+
+export interface TeamGet {
+  TeamId: number;
+  TeamName: string;
+  Gender: boolean;
+  SportId: number;
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DirectionProvider } from "@/components/ui/direction";
-import { vazir } from "@/fonts";
+import { modam } from "@/fonts";
 import { AuthProvider } from "@/context/AuthProvider";
 import { cn } from "@/lib/utils";
 import { ViewTransitions } from "next-view-transitions";
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={cn(vazir.variable)}>
+    <html lang="fa" dir="rtl" className={cn(modam.variable)}>
       <body>
         <AuthProvider>
           <DirectionProvider direction="rtl">

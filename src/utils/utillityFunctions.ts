@@ -2,7 +2,9 @@ import {
   BaseFieldConfig,
   FieldOption,
   FormConfig,
+  FormNode,
   isLayoutConfig,
+  LayoutConfig,
 } from "@/components/formBuilder/types";
 import { toEnglishDigits } from "./numberConversions";
 
@@ -30,15 +32,19 @@ export default function validateNationalCode(
 
 export type FormFieldOptions = Record<string, FieldOption[]>;
 
-export interface GenerateFormConfigOptions<T> {
+type GenerateFormConfigOptions<T> = {
   values?: T;
   readonlyFields?: string[];
   disabledFields?: string[];
   hiddenFields?: string[];
   visibleFields?: string[];
   options?: Record<string, FieldOption[]>;
-  fieldProps?: Record<string, Partial<BaseFieldConfig>>;
-}
+  fieldProps?: Record<
+    string,
+    Partial<Omit<BaseFieldConfig, "id" | "type">> &
+      Partial<Omit<LayoutConfig, "id" | "type">>
+  >;
+};
 
 export function generateFormConfig<T extends Record<string, any>>(
   config: FormConfig,
@@ -77,7 +83,6 @@ export function generateFormConfig<T extends Record<string, any>>(
       transformedField.visible = true;
     }
 
-    // پر کردن options برای select و multiselect
     if (
       (field.type === "select" || field.type === "multiselect") &&
       options[field.id]
@@ -88,32 +93,35 @@ export function generateFormConfig<T extends Record<string, any>>(
     return transformedField;
   };
 
-  return config.map((item) => {
+  const transformNode = (node: FormNode): FormNode => {
     // اگر Field باشد
-    if (!isLayoutConfig(item)) {
-      return transformField(item);
+    if (!isLayoutConfig(node)) {
+      return transformField(node);
     }
 
     // اگر Layout باشد
-    return {
-      ...item,
+    const layoutProps = fieldProps[node.id] ?? {};
 
-      // برای section و grid
-      children: item.children?.map(transformField),
+    const transformedLayout: LayoutConfig = {
+      ...node,
+      ...layoutProps,
 
-      // برای tabs و accordion
-      items: item.items?.map((tab) => ({
-        ...tab,
-        children: tab.children.map((child) => {
-          if (isLayoutConfig(child)) {
-            return child;
-          }
+      children: node.children?.map(
+        (child) => transformNode(child) as BaseFieldConfig,
+      ),
 
-          return transformField(child);
-        }),
+      items: node.items?.map((item) => ({
+        ...item,
+        children: item.children.map(transformNode),
       })),
     };
-  });
+
+    return transformedLayout;
+  };
+
+  return config.map(transformNode);
+
+  return config.map(transformNode);
 }
 
 export function toFieldOptions<T>(
@@ -290,4 +298,23 @@ export function createPaginationMeta<T = any>(
     TotalCount: response.TotalCount ?? 0,
     TotalPages: response.TotalPages ?? 1,
   };
+}
+
+export function validateExcelReportFieldSelection(
+  checks: Record<string, boolean>,
+): {
+  isValid: boolean;
+  message: string;
+} {
+  const checkValues = Object.entries(checks)
+    .filter(([key]) => key.startsWith("check"))
+    .map(([, value]) => value);
+
+  const hasAtLeastOneSelected = checkValues.some((value) => value === true);
+
+  if (!hasAtLeastOneSelected) {
+    return { isValid: false, message: "لطفاً حداقل یک فیلد را انتخاب کنید." };
+  }
+
+  return { isValid: true, message: "" };
 }

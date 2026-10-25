@@ -2,25 +2,25 @@ import { FormConfig } from "@/components/formBuilder/types";
 
 export const teamFormConfig: FormConfig = [
   {
-    id: "name",
+    id: "TeamName",
     label: "نام تیم",
     type: "text",
     required: true,
   },
   {
-    id: "fgsdfg",
+    id: "SportId",
     label: "رشته ورزشی",
     type: "select",
     required: true,
   },
   {
-    id: "uikyu",
+    id: "Gender",
     label: "جنسیت",
     type: "select",
     required: true,
     options: [
-      { value: "1", label: "مرد" },
-      { value: "2", label: "زن" },
+      { value: "true", label: "مرد" },
+      { value: "false", label: "زن" },
     ],
   },
 ];

@@ -16,11 +16,13 @@ import { Edit, Eye, Plus, PlusSquare, X } from "lucide-react";
 import CardSkeleton from "./skeletons/CardSkeleton";
 import { cn } from "@/lib/utils";
 import LinearLoadingProgress from "./LinearLoadingProgress";
+import { SubmitErrorHandler } from "react-hook-form";
 
 interface Props {
   formConfig: FormConfig;
   onTriggerButtonClick?: (data: any) => void;
   onSubmit?: (data: any) => void;
+  onInvalid?: SubmitErrorHandler<Record<string, any>> | undefined;
   onFieldChange?: (
     fieldId: string,
     value: any,
@@ -65,6 +67,7 @@ export const FormDrawer = forwardRef<FormDrawerRef, Props>(
       showTriggerButton = true,
       onTriggerButtonClick,
       onSubmit,
+      onInvalid,
       onFieldChange,
       formMode = "add",
       isLoading = false,
@@ -157,6 +160,8 @@ export const FormDrawer = forwardRef<FormDrawerRef, Props>(
                       : "اطلاعات"
                 } ${drawerTitle}`}
                 formMode={formMode}
+                onInvalid={onInvalid}
+                disableSubmitButton={isSubmitting}
               />
             )}
           </div>

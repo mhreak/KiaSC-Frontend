@@ -20,11 +20,21 @@ import { FormMode } from "@/components/formBuilder/types";
 import { useTransitionRouter } from "next-view-transitions";
 import { useApi } from "@/hooks/useApi";
 import { athleteApi } from "@/api/services/ApiService/athleteApi";
-import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import {
+  APIAddTemplateResponse,
+  APIGetTemplate,
+} from "@/types/api/commonApiTypes";
 import {
   createPaginationMeta,
   generateFormConfig,
+  toFieldOptions,
 } from "@/utils/utillityFunctions";
+import { toast } from "@/lib/toast/toast";
+import { birthdayGiftApi } from "@/api/services/ApiService/birthdayGiftApi";
+import {
+  Gift,
+  GiftGetListParams,
+} from "@/types/api/endpointTypes/birthdays.types";
 
 export default function AthleteListPage() {
   const formDrawerRef = useRef<FormDrawerRef>(null);
@@ -43,18 +53,103 @@ export default function AthleteListPage() {
   } = useApi<APIGetTemplate<Athlete[]>, AthleteGetListParams>(
     athleteApi.getList,
   );
+
   const {
     data: athleteData,
     isLoading: getLoading,
     execute: getAthlete,
   } = useApi<AthleteGet, { id: number }>(athleteApi.get);
 
+  const { isLoading: addLoading, execute: addAthlete } = useApi<
+    APIAddTemplateResponse<number>,
+    any
+  >(athleteApi.add, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formDrawerRef.current?.close();
+      getListAthletes({
+        ...filterItems,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  const { isLoading: editLoading, execute: editAthlete } = useApi<
+    APIAddTemplateResponse,
+    any
+  >(athleteApi.edit, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formDrawerRef.current?.close();
+      getListAthletes({
+        ...filterItems,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  const { data: allGiftsData, execute: getListGifts } = useApi<
+    APIGetTemplate<Gift[]>,
+    GiftGetListParams
+  >(birthdayGiftApi.getList);
+
+  const isSubmitting = addLoading || editLoading;
+
   useEffect(() => {
     getListAthletes();
+    getListGifts();
   }, []);
 
   const formConfig = generateFormConfig(athleteListFormConfig, {
-    values: athleteData ?? undefined,
+    values: formMode === "edit" ? athleteData || undefined : undefined,
+    options: {
+      BirthdayGiftId: toFieldOptions(
+        allGiftsData?.Items ?? [],
+        "GiftName",
+        "GiftId",
+      ),
+    },
+    fieldProps: {
+      personalImageFile: {
+        defaultValue: athleteData?.PersonalImageURL
+          ? [
+              {
+                id: 1,
+                fileName: athleteData.PersonalImageFileName,
+                extension: "jpg",
+                url: `http://${athleteData.PersonalImageURL}`,
+                thumbnailUrl: null,
+                size: 0,
+              },
+            ]
+          : [],
+      },
+      NationalCode: {
+        readonly: formMode === "edit" ? true : false,
+      },
+      "password-section": {
+        visible: formMode === "edit" ? false : true,
+      },
+      Password: {
+        required: formMode === "edit" ? false : true,
+      },
+      ConfirmPassword: {
+        required: formMode === "edit" ? false : true,
+      },
+      Gender: {
+        defaultValue:
+          formMode === "edit"
+            ? athleteData?.Gender
+              ? "true"
+              : "false"
+            : undefined,
+      },
+      "birthday-gift-section": {
+        visible: formMode === "edit" ? true : false,
+      },
+    },
   });
 
   const athleteColumns: ColumnDef<Athlete>[] = [
@@ -104,7 +199,7 @@ export default function AthleteListPage() {
           row={row}
           onEdit={() => {
             setFormMode("edit");
-            // getAthlete({ id: row.original.AthleteId });
+            getAthlete({ id: row.original.AthleteId });
             formDrawerRef.current?.open();
           }}
           onView={() => {
@@ -117,6 +212,7 @@ export default function AthleteListPage() {
       ),
     },
   ];
+
   return (
     <div className="space-y-5">
       <FilterRenderer
@@ -155,8 +251,11 @@ export default function AthleteListPage() {
           });
         }}
         onRefresh={() => {
-          setFilterItems({});
-          getListAthletes({ PageNumber: page, PageSize: pageSize });
+          getListAthletes({
+            ...filterItems,
+            PageNumber: page,
+            PageSize: pageSize,
+          });
         }}
       />
       <div className="flex-between">
@@ -164,11 +263,21 @@ export default function AthleteListPage() {
           <FormDrawer
             ref={formDrawerRef}
             formConfig={formConfig}
+            onSubmit={(data) => {
+              if (formMode === "add") {
+                console.log(data);
+                addAthlete(data);
+              } else if (formMode === "edit") {
+                editAthlete({ AthleteId: athleteData?.AthleteId, ...data });
+              }
+            }}
             drawerTitle="ورزشکار"
             formMode={formMode}
             onTriggerButtonClick={() => {
               setFormMode("add");
             }}
+            isSubmitting={isSubmitting}
+            isLoading={getLoading}
           />
           <Button variant={"warning"}>
             <FileChartColumn />

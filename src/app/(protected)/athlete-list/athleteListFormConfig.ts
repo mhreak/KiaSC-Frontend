@@ -44,11 +44,11 @@ export const athleteListFormConfig: FormConfig = [
         type: "select",
         options: [
           {
-            value: "1",
+            value: "false",
             label: "خانم",
           },
           {
-            value: "2",
+            value: "true",
             label: "آقا",
           },
         ],
@@ -63,7 +63,7 @@ export const athleteListFormConfig: FormConfig = [
         colSpan: 6,
       },
       {
-        id: "PersonelImage",
+        id: "personalImageFile",
         label: "عکس پرسنلی",
         type: "image",
         // required: true,
@@ -121,7 +121,6 @@ export const athleteListFormConfig: FormConfig = [
         id: "Address",
         label: "آدرس",
         type: "textarea",
-        required: true,
         colSpan: 12,
       },
     ],
@@ -135,9 +134,11 @@ export const athleteListFormConfig: FormConfig = [
     headerClassName: "text-green-500",
     children: [
       {
-        id: "athleticBackground",
-        label: "سابقه ورزشی",
+        id: "SportHistory",
+        label: "",
+        placeholder: "سابقه ورزشی",
         type: "textarea",
+        colSpan: 12,
       },
     ],
   },
@@ -150,7 +151,7 @@ export const athleteListFormConfig: FormConfig = [
     headerClassName: "text-violet-500",
     children: [
       {
-        id: "_",
+        id: "PromoTypeId",
         label: "نحوه ی آشنایی با موسسه",
         type: "select",
         options: [
@@ -163,7 +164,7 @@ export const athleteListFormConfig: FormConfig = [
         colSpan: 6,
       },
       {
-        id: "__",
+        id: "IntroducerCode",
         label: "معرف",
         type: "text",
         colSpan: 6,
@@ -179,27 +180,27 @@ export const athleteListFormConfig: FormConfig = [
     headerClassName: "text-orange-500",
     children: [
       {
-        id: "insuranceNumber",
+        id: "InsuranceNumber",
         label: "شماره بیمه",
         type: "text",
-        colSpan: 6,
+        colSpan: 4,
       },
       {
-        id: "insuranceDate",
+        id: "InsuranceExpirationDate",
         label: "تاریخ اعتبار بیمه",
         type: "date",
-        colSpan: 6,
+        colSpan: 4,
       },
       {
-        id: "insuranceN",
+        id: "InsuranceRenewalType",
         label: "وضعیت تمدید بیمه",
         type: "select",
         options: [
           { value: "1", label: "پیش فرض" },
-          { value: "1", label: "تمدید" },
-          { value: "1", label: "انصراف از تمدید" },
+          { value: "2", label: "تمدید" },
+          { value: "3", label: "انصراف از تمدید" },
         ],
-        colSpan: 6,
+        colSpan: 4,
       },
     ],
   },
@@ -212,15 +213,16 @@ export const athleteListFormConfig: FormConfig = [
     headerClassName: "text-pink-500",
     children: [
       {
-        id: "shirtNumber",
-        label: "شماره پیراهن",
+        id: "ShirtNumber",
+        label: "",
+        placeholder: "شماره پیراهن",
         type: "number",
         colSpan: 6,
       },
     ],
   },
   {
-    id: "password",
+    id: "password-section",
     type: "section",
     title: "رمز عبور",
     icon: "Lock",
@@ -228,16 +230,36 @@ export const athleteListFormConfig: FormConfig = [
     headerClassName: "text-amber-500",
     children: [
       {
-        id: "password",
+        id: "Password",
         label: "رمز عبور",
         type: "password",
         colSpan: 6,
+        required: true,
       },
       {
-        id: "passwordAgain",
+        id: "ConfirmPassword",
         label: "تکرار رمز عبور",
         type: "password",
         colSpan: 6,
+        required: true,
+      },
+    ],
+  },
+  {
+    id: "birthday-gift-section",
+    type: "section",
+    title: "هدیه تولد",
+    icon: "Cake",
+    wrapperVariant: "card",
+    headerClassName: "text-teal-500",
+    visible: false,
+    children: [
+      {
+        id: "BirthdayGiftId",
+        label: "",
+        placeholder: "هدیه روز تولد",
+        type: "select",
+        colSpan: 12,
       },
     ],
   },

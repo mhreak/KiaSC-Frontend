@@ -1,3 +1,5 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Installment {
   id: string;
   athlete: string;
@@ -8,6 +10,21 @@ export interface Installment {
   status: "settled" | "unsettled" | "deleted";
   settlementDate: string;
 }
+
+export interface InstallmentGetListParams extends BaseParams {
+  FilterTermId?: string;
+  FilterCourseId?: string;
+  FilterAthleteId?: string;
+  FilterState?: string;
+  FilterAmountFrom?: string;
+  FilterAmountTo?: string;
+  FilterInstallmentDateFrom?: string;
+  FilterInstallmentDateTo?: string;
+  FilterPayDateFrom?: string;
+  FilterPayDateTo?: string;
+}
+
+export interface InstallmentGet {}
 
 export interface InstallmentItem {
   id: string;

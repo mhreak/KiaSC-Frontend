@@ -45,4 +45,6 @@ export const SIDEBAR_ITEM_LINKS = {
   generalSettings: "/settings/general-settings",
   smsSettings: "/settings/sms-settings",
   messagingSettings: "/settings/messaging-settings",
+  athleteExcelReport: "/athlete-list/excel-report",
+  personExcelReport: "/person-list/excel-report",
 };

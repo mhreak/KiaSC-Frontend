@@ -1,4 +1,15 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Sport {
-  id: string;
-  name: string;
+  SportId: number;
+  SportName: string;
+}
+
+export interface SportGetListParams extends BaseParams {
+  FilterSportName?: string;
+}
+
+export interface SportGet {
+  SportId: number;
+  SportName: string;
 }

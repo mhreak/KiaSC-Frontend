@@ -6,44 +6,69 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
-import { useRef, useState } from "react";
-import { Gift } from "@/types/api/endpointTypes/birthdays.types";
+import { useEffect, useRef, useState } from "react";
+import {
+  Gift,
+  GiftGetListParams,
+} from "@/types/api/endpointTypes/birthdays.types";
 import { giftsListFormConfig } from "./giftsListFormConfig";
 import { useTransitionRouter } from "next-view-transitions";
 import { FormMode } from "@/components/formBuilder/types";
-
-const sampleData: Gift[] = [
-  {
-    id: "ethdfh-aejfaek",
-    name: "تولد",
-    status: "enabled",
-  },
-];
+import { useApi } from "@/hooks/useApi";
+import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import { birthdayGiftApi } from "@/api/services/ApiService/birthdayGiftApi";
+import { createPaginationMeta } from "@/utils/utillityFunctions";
+import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
+import { giftListFilterConfig } from "./giftListFilterConfig";
+import {
+  currencyFormatter,
+  numberFormatter,
+  statusFormatter,
+} from "@/components/ui/data-table/formatters";
 
 export default function GiftsListPage() {
   const formDrawerRef = useRef<FormDrawerRef>(null);
+
   const [formMode, setFormMode] = useState<FormMode>("add");
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [filterItems, setFilterItems] = useState<GiftGetListParams>({});
+
   const router = useTransitionRouter();
+
+  const {
+    data: allGiftsData,
+    isLoading: getListLoading,
+    execute: getListGifts,
+  } = useApi<APIGetTemplate<Gift[]>, GiftGetListParams>(
+    birthdayGiftApi.getList,
+  );
+
+  useEffect(() => {
+    getListGifts();
+  }, []);
 
   const giftsListColumns: ColumnDef<Gift>[] = [
     {
-      accessorKey: "id",
+      accessorKey: "GiftId",
       header: "شناسۀ هدیه",
     },
     {
-      accessorKey: "name",
+      accessorKey: "GiftName",
       header: "نام هدیه",
     },
     {
-      accessorKey: "status",
+      accessorKey: "Amount",
+      header: "مبلغ شارژ کیف پول",
+      meta: {
+        formatter: currencyFormatter,
+      },
+    },
+    {
+      accessorKey: "Active",
       header: "وضعیت",
-      cell: ({ row }) => {
-        switch (row.original.status) {
-          case "enabled":
-            return "فعال";
-          case "disabled":
-            return "غیرفعال";
-        }
+      meta: {
+        formatter: statusFormatter,
       },
     },
     {
@@ -65,7 +90,7 @@ export default function GiftsListPage() {
               label: "ورزشکاران",
               onClick: () => {
                 router.push(
-                  `/birthdays/gifts-list/gift-athlete-list/${row.original.id}`,
+                  `/birthdays/gifts-list/gift-athlete-list/${row.original.GiftId}`,
                 );
               },
             },
@@ -77,7 +102,46 @@ export default function GiftsListPage() {
 
   return (
     <div className="space-y-5">
-      <DataTable columns={giftsListColumns} data={sampleData} mode="filter" />
+      <FilterRenderer
+        config={giftListFilterConfig}
+        onApplyFilters={(filterData) => {
+          setFilterItems(filterData);
+          setPage(1);
+          getListGifts({
+            ...filterData,
+            PageNumber: 1,
+            PageSize: pageSize,
+          });
+        }}
+      />
+      <DataTable
+        columns={giftsListColumns}
+        data={allGiftsData?.Items ?? []}
+        mode="filter"
+        paginationMeta={createPaginationMeta(allGiftsData)}
+        isLoading={getListLoading}
+        onPageChanged={(currentPage) => {
+          setPage(currentPage);
+          getListGifts({
+            ...filterItems,
+            PageNumber: currentPage,
+            PageSize: pageSize,
+          });
+        }}
+        onPageSizeChanged={(currentPageSize) => {
+          setPageSize(currentPageSize);
+          setPage(1);
+          getListGifts({
+            ...filterItems,
+            PageNumber: 1,
+            PageSize: currentPageSize,
+          });
+        }}
+        onRefresh={() => {
+          setFilterItems({});
+          getListGifts({ PageNumber: page, PageSize: pageSize });
+        }}
+      />
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
           <FormDrawer

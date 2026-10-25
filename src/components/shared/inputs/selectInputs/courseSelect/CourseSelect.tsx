@@ -5,18 +5,11 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CourseSelectDialog } from "./CourseSelectDialog";
-
-export interface Course {
-  id: string;
-  name: string;
-  sport: string;
-  term: string;
-  gender: 'male' | 'female';
-}
+import { Course } from "@/types/api/endpointTypes/course.types";
 
 interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
   value: string[];
-  onChange: (value: string[]) => void;
+  onChange: (value: number[]) => void;
   className?: string;
   onClear?: () => void;
   disabled?: boolean;
@@ -36,16 +29,16 @@ export function CourseSelect({
 
   const handleSelectionChange = (courses: Course[]) => {
     setSelectedCourses(courses);
-    onChange(courses.map((course) => course.id));
+    onChange(courses.map((course) => course.CourseId));
   };
 
-  const handleRemove = (courseId: string) => {
+  const handleRemove = (courseId: number) => {
     const newCourses = selectedCourses.filter(
-      (course) => course.id !== courseId,
+      (course) => course.CourseId !== courseId,
     );
 
     setSelectedCourses(newCourses);
-    onChange(newCourses.map((course) => course.id));
+    onChange(newCourses.map((course) => course.CourseId));
 
     if (newCourses.length === 0) {
       onClear?.();
@@ -71,15 +64,15 @@ export function CourseSelect({
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {selectedCourses.map((course) => (
           <div
-            key={course.id}
+            key={course.CourseId}
             className="flex items-center text-white gap-1 rounded-lg bg-secondary px-2.5 py-1.5 text-sm font-medium"
           >
-            <span>{course.name}</span>
+            <span>{course.CourseName}</span>
 
             {!disabled && !readOnly && (
               <button
                 type="button"
-                onClick={() => handleRemove(course.id)}
+                onClick={() => handleRemove(course.CourseId)}
                 className="flex size-5 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               >
                 <X className="size-3.5 cursor-pointer" />

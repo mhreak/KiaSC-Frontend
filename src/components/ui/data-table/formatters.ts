@@ -26,3 +26,13 @@ export const percentFormatter = (value: unknown) => {
 export const dateFormatter = (value: unknown) => {
   return toPersianDigits(toJalaliDate(String(value) || ""));
 };
+
+export const genderFormatter = (value: unknown) => {
+  if (value) return "آقا";
+  else return "خانم";
+};
+
+export const statusFormatter = (value: unknown) => {
+  if (value) return "فعال";
+  else return "غیرفعال";
+};

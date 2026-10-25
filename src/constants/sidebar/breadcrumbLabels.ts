@@ -55,4 +55,5 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "general-settings": "تنظیمات اصلی",
   "sms-settings": "تنظیمات پنل پیامک",
   "messaging-settings": "تنظیمات اطلاع‌رسانی",
+  "excel-report": "گزارش ساز اکسل",
 };

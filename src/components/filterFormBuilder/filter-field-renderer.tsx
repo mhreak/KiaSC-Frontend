@@ -98,11 +98,16 @@ export function FilterFieldRenderer({
               return (
                 <Select onValueChange={onChange} value={value ?? undefined}>
                   <SelectTrigger id={field.id} size="sm">
-                    <SelectValue placeholder={field.placeholder ?? "انتخاب..."}>
+                    <SelectValue
+                      placeholder={field.placeholder ?? "انتخاب کنید..."}
+                    >
                       {selectedOption ? selectedOption.label : null}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem key={"undefined"} value={""}>
+                      {"انتخاب کنید..."}
+                    </SelectItem>
                     {field.options?.map((option) => (
                       <SelectItem
                         key={option.value}
@@ -239,6 +244,9 @@ export function FilterFieldRenderer({
                   </Label>
                 </div>
               );
+
+            case "invisible":
+              return <div />;
 
             default:
               return <></>;

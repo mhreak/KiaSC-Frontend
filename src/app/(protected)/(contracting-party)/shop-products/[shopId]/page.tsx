@@ -9,25 +9,22 @@ import {
   currencyFormatter,
   numberFormatter,
 } from "@/components/ui/data-table/formatters";
-import { ShopProduct } from "@/types/api/endpointTypes/shopProduct";
+import {
+  ShopProduct,
+  ShopProductGetListParams,
+} from "@/types/api/endpointTypes/shopProduct";
 import { ColumnDef } from "@tanstack/react-table";
 import { FileChartColumn } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { shopProductFormConfig } from "../shopProductFormConfig";
 import { useParams } from "next/navigation";
 import BackButton from "@/components/shared/BackButton";
-
-const sampleData: ShopProduct[] = [
-  {
-    id: "asedf-dguerj",
-    name: "کفش سالنی",
-    shopName: "اسپرت کیا",
-    price: 1000000,
-    discountPercent: 20,
-    status: true,
-    statusStr: "فعال",
-  },
-];
+import { useApi } from "@/hooks/useApi";
+import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import { shopProductApi } from "@/api/services/ApiService/shopProductApi";
+import { createPaginationMeta } from "@/utils/utillityFunctions";
+import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
+import { shopProductFilterConfig } from "../shopProductFilterConfig";
 
 export default function ShopProductPage() {
   const { shopId } = useParams<{ shopId: string }>();
@@ -35,6 +32,21 @@ export default function ShopProductPage() {
   const formDrawerRef = useRef<FormDrawerRef>(null);
 
   const [formMode, setFormMode] = useState<FormMode>("add");
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [filterItems, setFilterItems] = useState<ShopProductGetListParams>({});
+
+  const {
+    data: allShopProductsData,
+    isLoading: getListLoading,
+    execute: getListShopProducts,
+  } = useApi<APIGetTemplate<ShopProduct[]>, ShopProductGetListParams>(
+    shopProductApi.getList,
+  );
+
+  useEffect(() => {
+    getListShopProducts({ FilterShopId: shopId });
+  }, []);
 
   const shopProductColumns: ColumnDef<ShopProduct>[] = [
     {
@@ -81,7 +93,34 @@ export default function ShopProductPage() {
 
   return (
     <div className="space-y-5">
-      <DataTable columns={shopProductColumns} data={sampleData} />
+      <DataTable
+        columns={shopProductColumns}
+        data={allShopProductsData?.Items ?? []}
+        mode="filter"
+        paginationMeta={createPaginationMeta(allShopProductsData)}
+        isLoading={getListLoading}
+        onPageChanged={(currentPage) => {
+          setPage(currentPage);
+          getListShopProducts({
+            ...filterItems,
+            PageNumber: currentPage,
+            PageSize: pageSize,
+          });
+        }}
+        onPageSizeChanged={(currentPageSize) => {
+          setPageSize(currentPageSize);
+          setPage(1);
+          getListShopProducts({
+            ...filterItems,
+            PageNumber: 1,
+            PageSize: currentPageSize,
+          });
+        }}
+        onRefresh={() => {
+          setFilterItems({});
+          getListShopProducts({ PageNumber: page, PageSize: pageSize });
+        }}
+      />
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
           <FormDrawer

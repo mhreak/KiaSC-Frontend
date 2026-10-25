@@ -1,4 +1,8 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface FileType {
-  id: string;
-  name: string;
+  FileTypeId: number;
+  FileTypeName: string;
 }
+
+export interface FileTypeGetListParams extends BaseParams {}

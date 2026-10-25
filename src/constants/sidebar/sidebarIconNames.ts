@@ -56,4 +56,5 @@ export const SIDEBAR_ICON_NAMES: Record<string, string> = {
   "general-settings": "/icon/ic-setting.png",
   "sms-settings": "/icon/ic-setting.png",
   "messaging-settings": "/icon/ic-message.png",
+  "excel-report": "/icon/ic-file.png",
 };

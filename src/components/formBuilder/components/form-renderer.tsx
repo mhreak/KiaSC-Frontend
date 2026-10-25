@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -24,6 +24,8 @@ import { cn } from "@/lib/utils";
 interface FormRendererProps {
   config: FormConfig;
   onSubmit: (data: any) => void;
+
+  onInvalid?: SubmitErrorHandler<Record<string, any>> | undefined;
 
   onFieldChange?: (
     fieldId: string,
@@ -67,6 +69,7 @@ function flattenFields(nodes: FormNode[]): BaseFieldConfig[] {
 export function FormRenderer({
   config,
   onSubmit,
+  onInvalid,
   onFieldChange,
   submitButtonText = "ثبت فرم",
   onCancel,
@@ -176,7 +179,7 @@ export function FormRenderer({
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(handleFormSubmit)}
+        onSubmit={methods.handleSubmit(handleFormSubmit, onInvalid)}
         className={cn(
           "relative flex flex-col justify-between h-full",
           formClassName,

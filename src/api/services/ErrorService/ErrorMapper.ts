@@ -9,9 +9,12 @@ const handleApiErrorMessage = (
 ): string | undefined => {
   let dataError: string | undefined = undefined;
 
-  if (typeof data?.message === "string") dataError = data?.message;
+  console.log(data);
 
-  return dataError;
+  if (!data.Success) {
+    if (data?.MessageList.length > 0) dataError = data?.MessageList[0];
+    return dataError;
+  }
 };
 
 export class ErrorMapper {

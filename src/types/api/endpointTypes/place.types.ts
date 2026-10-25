@@ -1,6 +1,12 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Place {
-  id: string;
-  name: string;
-  manager: string;
-  rabetName: string;
+  PlaceId: number;
+  PlaceName: string;
+  ManagerName: string | null;
+  ContactPersonName: string | null;
+  Active: boolean;
+}
+export interface PlaceGetListParams extends BaseParams {
+  FilterPlaceName?: string;
 }

@@ -1,9 +1,15 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Person {
-  id: string;
-  fullName: string;
-  fatherName: string;
-  nationalCole: string;
-  gender: number;
-  genderStr: string;
-  ageGroup: string;
+  PersonId: number;
+  FullName: string;
+  Mobile: string;
+  Gender: boolean;
+}
+
+export interface PersonGetListParams extends BaseParams {
+  FilterFullName?: string;
+  FilterNationalCode?: string;
+  FilterMobile?: string;
+  FilterGender?: string;
 }

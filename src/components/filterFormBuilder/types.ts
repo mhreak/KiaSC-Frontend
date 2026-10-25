@@ -9,7 +9,8 @@ export type FilterFieldType =
   | "multiselect"
   | "date"
   | "date-range" // فیلتر بازه تاریخ
-  | "switch";
+  | "switch"
+  | "invisible";
 
 export type FilterOption = FieldOption;
 

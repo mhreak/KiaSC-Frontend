@@ -1,4 +1,11 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Guild {
-  id: string;
-  name: string;
+  SenfId: number;
+  SenfName: string;
+  ShopCount: number;
+}
+
+export interface GuildGetListParams extends BaseParams {
+  FilterSenfName?: string;
 }

@@ -1,7 +1,10 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface PromoType {
-  id: string;
-  name: string;
-  status: boolean;
-  statusStr: string;
-  athletCount: number;
+  PromoTypeId: number;
+  PromoTypeName: string;
+  Active: boolean;
+  AthleteCount: number;
 }
+
+export interface PromoTypeGetListParams extends BaseParams {}

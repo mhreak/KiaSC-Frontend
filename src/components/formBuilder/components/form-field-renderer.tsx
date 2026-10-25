@@ -76,7 +76,6 @@ export function FormFieldRenderer({
   onFieldChange,
 }: Readonly<FormFieldRendererProps>) {
   const { control, setValue, formState } = useFormContext();
-  console.log(formState.errors);
 
   // ۱. مانیتور کردن زنده مقادیر فرم
   const formValues = useWatch({ control }) || {};
@@ -312,6 +311,7 @@ export function FormFieldRenderer({
                     onBlur={onBlur}
                     ref={ref}
                     className={cn(
+                      "h-24",
                       error &&
                         "border-destructive focus-visible:ring-destructive",
                       isReadOnly &&
@@ -323,7 +323,7 @@ export function FormFieldRenderer({
 
               case "checkbox":
                 return (
-                  <div className="flex items-center space-x-2 space-x-reverse pt-2">
+                  <div className="flex items-center gap-2  pt-2">
                     <Checkbox
                       id={field.id}
                       disabled={isDisabled}
@@ -334,7 +334,7 @@ export function FormFieldRenderer({
                     <Label
                       htmlFor={field.id}
                       className={cn(
-                        "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+                        "text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
                         isDisabled && "opacity-50",
                       )}
                     >

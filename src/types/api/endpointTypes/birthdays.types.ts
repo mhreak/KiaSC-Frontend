@@ -1,12 +1,28 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Birthday {
-  id: string;
-  athlete: string;
-  birthDate: string;
-  gift: string;
+  AthleteId: number;
+  AthleteFullName: string;
+  Mobile: string;
+  ShamsiBirthDate: string;
+  BirthDayGiftName: string;
+}
+
+export interface BirthdayGetListParams extends BaseParams {
+  AthleteId?: string;
+  BirthdayMonth?: string;
+  BirthdayDayOfMonth?: string;
+  BirthdayGiftId?: string;
 }
 
 export interface Gift {
-  id: string;
-  name: string;
-  status: "enabled" | "disabled";
+  GiftId: number;
+  GiftName: string;
+  Amount: number;
+  Active: boolean;
+}
+
+export interface GiftGetListParams extends BaseParams {
+  FilterGiftName?: string;
+  FilterActive?: string;
 }

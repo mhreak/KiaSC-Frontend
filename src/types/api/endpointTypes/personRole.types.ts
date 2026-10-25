@@ -1,5 +1,12 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface PersonRole {
-  id: string;
-  roleName: string;
-  sport: string;
+  PersonRoleId: number;
+  PersonRoleName: string;
+  SportName: string;
+}
+
+export interface PersonRoleGetListParams extends BaseParams {
+  FilterRoleName?: string;
+  FilterSportId?: string;
 }

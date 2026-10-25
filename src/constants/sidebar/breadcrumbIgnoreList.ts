@@ -11,4 +11,5 @@ export const BREADCRUMB_IGNORE_LIST = [
   "users",
   "dev-settings",
   "settings",
+  "course-details",
 ];

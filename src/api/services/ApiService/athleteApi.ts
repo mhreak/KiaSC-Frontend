@@ -1,6 +1,9 @@
 import ApiClient from "@/api/ApiClient";
 import { API_ENDPOINT } from "@/constants/api/apiEndpoints";
-import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import {
+  APIAddTemplateResponse,
+  APIGetTemplate,
+} from "@/types/api/commonApiTypes";
 import { API_CONFIG } from "@/config/apiConfig";
 import {
   Athlete,
@@ -19,16 +22,21 @@ export const athleteApi = {
     return client.get<AthleteGet>(`/Get/${params?.id}`);
   },
 
-  //   add: (data?: ContractAdd) => {
-  //     return client.post<APIGetTemplate<Contract>, ContractAdd>("", data);
-  //   },
+  add: (data?: any) => {
+    return client.post<APIAddTemplateResponse<number>, any>("/Add", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 
-  //   edit: (params?: { data: ContractEdit; id: string }) => {
-  //     return client.put<APIGetTemplate<Contract>, ContractEdit>(
-  //       `/${params?.id}`,
-  //       params?.data,
-  //     );
-  //   },
+  edit: (params?: any) => {
+    return client.put<APIAddTemplateResponse, any>(`/Edit`, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
   //   delete: (params?: { id?: string }) => {
   //     return client.delete<APIGetTemplate<null>>(`/${params?.id}`);
   //   },

@@ -1,3 +1,5 @@
+import { BaseParams } from "../commonApiTypes";
+
 export interface Discount {
   id: string;
   name: string;
@@ -12,4 +14,11 @@ export interface DiscountReport {
   status: "removed" | "submitting" | "submitted";
   discountAmount: number;
   finalPrice: number;
+}
+
+export interface DiscountGetListParams extends BaseParams {
+  FilterDiscountCodeType?: string;
+  FilterExpirationDateFrom?: string;
+  FilterExpirationDateTo?: string;
+  FilterActive?: string;
 }

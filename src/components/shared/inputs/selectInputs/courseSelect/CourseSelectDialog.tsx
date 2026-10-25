@@ -16,22 +16,12 @@ import {
 } from "@/components/ui/dialog";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { courseSelectFilterConfig } from "./courseSelectFilterConfig";
-import { Course } from "./CourseSelect";
+import { Course } from "@/types/api/endpointTypes/course.types";
 
 interface Props {
   selectedCourses: Course[];
   onSelectionChange: (courses: Course[]) => void;
 }
-
-const sampleData: Course[] = [
-  {
-    id: "1",
-    name: "بهار 1405",
-    sport: "فوتبال",
-    term: "بهار",
-    gender: "male",
-  },
-];
 
 export function CourseSelectDialog({
   selectedCourses,
@@ -58,7 +48,7 @@ export function CourseSelectDialog({
       accessorKey: "gender",
       header: "جنسیت",
       cell: ({ row }) => {
-        switch (row.original.gender) {
+        switch (row.original.genderStr) {
           case "male":
             return "مرد";
           case "female":
@@ -114,7 +104,7 @@ export function CourseSelectDialog({
         <div className="-mx-4 max-h-[80vh] overflow-y-auto px-4 no-scrollbar">
           <DataTable
             columns={courseColumns}
-            data={sampleData}
+            data={[]}
             selectionMode="multiple"
             mode="modal"
             onPageChanged={() => {}}
