@@ -11,4 +11,8 @@ export interface CourseClasseGetListParams extends BaseParams {
   CourseId?: string;
 }
 
-export interface CourseClassGet {}
+export interface CourseClassGet {
+  CourseClassId: number;
+  ClassName: string;
+  CourseId: number;
+}

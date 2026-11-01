@@ -1,29 +1,38 @@
 "use client";
 
-import { courseClassesApi } from "@/api/services/ApiService/courseClassesApi";
+import { courseClassApi } from "@/api/services/ApiService/courseClassesApi";
 import { FormMode } from "@/components/formBuilder/types";
 import ActionItems from "@/components/shared/ActionItems";
 import BackButton from "@/components/shared/BackButton";
-import { FormDrawerRef } from "@/components/shared/FormDrawer";
+import { FormModal, FormModalRef } from "@/components/shared/FormModal";
 import { DataTable } from "@/components/ui/data-table/data-table";
 import { numberFormatter } from "@/components/ui/data-table/formatters";
 import { useApi } from "@/hooks/useApi";
-import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import { toast } from "@/lib/toast/toast";
+import {
+  APIAddTemplateResponse,
+  APIGetTemplate,
+} from "@/types/api/commonApiTypes";
 import {
   CourseClass,
   CourseClasseGetListParams,
+  CourseClassGet,
 } from "@/types/api/endpointTypes/courseClasses.types";
-import { createPaginationMeta } from "@/utils/utillityFunctions";
+import {
+  createPaginationMeta,
+  generateFormConfig,
+} from "@/utils/utillityFunctions";
 import { ColumnDef } from "@tanstack/react-table";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { courseClassFormConfig } from "./courseClassFormConfig";
 
 export default function CourseClassesPage() {
   const searchParam = useSearchParams();
 
   const courseId = searchParam.get("courseId");
 
-  const formDrawerRef = useRef<FormDrawerRef>(null);
+  const formModalRef = useRef<FormModalRef>(null);
 
   const [formMode, setFormMode] = useState<FormMode>("add");
   const [page, setPage] = useState<number>(1);
@@ -35,12 +44,56 @@ export default function CourseClassesPage() {
     isLoading: getListLoading,
     execute: getListCourseClasses,
   } = useApi<APIGetTemplate<CourseClass[]>, CourseClasseGetListParams>(
-    courseClassesApi.getList,
+    courseClassApi.getList,
   );
+
+  const {
+    data: courseClassData,
+    isLoading: getLoading,
+    execute: getcourseClass,
+  } = useApi<CourseClassGet, { id: number }>(courseClassApi.get);
+
+  const { isLoading: addLoading, execute: addCourseClass } = useApi<
+    APIAddTemplateResponse<number>,
+    any
+  >(courseClassApi.add, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formModalRef.current?.close();
+      getListCourseClasses({
+        ...filterItems,
+        CourseId: courseId || undefined,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  const { isLoading: editLoading, execute: editCourseClass } = useApi<
+    APIAddTemplateResponse,
+    any
+  >(courseClassApi.edit, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formModalRef.current?.close();
+      getListCourseClasses({
+        ...filterItems,
+        CourseId: courseId || undefined,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  const isSubmitting = addLoading || editLoading;
 
   useEffect(() => {
     getListCourseClasses({ CourseId: courseId || undefined });
   }, []);
+
+  const formConfig = generateFormConfig(courseClassFormConfig, {
+    values: formMode === "edit" ? courseClassData || undefined : undefined,
+  });
 
   const tableColumns: ColumnDef<CourseClass>[] = [
     {
@@ -69,7 +122,8 @@ export default function CourseClassesPage() {
           row={row}
           onEdit={() => {
             setFormMode("edit");
-            formDrawerRef.current?.open();
+            getcourseClass({ id: row.original.CourseClassId });
+            formModalRef.current?.open();
           }}
         />
       ),
@@ -113,15 +167,18 @@ export default function CourseClassesPage() {
       />
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
-          {/* <FormDrawer
-            ref={formDrawerRef}
+          <FormModal
+            ref={formModalRef}
             formConfig={formConfig}
             onSubmit={(data) => {
               if (formMode === "add") {
-                console.log(data);
-                addAthlete(data);
+                addCourseClass({ ...data, CourseId: courseId || undefined });
               } else if (formMode === "edit") {
-                editAthlete({ AthleteId: athleteData?.AthleteId, ...data });
+                editCourseClass({
+                  ...data,
+                  CourseClassId: courseClassData?.CourseClassId,
+                  CourseId: courseId || undefined,
+                });
               }
             }}
             drawerTitle="ورزشکار"
@@ -131,10 +188,7 @@ export default function CourseClassesPage() {
             }}
             isSubmitting={isSubmitting}
             isLoading={getLoading}
-            onInvalid={(errors) => {
-              console.log(errors);
-            }}
-          /> */}
+          />
         </div>
         <BackButton />
       </div>

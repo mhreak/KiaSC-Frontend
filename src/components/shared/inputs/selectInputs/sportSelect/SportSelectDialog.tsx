@@ -16,47 +16,12 @@ import {
 } from "@/components/ui/dialog";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { sportSelectFilterConfig } from "./sportSelectFilterConfig";
-import { Sport } from "./SportSelect";
+import { Sport } from "@/types/api/endpointTypes/sport.types";
 
 interface Props {
   selectedSports: Sport[];
   onSelectionChange: (sports: Sport[]) => void;
 }
-
-const sampleData: Sport[] = [
-  {
-    id: "1",
-    name: "فوتبال",
-  },
-  {
-    id: "2",
-    name: "والیبال",
-  },
-  {
-    id: "3",
-    name: "بسکتبال",
-  },
-  {
-    id: "4",
-    name: "شنا",
-  },
-  {
-    id: "5",
-    name: "کشتی",
-  },
-  {
-    id: "6",
-    name: "کاراته",
-  },
-  {
-    id: "7",
-    name: "تکواندو",
-  },
-  {
-    id: "8",
-    name: "جودو",
-  },
-];
 
 export function SportSelectDialog({
   selectedSports,
@@ -123,7 +88,7 @@ export function SportSelectDialog({
         <div className="-mx-4 max-h-[80vh] overflow-y-auto px-4 no-scrollbar">
           <DataTable
             columns={sportColumns}
-            data={sampleData}
+            data={[]}
             selectionMode="multiple"
             mode="modal"
             onPageChanged={() => {}}

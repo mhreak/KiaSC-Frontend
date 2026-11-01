@@ -56,4 +56,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   "sms-settings": "تنظیمات پنل پیامک",
   "messaging-settings": "تنظیمات اطلاع‌رسانی",
   "excel-report": "گزارش ساز اکسل",
+  "course-classes": "کلاس های دوره",
+  "course-sessions": "جلسه های دوره",
+  "course-register-option": "گزینه های ثبت نامی دوره",
 };

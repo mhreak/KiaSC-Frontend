@@ -168,6 +168,7 @@ export const FormModal = forwardRef<FormModalRef, Props>(
                 isSubmitting={isSubmitting}
                 formMode={formMode}
                 buttonsContainerClassName="mt-5"
+                disableSubmitButton={isSubmitting}
               />
             )}
 

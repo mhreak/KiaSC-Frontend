@@ -69,7 +69,7 @@ export default function OtpPage() {
         </span>
       </div>
       <div className="h-full w-full flex flex-col justify-end">
-        <Button variant={"gradient"} type="submit" className={"mt-auto"}>
+        <Button type="submit" className={"mt-auto"}>
           ورود
         </Button>
       </div>

@@ -12,7 +12,8 @@ const handleApiErrorMessage = (
   console.log(data);
 
   if (!data.Success) {
-    if (data?.MessageList.length > 0) dataError = data?.MessageList[0];
+    if (Array.isArray(data.MessageList) && data?.MessageList?.length > 0)
+      dataError = data?.MessageList[0];
     return dataError;
   }
 };

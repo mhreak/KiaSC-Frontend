@@ -125,7 +125,7 @@ export default function NeshanLocationPicker() {
           z-30
         "
       >
-        <Button className="w-full" variant={"gradient"} onClick={saveLocation}>
+        <Button className="w-full" onClick={saveLocation}>
           ذخیره موقعیت
         </Button>
       </div>

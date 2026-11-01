@@ -15,11 +15,18 @@ import {
 import { discountFormConfig } from "./discountsFormConfig";
 import { FormMode } from "@/components/formBuilder/types";
 import { useApi } from "./../../../hooks/useApi";
-import { APIGetTemplate } from "@/types/api/commonApiTypes";
-import { discountCodeApi } from "@/api/services/ApiService/discountCode";
-import { createPaginationMeta } from "@/utils/utillityFunctions";
+import {
+  APIAddTemplateResponse,
+  APIGetTemplate,
+} from "@/types/api/commonApiTypes";
+import { discountCodeApi } from "@/api/services/ApiService/discountCodeApi";
+import {
+  createPaginationMeta,
+  generateFormConfig,
+} from "@/utils/utillityFunctions";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { discountFilterConfig } from "./discountFilterConfig";
+import { toast } from "@/lib/toast/toast";
 
 export default function DiscountsPage() {
   const formDrawerRef = useRef<FormDrawerRef>(null);
@@ -38,6 +45,45 @@ export default function DiscountsPage() {
   } = useApi<APIGetTemplate<Discount[]>, DiscountGetListParams>(
     discountCodeApi.getList,
   );
+
+  // const {
+  //   data: athleteData,
+  //   isLoading: getLoading,
+  //   execute: getAthlete,
+  // } = useApi<AthleteGet, { id: number }>(athleteApi.get);
+
+  const { isLoading: addLoading, execute: addDiscountCode } = useApi<
+    APIAddTemplateResponse<number>,
+    any
+  >(discountCodeApi.add, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formDrawerRef.current?.close();
+      getListDiscount({
+        ...filterItems,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  // const { isLoading: editLoading, execute: editAthlete } = useApi<
+  //   APIAddTemplateResponse,
+  //   any
+  // >(athleteApi.edit, {
+  //   onSuccess(response) {
+  //     toast.success(response.MessageList[0] || "");
+  //     formDrawerRef.current?.close();
+  //     getListAthletes({
+  //       ...filterItems,
+  //       PageNumber: page,
+  //       PageSize: pageSize,
+  //     });
+  //   },
+  // });
+
+  const isSubmitting = addLoading;
+  // || editLoading;
 
   useEffect(() => {
     getListDiscount();
@@ -89,6 +135,8 @@ export default function DiscountsPage() {
     },
   ];
 
+  const formConfig = generateFormConfig(discountFormConfig, {});
+
   return (
     <div className="space-y-5">
       <FilterRenderer
@@ -135,10 +183,16 @@ export default function DiscountsPage() {
         <div className="flex flex-row items-center gap-5">
           <FormDrawer
             ref={formDrawerRef}
-            formConfig={discountFormConfig}
+            formConfig={formConfig}
+            onSubmit={(data) => {
+              if (formMode === "add") {
+                addDiscountCode(data);
+              }
+            }}
             drawerTitle="کد تخفیف"
             formMode={formMode}
             onTriggerButtonClick={() => setFormMode("add")}
+            isSubmitting={isSubmitting}
           />
           <Button variant={"warning"}>
             <FileChartColumn />

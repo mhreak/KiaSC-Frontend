@@ -155,7 +155,7 @@ export default function CoursesPage() {
           row={row}
           onView={() => {
             router.push(
-              `/courses/course-details/${row.original.CourseId}?name=${"منوی دسترسی " + row.original.CourseName}`,
+              `/courses/course-details?courseId=${row.original.CourseId}&name=${"منوی دسترسی " + row.original.CourseName}`,
             );
           }}
         />

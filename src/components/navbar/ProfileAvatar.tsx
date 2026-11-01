@@ -16,7 +16,7 @@ const ProfileAvatar = () => {
         render={
           <Button
             size="icon-lg"
-            className="rounded-full bg-secondary flex-center p-3 cursor-pointer size-12"
+            className="rounded-full flex-center p-3  size-12"
           >
             <User2 className="text-secondary-foreground size-6" />
           </Button>
@@ -33,7 +33,10 @@ const ProfileAvatar = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className={"text-destructive flex justify-between"}>
+          <DropdownMenuItem
+            className={"text-destructive flex justify-between"}
+            variant="destructive"
+          >
             خروج از حساب کاربری
             <Button size={"icon"} variant={"destructive"}>
               <LogOut className="size-4" />

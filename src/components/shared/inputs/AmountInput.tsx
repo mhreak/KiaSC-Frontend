@@ -11,7 +11,7 @@ import {
 } from "@/utils/numberConversions";
 
 interface AmountInputProps extends Omit<
-  React.ComponentProps<"input">, 
+  React.ComponentProps<"input">,
   "value" | "onChange"
 > {
   value?: string;
@@ -58,7 +58,6 @@ export function AmountInput({
         inputMode="numeric"
         dir="ltr"
         onChange={handleChange}
-        size={"default"}
       />
       <p className="text-xs text-muted-foreground mt-1">
         {toPersianLetters(

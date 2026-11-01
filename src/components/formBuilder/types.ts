@@ -23,6 +23,7 @@ export type FieldType =
   | "image"
   | "postalcode"
   | "athleteSearch"
+  | "courseSearch"
   | "sportSelect"
   | "termSelect"
   | "courseSelect"
@@ -76,7 +77,7 @@ export interface BaseFieldConfig {
 
   displayName?: string;
 
-  onClick?: () => void;
+  onClick?: (formValues: Record<string, any>) => void;
 
   isLoading?: boolean;
 }

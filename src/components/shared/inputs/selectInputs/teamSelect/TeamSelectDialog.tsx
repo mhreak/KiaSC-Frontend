@@ -17,20 +17,12 @@ import {
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { teamSelectFilterConfig } from "./teamSelectFilterConfig";
 import { Team } from "@/types/api/endpointTypes/team.types";
+import { genderFormatter } from "@/components/ui/data-table/formatters";
 
 interface Props {
   selectedTeams: Team[];
   onSelectionChange: (teams: Team[]) => void;
 }
-
-const sampleData: Team[] = [
-  {
-    id: "1",
-    name: "زیر 13 سال",
-    sport: "فوتبال",
-    gender: "male",
-  },
-];
 
 export function TeamSelectDialog({
   selectedTeams,
@@ -52,13 +44,8 @@ export function TeamSelectDialog({
     {
       accessorKey: "gender",
       header: "جنسیت",
-      cell: ({ row }) => {
-        switch (row.original.gender) {
-          case "male":
-            return "مرد";
-          case "female":
-            return "زن";
-        }
+      meta: {
+        formatter: genderFormatter,
       },
     },
   ];
@@ -109,7 +96,7 @@ export function TeamSelectDialog({
         <div className="-mx-4 max-h-[80vh] overflow-y-auto px-4 no-scrollbar">
           <DataTable
             columns={teamColumns}
-            data={sampleData}
+            data={[]}
             selectionMode="multiple"
             mode="modal"
             onPageChanged={() => {}}

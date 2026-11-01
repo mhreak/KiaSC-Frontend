@@ -10,16 +10,6 @@ import { useTransitionRouter } from "next-view-transitions";
 import { Course } from "@/types/api/endpointTypes/course.types";
 import { courseFilterConfig } from "../../courses/courseFilterConfig";
 
-const sampleData: Course[] = [
-  {
-    id: "ethdfh-aejfaek",
-    courseName: "پاییز و زمستان ۱۴۰۵",
-    term: "پاییز و زمستان",
-    sport: "فوتبال",
-    genderStr: "مرد",
-  },
-];
-
 export default function ReportCourseListPage() {
   const router = useTransitionRouter();
 
@@ -49,7 +39,7 @@ export default function ReportCourseListPage() {
           row={row}
           onView={() => {
             router.push(
-              `/installment/report-course-list/report-course-details/${row.original.id}`,
+              `/installment/report-course-list/report-course-details/${row.original.CourseId}`,
             );
           }}
         />
@@ -60,11 +50,7 @@ export default function ReportCourseListPage() {
   return (
     <div className="space-y-5">
       <FilterRenderer config={courseFilterConfig} onApplyFilters={() => {}} />
-      <DataTable
-        columns={reportCourseListColumns}
-        data={sampleData}
-        mode="filter"
-      />
+      <DataTable columns={reportCourseListColumns} data={[]} mode="filter" />
       <div className="flex-between">
         <div className="flex flex-row items-center gap-5">
           <Button variant={"warning"}>

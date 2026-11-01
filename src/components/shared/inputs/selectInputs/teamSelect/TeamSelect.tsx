@@ -8,8 +8,8 @@ import { TeamSelectDialog } from "./TeamSelectDialog";
 import { Team } from "@/types/api/endpointTypes/team.types";
 
 interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: number[];
+  onChange: (value: number[]) => void;
   className?: string;
   onClear?: () => void;
   disabled?: boolean;
@@ -29,14 +29,14 @@ export function TeamSelect({
 
   const handleSelectionChange = (teams: Team[]) => {
     setSelectedTeams(teams);
-    onChange(teams.map((team) => team.id));
+    onChange(teams.map((team) => team.TeamId));
   };
 
-  const handleRemove = (teamId: string) => {
-    const newTeams = selectedTeams.filter((team) => team.id !== teamId);
+  const handleRemove = (teamId: number) => {
+    const newTeams = selectedTeams.filter((team) => team.TeamId !== teamId);
 
     setSelectedTeams(newTeams);
-    onChange(newTeams.map((team) => team.id));
+    onChange(newTeams.map((team) => team.TeamId));
 
     if (newTeams.length === 0) {
       onClear?.();
@@ -62,15 +62,15 @@ export function TeamSelect({
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {selectedTeams.map((team) => (
           <div
-            key={team.id}
+            key={team.TeamId}
             className="flex items-center text-white gap-1 rounded-lg bg-secondary px-2.5 py-1.5 text-sm font-medium"
           >
-            <span>{team.name}</span>
+            <span>{team.TeamName}</span>
 
             {!disabled && !readOnly && (
               <button
                 type="button"
-                onClick={() => handleRemove(team.id)}
+                onClick={() => handleRemove(team.TeamId)}
                 className="flex size-5 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               >
                 <X className="size-3.5 cursor-pointer" />

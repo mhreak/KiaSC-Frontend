@@ -4,9 +4,9 @@ import { FormDrawer, FormDrawerRef } from "@/components/shared/FormDrawer";
 import ImageLableCard, {
   ImageLableCardProps,
 } from "@/components/shared/ImageLableCard";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
-import { courseFormConfig } from "../../courseFormConfig";
+import { courseFormConfig } from "../courseFormConfig";
 import BackButton from "@/components/shared/BackButton";
 import { generateFormConfig, toFieldOptions } from "@/utils/utillityFunctions";
 import { useApi } from "@/hooks/useApi";
@@ -36,7 +36,10 @@ import {
 import { CourseGet } from "@/types/api/endpointTypes/course.types";
 
 export default function CourseDetailsPage() {
-  const { courseId } = useParams<{ courseId: string }>();
+  const searchParams = useSearchParams();
+
+  const courseId = searchParams.get("courseId");
+  const breadCrumbName = searchParams.get("name");
 
   const formDrawerRef = useRef<FormDrawerRef>(null);
 
@@ -97,16 +100,19 @@ export default function CourseDetailsPage() {
       imageSrc: "/icon/ic-course-session.png",
       label: "جلسات",
       themeColor: "emerald",
+      link: `/courses/course-details/course-sessions?courseId=${courseId}`,
     },
     {
       imageSrc: "/icon/ic-options.png",
       label: "گزینه های ثبت نامی",
       themeColor: "blue",
+      link: `/courses/course-details/course-register-option?courseId=${courseId}`,
     },
     {
       imageSrc: "/icon/ic-athlete.png",
       label: "ورزش آموزان",
       themeColor: "red",
+      link: `/courses/course-details/athlete-in-course?courseId=${courseId}`,
     },
     {
       imageSrc: "/icon/ic-coach.png",

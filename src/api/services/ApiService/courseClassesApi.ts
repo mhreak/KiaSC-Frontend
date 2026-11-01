@@ -15,7 +15,7 @@ const client = new ApiClient(
   API_CONFIG.panel.admin + API_ENDPOINT.courseClasses,
 );
 
-export const courseClassesApi = {
+export const courseClassApi = {
   getList: (params?: CourseClasseGetListParams) => {
     return client.get<APIGetTemplate<CourseClass[]>>("/GetList", params);
   },

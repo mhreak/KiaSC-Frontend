@@ -5,19 +5,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import BackButton from "@/components/shared/BackButton";
 import { Athlete } from "@/types/api/endpointTypes/athlete.types";
 
-const sampleData: Athlete[] = [
-  {
-    id: "ivsjekflisjdjj-aejfaek",
-    fullName: "مبین عاطفی",
-    teamName: "زیر ۱۳ سال",
-    ageGroup: "",
-    fatherName: "",
-    gender: 1,
-    genderStr: "",
-    nationalCole: "",
-  },
-];
-
 export default function AthletesWithRolePage() {
   const athleteColumns: ColumnDef<Athlete>[] = [
     {
@@ -31,7 +18,7 @@ export default function AthletesWithRolePage() {
   ];
   return (
     <div className="space-y-5">
-      <DataTable columns={athleteColumns} data={sampleData} />
+      <DataTable columns={athleteColumns} data={[]} />
       <div className="flex-between">
         <div />
         <BackButton />

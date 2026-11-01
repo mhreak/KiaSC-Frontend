@@ -8,8 +8,8 @@ import { TermSelectDialog } from "./TermSelectDialog";
 import { Term } from "@/types/api/endpointTypes/term.types";
 
 interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: number[];
+  onChange: (value: number[]) => void;
   className?: string;
   onClear?: () => void;
   disabled?: boolean;
@@ -29,14 +29,14 @@ export function TermSelect({
 
   const handleSelectionChange = (terms: Term[]) => {
     setSelectedTerms(terms);
-    onChange(terms.map((term) => term.id));
+    onChange(terms.map((term) => term.TermId));
   };
 
-  const handleRemove = (termId: string) => {
-    const newTerms = selectedTerms.filter((term) => term.id !== termId);
+  const handleRemove = (termId: number) => {
+    const newTerms = selectedTerms.filter((term) => term.TermId !== termId);
 
     setSelectedTerms(newTerms);
-    onChange(newTerms.map((term) => term.id));
+    onChange(newTerms.map((term) => term.TermId));
 
     if (newTerms.length === 0) {
       onClear?.();
@@ -62,15 +62,15 @@ export function TermSelect({
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {selectedTerms.map((term) => (
           <div
-            key={term.id}
+            key={term.TermId}
             className="flex items-center text-white gap-1 rounded-lg bg-secondary px-2.5 py-1.5 text-sm font-medium"
           >
-            <span>{term.name}</span>
+            <span>{term.TermName}</span>
 
             {!disabled && !readOnly && (
               <button
                 type="button"
-                onClick={() => handleRemove(term.id)}
+                onClick={() => handleRemove(term.TermId)}
                 className="flex size-5 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               >
                 <X className="size-3.5 cursor-pointer" />

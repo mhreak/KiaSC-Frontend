@@ -60,7 +60,6 @@ const DesktopHeader = () => {
         </div>
         <Link href={"/ai-assistant/gift-assistant"}>
           <Button
-            variant={"gradient"}
             size={"icon-lg"}
             className="[&_svg:not([class*='size-'])]:size-8"
           >

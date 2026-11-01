@@ -22,3 +22,12 @@ export interface DiscountGetListParams extends BaseParams {
   FilterExpirationDateTo?: string;
   FilterActive?: string;
 }
+
+export interface DiscountGet {}
+
+export interface DiscountCodeValidate {
+  AthleteId: number;
+  CourseId: number;
+  PaymentTypeId: number;
+  Code: string;
+}

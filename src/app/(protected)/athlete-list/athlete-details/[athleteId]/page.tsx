@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import AthletePersonalInfoTab from "./_components/AthletePersonalInfoTab";
 import { useTransitionRouter } from "next-view-transitions";
 import BackButton from "@/components/shared/BackButton";
+import AthleteInTeamTab from "./_components/AthleteInTeamTab";
 
 export default function AthleteDetailsPage() {
   const { athleteId } = useParams<{ athleteId: string }>();
@@ -29,7 +30,9 @@ export default function AthleteDetailsPage() {
           </TabsContent>
           <TabsContent value={"fileAndDocs"}></TabsContent>
           <TabsContent value={"courses"}></TabsContent>
-          <TabsContent value={"teams"}></TabsContent>
+          <TabsContent value={"teams"}>
+            <AthleteInTeamTab athleteId={athleteId} />
+          </TabsContent>
           <TabsContent value={"messages"}></TabsContent>
           <TabsContent value={"installments"}></TabsContent>
           <TabsContent value={"referer"}></TabsContent>

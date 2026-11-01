@@ -14,15 +14,6 @@ import { giftAthleteListFormConfig } from "./giftAthleteListFormConfig";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { giftAthleteListFilterConfig } from "./giftAthleteListFilterConfig";
 
-const sampleData: Birthday[] = [
-  {
-    id: "ethdfh-aejfaek",
-    athlete: "مهدی مهدوی",
-    birthDate: "12-12-2006",
-    gift: "تولد",
-  },
-];
-
 export default function GiftAthletesPage() {
   const formDrawerRef = useRef<FormDrawerRef>(null);
 
@@ -62,11 +53,7 @@ export default function GiftAthletesPage() {
         config={giftAthleteListFilterConfig}
         onApplyFilters={() => {}}
       />
-      <DataTable
-        columns={giftAthletesColumns}
-        data={sampleData}
-        mode="filter"
-      />
+      <DataTable columns={giftAthletesColumns} data={[]} mode="filter" />
       <div className="flex-between">
         <div className="w-full flex flex-row items-center justify-between gap-5">
           <FormDrawer

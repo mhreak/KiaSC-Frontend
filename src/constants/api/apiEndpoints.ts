@@ -26,4 +26,9 @@ export const API_ENDPOINT = {
   birthdayGift: "/BirthdayGift",
   courseClasses: "/CourseClass",
   installment: "/Installment",
+  courseSessions: "/CourseSession",
+  dashboard: "/Dashboard",
+  athleteInTeam: "/AthleteInTeam",
+  courseRegisterOption: "/CourseRegisterOption",
+  athleteInCourse: "/AthleteInCourse",
 };

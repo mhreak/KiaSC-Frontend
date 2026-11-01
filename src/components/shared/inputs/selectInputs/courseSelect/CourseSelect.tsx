@@ -55,7 +55,7 @@ export function CourseSelect({
     <div
       {...props}
       className={cn(
-        "relative flex min-h-14 w-full flex-wrap items-center gap-2 rounded-xl border border-input bg-background px-3 py-2",
+        "relative flex min-h-10 w-full flex-wrap items-center gap-2 rounded-xl border border-input bg-background p-1",
         "focus-within:ring-2 focus-within:ring-ring/50",
         (disabled || readOnly) && "cursor-not-allowed bg-muted opacity-70",
         className,
@@ -83,7 +83,7 @@ export function CourseSelect({
 
         {selectedCourses.length === 0 && (
           <span className="text-sm text-muted-foreground">
-            ورزشی انتخاب نشده است
+            دوره ای انتخاب نشده است
           </span>
         )}
       </div>

@@ -44,6 +44,7 @@ import { SportSelect } from "@/components/shared/inputs/selectInputs/sportSelect
 import { TermSelect } from "@/components/shared/inputs/selectInputs/termSelect/TermSelect";
 import { CourseSelect } from "@/components/shared/inputs/selectInputs/courseSelect/CourseSelect";
 import { TeamSelect } from "@/components/shared/inputs/selectInputs/teamSelect/TeamSelect";
+import { CourseSearch } from "@/components/shared/inputs/searchInputs/courseSearch/CourseSearch";
 
 interface FormFieldRendererProps {
   field: BaseFieldConfig;
@@ -543,7 +544,7 @@ export function FormFieldRenderer({
                   <AthleteSearch
                     id={field.id}
                     type={field.type}
-                    placeholder={field.placeholder}
+                    placeholder={field.placeholder || "انتخاب ورزشکار"}
                     disabled={isDisabled}
                     readOnly={isReadOnly || !!field.computedValue}
                     value={value ?? ""}
@@ -561,6 +562,40 @@ export function FormFieldRenderer({
                       onChange("");
                     }}
                     displayName={field.displayName}
+                  />
+                );
+              }
+              case "courseSearch": {
+                return (
+                  <CourseSearch
+                    id={field.id}
+                    type={field.type}
+                    placeholder={field.placeholder || "انتخاب دوره"}
+                    disabled={isDisabled}
+                    readOnly={isReadOnly || !!field.computedValue}
+                    value={value ?? ""}
+                    onChange={(data) => {
+                      onChange(data);
+                    }}
+                    onBlur={onBlur}
+                    ref={ref}
+                    className={cn(
+                      error &&
+                        "border-destructive focus-visible:ring-destructive",
+                      (isReadOnly || field.computedValue) &&
+                        "bg-muted cursor-not-allowed focus-visible:ring-0",
+                    )}
+                    maxLength={field.maxLength}
+                    onClear={() => {
+                      onChange("");
+                    }}
+                    displayName={field.displayName}
+                    onConfirm={() => {
+                      onFieldChange?.(field.id, value, {
+                        ...formValues,
+                        [field.id]: value,
+                      });
+                    }}
                   />
                 );
               }
@@ -673,7 +708,7 @@ export function FormFieldRenderer({
                     <Button
                       variant={"secondary"}
                       size={"icon-lg"}
-                      onClick={field.onClick}
+                      onClick={() => field.onClick?.(formValues)}
                     >
                       <Check className="size-5" strokeWidth={4} />
                     </Button>

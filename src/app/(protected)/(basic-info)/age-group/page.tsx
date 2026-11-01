@@ -17,11 +17,15 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useRef, useState } from "react";
 import { ageGroupFormConfig } from "./ageGroupFormConfig";
 import { useApi } from "@/hooks/useApi";
-import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import {
+  APIAddTemplateResponse,
+  APIGetTemplate,
+} from "@/types/api/commonApiTypes";
 import { createPaginationMeta } from "@/utils/utillityFunctions";
 import { ageGroupApi } from "@/api/services/ApiService/ageGroupApi";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { ageGroupFilterConfig } from "./ageGroupFilterConfig";
+import { toast } from "@/lib/toast/toast";
 
 export default function AgeGroupPage() {
   const formModalRef = useRef<FormModalRef>(null);
@@ -38,6 +42,45 @@ export default function AgeGroupPage() {
   } = useApi<APIGetTemplate<AgeGroup[]>, AgeGroupGetListParams>(
     ageGroupApi.getList,
   );
+
+  // const {
+  //   data: athleteData,
+  //   isLoading: getLoading,
+  //   execute: getAthlete,
+  // } = useApi<AthleteGet, { id: number }>(athleteApi.get);
+
+  const { isLoading: addLoading, execute: addAgeGroup } = useApi<
+    APIAddTemplateResponse<number>,
+    any
+  >(ageGroupApi.add, {
+    onSuccess(response) {
+      toast.success(response.MessageList[0] || "");
+      formModalRef.current?.close();
+      getListAgeGroups({
+        ...filterItems,
+        PageNumber: page,
+        PageSize: pageSize,
+      });
+    },
+  });
+
+  // const { isLoading: editLoading, execute: editAthlete } = useApi<
+  //   APIAddTemplateResponse,
+  //   any
+  // >(athleteApi.edit, {
+  //   onSuccess(response) {
+  //     toast.success(response.MessageList[0] || "");
+  //     formDrawerRef.current?.close();
+  //     getListAthletes({
+  //       ...filterItems,
+  //       PageNumber: page,
+  //       PageSize: pageSize,
+  //     });
+  //   },
+  // });
+
+  const isSubmitting = addLoading;
+  // || editLoading;
 
   useEffect(() => {
     getListAgeGroups();
@@ -116,8 +159,11 @@ export default function AgeGroupPage() {
           });
         }}
         onRefresh={() => {
-          setFilterItems({});
-          getListAgeGroups({ PageNumber: page, PageSize: pageSize });
+          getListAgeGroups({
+            ...filterItems,
+            PageNumber: page,
+            PageSize: pageSize,
+          });
         }}
       />
       <div className="flex-between">
@@ -125,11 +171,17 @@ export default function AgeGroupPage() {
           <FormModal
             ref={formModalRef}
             formConfig={ageGroupFormConfig}
+            onSubmit={(data) => {
+              if (formMode === "add") {
+                addAgeGroup(data);
+              }
+            }}
             drawerTitle="رده سنی"
             formMode={formMode}
             onTriggerButtonClick={() => {
               setFormMode("add");
             }}
+            isSubmitting={isSubmitting}
           />
         </div>
       </div>

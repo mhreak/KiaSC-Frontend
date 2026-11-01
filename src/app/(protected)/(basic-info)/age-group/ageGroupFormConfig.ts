@@ -2,19 +2,19 @@ import { FormConfig } from "@/components/formBuilder/types";
 
 export const ageGroupFormConfig: FormConfig = [
   {
-    id: "name",
+    id: "AgeGroupName",
     label: "نام رده سنی",
     type: "text",
     required: true,
   },
   {
-    id: "startDate",
+    id: "AgeGroupStartDate",
     label: "تاریخ آغاز",
     type: "date",
     required: true,
   },
   {
-    id: "endDate",
+    id: "AgeGroupEndDate",
     label: "تاریخ پایان",
     type: "date",
     required: true,

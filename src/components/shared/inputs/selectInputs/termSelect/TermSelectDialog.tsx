@@ -23,15 +23,6 @@ interface Props {
   onSelectionChange: (terms: Term[]) => void;
 }
 
-const sampleData: Term[] = [
-  {
-    id: "1",
-    name: "بهار",
-    year: 1405,
-    season: "بهار",
-  },
-];
-
 export function TermSelectDialog({
   selectedTerms,
   onSelectionChange,
@@ -101,7 +92,7 @@ export function TermSelectDialog({
         <div className="-mx-4 max-h-[80vh] overflow-y-auto px-4 no-scrollbar">
           <DataTable
             columns={termColumns}
-            data={sampleData}
+            data={[]}
             selectionMode="multiple"
             mode="modal"
             onPageChanged={() => {}}

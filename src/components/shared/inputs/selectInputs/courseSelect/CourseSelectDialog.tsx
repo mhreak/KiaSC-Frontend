@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Check, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,14 @@ import {
 } from "@/components/ui/dialog";
 import { FilterRenderer } from "@/components/filterFormBuilder/filter-renderer";
 import { courseSelectFilterConfig } from "./courseSelectFilterConfig";
-import { Course } from "@/types/api/endpointTypes/course.types";
+import {
+  Course,
+  CourseGetListParams,
+} from "@/types/api/endpointTypes/course.types";
+import { useApi } from "@/hooks/useApi";
+import { APIGetTemplate } from "@/types/api/commonApiTypes";
+import { courseApi } from "@/api/services/ApiService/courseApi";
+import { genderFormatter } from "@/components/ui/data-table/formatters";
 
 interface Props {
   selectedCourses: Course[];
@@ -31,29 +38,38 @@ export function CourseSelectDialog({
 
   const [tempSelectedCourses, setTempSelectedCourses] = useState<Course[]>([]);
 
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [filterItems, setFilterItems] = useState<CourseGetListParams>({});
+
+  const {
+    data: allCoursesData,
+    isLoading: getListLoading,
+    execute: getListCourses,
+  } = useApi<APIGetTemplate<Course[]>, CourseGetListParams>(courseApi.getList);
+
+  useEffect(() => {
+    getListCourses();
+  }, []);
+
   const courseColumns: ColumnDef<Course>[] = [
     {
-      accessorKey: "name",
+      accessorKey: "CourseName",
       header: "نام دورۀ آموزشی",
     },
     {
-      accessorKey: "sport",
+      accessorKey: "SportName",
       header: "رشتۀ ورزشی",
     },
     {
-      accessorKey: "term",
+      accessorKey: "TermName",
       header: "ترم",
     },
     {
-      accessorKey: "gender",
+      accessorKey: "Gender",
       header: "جنسیت",
-      cell: ({ row }) => {
-        switch (row.original.genderStr) {
-          case "male":
-            return "مرد";
-          case "female":
-            return "زن";
-        }
+      meta: {
+        formatter: genderFormatter,
       },
     },
   ];
@@ -104,11 +120,34 @@ export function CourseSelectDialog({
         <div className="-mx-4 max-h-[80vh] overflow-y-auto px-4 no-scrollbar">
           <DataTable
             columns={courseColumns}
-            data={[]}
+            data={allCoursesData?.Items ?? []}
             selectionMode="multiple"
             mode="modal"
-            onPageChanged={() => {}}
-            onPageSizeChanged={() => {}}
+            isLoading={getListLoading}
+            onPageChanged={(currentPage) => {
+              setPage(currentPage);
+              getListCourses({
+                ...filterItems,
+                PageNumber: currentPage,
+                PageSize: pageSize,
+              });
+            }}
+            onPageSizeChanged={(currentPageSize) => {
+              setPageSize(currentPageSize);
+              setPage(1);
+              getListCourses({
+                ...filterItems,
+                PageNumber: 1,
+                PageSize: currentPageSize,
+              });
+            }}
+            onRefresh={() => {
+              getListCourses({
+                ...filterItems,
+                PageNumber: page,
+                PageSize: pageSize,
+              });
+            }}
             onSelectionChange={(rows) => {
               setTempSelectedCourses(rows);
             }}
